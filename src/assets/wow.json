@@ -1,0 +1,99 @@
+{
+  "success": true,
+  "result": {
+    "uid": 344,
+    "guildUid": 223,
+    "name": "cats",
+    "description": "",
+    "path": "",
+    "status": "",
+    "type": "",
+    "createdTime": "2022-04-03T21:49:38.000Z",
+    "updatedTime": "2022-04-03T22:27:18.000Z",
+    "options": {
+      "collect": {
+        "collected": {
+          "value": "0",
+          "updatedTime": "2022-04-03T21:49:38.000Z"
+        },
+        "maxCount": { "value": "0", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "request": { "value": "0", "updatedTime": "2022-04-03T21:49:38.000Z" }
+      },
+      "command": {
+        "prefix": { "value": "$", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "tokenName": {
+          "value": "gfuguyguyg",
+          "updatedTime": "2022-04-03T21:49:38.000Z"
+        }
+      },
+      "contract": {
+        "address": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "verified": { "value": "0", "updatedTime": "2022-04-03T21:49:38.000Z" }
+      },
+      "event": {
+        "mint": {
+          "active": { "value": "0", "updatedTime": "2022-04-03T21:49:38.000Z" },
+          "channels": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" }
+        }
+      },
+      "general": {
+        "discord": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "email": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "etherscan": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "instagram": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "introduce": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "medium": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "opensea": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "twitter": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "website": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" }
+      },
+      "opensea": {
+        "active": { "value": "1", "updatedTime": "2022-04-04T20:05:27.000Z" },
+        "delisting": {
+          "active": { "value": "1", "updatedTime": "2022-04-04T20:09:14.000Z" },
+          "channels": {
+            "value": "960426188445208669,960769045811068938",
+            "updatedTime": "2022-04-13T17:48:54.000Z"
+          }
+        },
+        "floorPrice": {
+          "active": { "value": "1", "updatedTime": "2022-04-10T19:36:57.000Z" },
+          "channels": {
+            "value": "960426188445208670",
+            "updatedTime": "2022-04-04T20:09:10.000Z"
+          }
+        },
+        "listing": {
+          "active": { "value": "1", "updatedTime": "2022-04-04T20:07:46.000Z" },
+          "channels": {
+            "value": "960426188445208669,960769006527197187,960769045811068938",
+            "updatedTime": "2022-04-13T17:48:29.000Z"
+          }
+        },
+        "sales": {
+          "active": { "value": "0", "updatedTime": "2022-04-14T22:38:01.000Z" },
+          "channels": {
+            "value": "960769045811068938",
+            "updatedTime": "2022-04-04T20:13:59.000Z"
+          }
+        },
+        "tradingVolume": {
+          "active": { "value": "1", "updatedTime": "2022-04-04T20:09:11.000Z" },
+          "channels": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" }
+        },
+        "URL": {
+          "value": "https://opensea.io/collection/makersplace",
+          "updatedTime": "2022-04-04T20:05:27.000Z"
+        }
+      },
+      "rarity": {
+        "active": { "value": "0", "updatedTime": "2022-04-03T21:49:38.000Z" },
+        "channels": { "value": "", "updatedTime": "2022-04-03T21:49:38.000Z" }
+      },
+      "verify": {
+        "active": { "value": "0", "updatedTime": "2022-04-25T18:45:04.000Z" },
+        "channels": { "value": "", "updatedTime": "2022-04-25T18:45:04.000Z" }
+      }
+    }
+  }
+}
