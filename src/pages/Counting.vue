@@ -1,7 +1,5 @@
 <template>
-  <div>
-    {{ state.counter }} sec
-  </div>
+  <div>{{ state.counter }} sec</div>
 </template>
 
 <script lang="ts">
@@ -10,9 +8,10 @@ import { defineComponent, reactive, onMounted } from "vue";
 export default defineComponent({
   name: "Counting",
   components: {},
+  props:{},
   setup() {
     const state = reactive({
-      counter: "",
+      counter: "" as number | string,
     });
     onMounted(() => {
       const FESTART_DAY: string = "2021-10-03";
@@ -21,7 +20,7 @@ export default defineComponent({
 
       setInterval(() => {
         const now = new Date();
-        const difference = Math.floor(
+        const difference: number = Math.floor(
           (now.getTime() - FESTART_DAY_DATE.getTime()) / 1000
         );
         state.counter = intlNumberFormatter.format(difference);
