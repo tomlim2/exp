@@ -10,7 +10,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .hiThere {
   font-size: 40px;
 }

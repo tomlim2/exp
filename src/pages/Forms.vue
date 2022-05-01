@@ -93,22 +93,26 @@
         <label for="how-offline">offline</label>
       </div>
     </div>
+    <div><Rating v-model="state.rating" /></div>
     <div><button>Save</button></div>
   </form>
 </template>
 
 <script lang="ts">
+import Rating from "../components/Rating.vue";
 import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
+  components: { Rating },
   setup() {
     const state = reactive({
-      userName: "" as string,
-      userAge: "" as number | string,
-      referer: "" as string,
-      interest: [] as Array<string>,
-      how: "" as string,
-      userNameValidity: "" as string,
+      userName: "" as String,
+      userAge: "" as Number | String,
+      referer: "" as String,
+      interest: [] as Array<String>,
+      how: "" as String,
+      userNameValidity: "" as String,
+      rating:"" as String
     });
     const submitForm = () => {
       console.log("Username " + state.userName);
@@ -122,8 +126,11 @@ export default defineComponent({
       console.log("how " + state.how);
       state.how = "";
       state.userNameValidity = "";
+      console.log("rating " + state.rating);
+      state.rating = "";
+      
     };
-    
+
     const validateInput = () => {
       if (state.userName === "") {
         state.userNameValidity = "invalid";
