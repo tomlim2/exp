@@ -99,7 +99,7 @@
 </template>
 
 <script lang="ts">
-import Rating from "../components/Rating.vue";
+import Rating from "@/components/Forms/Rating.vue";
 import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
@@ -112,23 +112,16 @@ export default defineComponent({
       interest: [] as Array<String>,
       how: "" as String,
       userNameValidity: "" as String,
-      rating:"" as String
+      rating: "" as String,
     });
     const submitForm = () => {
-      console.log("Username " + state.userName);
       state.userName = "";
-      console.log("userAge " + state.userAge);
       state.userAge = "";
-      console.log("referer " + state.referer);
       state.referer = "";
-      console.log("interest " + state.interest);
       state.interest = [];
-      console.log("how " + state.how);
       state.how = "";
       state.userNameValidity = "";
-      console.log("rating " + state.rating);
       state.rating = "";
-      
     };
 
     const validateInput = () => {
