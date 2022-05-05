@@ -6,9 +6,9 @@ export default createRouter({
     routes: [
         {
             path: "/",
-            component: PageMap.Home,
+            component: PageMap.HomeLayout,
             children: [
-                { path: "/", component: PageMap.HomeChildren.HomeMain }
+                { path: "", component: PageMap.HomeChildren.Home }
             ]
         },
         {
