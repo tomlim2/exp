@@ -17,9 +17,9 @@ export default createRouter({
         },
         {
             path: "/feeds",
-            component: PageMap.Feeds,
+            component: PageMap.FeedsLayout,
             children: [
-                { path: "/", component: PageMap.FeedsChildren.FeedsMain }
+                { path: "", component: PageMap.FeedsChildren.Feeds }
             ]
         }
     ]

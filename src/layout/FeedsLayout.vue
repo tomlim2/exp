@@ -8,11 +8,11 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "@/components/Home/Header.vue";
-import Footer from "@/components/Home/Footer.vue";
+import Header from "@/components/Feeds/Header.vue";
+import Footer from "@/components/Feeds/Footer.vue";
 
 export default defineComponent({
-  name: "FeedsLayoutDefault",
+  name: "HomeLayoutDefault",
   components: {
     Header,
     Footer,

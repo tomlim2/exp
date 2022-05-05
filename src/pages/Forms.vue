@@ -106,13 +106,13 @@ export default defineComponent({
   components: { Rating },
   setup() {
     const state = reactive({
-      userName: "" as String,
-      userAge: "" as Number | String,
-      referer: "" as String,
-      interest: [] as Array<String>,
-      how: "" as String,
-      userNameValidity: "" as String,
-      rating: "" as String,
+      userName: "" as string,
+      userAge: "" as number | string,
+      referer: "" as string,
+      interest: [] as Array<string>,
+      how: "" as string,
+      userNameValidity: "" as string,
+      rating: "" as string,
     });
     const submitForm = () => {
       state.userName = "";
