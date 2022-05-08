@@ -1,9 +1,9 @@
 <template>
   <header class="header">
     <div class="nav">
-      <router-link to="/"> home</router-link> |
-      <router-link to="/feeds"> feeds</router-link> |
-      <router-link to="/forms"> forms</router-link>
+      <router-link to="/">home</router-link> |
+      <router-link to="/feeds">feeds</router-link> |
+      <router-link to="/forms">forms</router-link>
     </div>
   </header>
 </template>
@@ -17,7 +17,7 @@
 .header {
   padding: 10px 10px;
   text-align: center;
-  
+
   .nav {
     a {
       padding: 5px 15px;

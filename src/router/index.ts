@@ -21,6 +21,16 @@ export default createRouter({
             children: [
                 { path: "", component: PageMap.FeedsChildren.Feeds }
             ]
-        }
+        },
+        {
+            path: "/404",
+            component: PageMap.DefaultLayout,
+            children: [
+                { path: "", component: PageMap.HomeChildren.NotFound }
+            ]
+        }, {
+            path: "/:pathMatch(.*)*",
+            redirect: "/404",
+        },
     ]
 })
