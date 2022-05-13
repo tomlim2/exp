@@ -6,21 +6,36 @@ export default createRouter({
     routes: [
         {
             path: "/",
-            component: PageMap.HomeLayout,
+            component: PageMap.DefaultLayout,
             children: [
-                { path: "", component: PageMap.HomeChildren.Home }
-            ]
-        },
-        {
-            path: "/forms",
-            component: PageMap.Forms
-        },
-        {
-            path: "/feeds",
-            component: PageMap.FeedsLayout,
-            children: [
-                { path: "", component: PageMap.FeedsChildren.Feeds }
-            ]
+                {
+                    path: "",
+                    component: PageMap.HomeLayout,
+                    children: [
+                        {
+                            path: "",
+                            component: PageMap.HomeChildren.Home
+                        }]
+                },
+                {
+                    path: "/feeds",
+                    component: PageMap.FeedsLayout,
+                    children: [
+                        {
+                            path: "",
+                            component: PageMap.FeedsChildren.Feeds
+                        }
+                    ]
+                },
+                {
+                    path: "/forms",
+                    component: PageMap.Forms
+                },
+                {
+                    path: "/interaction",
+                    component: PageMap.Interaction
+                },
+            ],
         },
         {
             path: "/404",
@@ -28,7 +43,8 @@ export default createRouter({
             children: [
                 { path: "", component: PageMap.HomeChildren.NotFound }
             ]
-        }, {
+        },
+        {
             path: "/:pathMatch(.*)*",
             redirect: "/404",
         },

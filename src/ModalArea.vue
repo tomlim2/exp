@@ -1,8 +1,8 @@
 <template>
   <teleport to="#modal-area">
-    <div>Modal1</div>
-    <div>Modal2</div>
-    <div>Modal3</div>
+    <div v-if="false">Modal1</div>
+    <div v-if="false">Modal2</div>
+    <div v-if="false">Modal3</div>
   </teleport>
 </template>
 
