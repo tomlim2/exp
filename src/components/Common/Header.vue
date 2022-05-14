@@ -16,18 +16,28 @@
 @import "~@/theme/style.scss";
 
 .header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 56px;
   padding: 10px 10px;
   text-align: center;
+  
 
   .nav {
     a {
       padding: 5px 15px;
       border-radius: 2px;
-      color: $black-200;
+      color: $white-100;
       text-decoration: none;
 
       &.router-link-active {
-        background-color: $brand-green-secondary;
+        color: $black-300;
+        background-color: $white-300;
       }
     }
   }

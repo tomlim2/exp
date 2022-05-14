@@ -33,7 +33,11 @@ export default createRouter({
                 },
                 {
                     path: "/interaction",
-                    component: PageMap.Interaction
+                    component: PageMap.InteractionLayout,
+                    children:[
+                        {path:"",
+                    component:PageMap.Interaction}
+                    ]
                 },
             ],
         },

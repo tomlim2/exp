@@ -1,5 +1,6 @@
 import HomeLayout from "@/layout/HomeLayout.vue"
 import FeedsLayout from "@/layout/FeedsLayout.vue"
+import InteractionLayout from "@/layout/InteractionLayout.vue"
 import DefaultLayout from "@/layout/DefaultLayout.vue"
 
 import Home from "../pages/Home.vue";
@@ -17,5 +18,6 @@ export default {
     FeedsLayout,
     FeedsChildren: { Feeds },
     Forms,
+    InteractionLayout,
     Interaction,
 }

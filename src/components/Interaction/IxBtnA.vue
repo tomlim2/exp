@@ -1,29 +1,24 @@
 <template>
-  <div class="otherside-button-wrapper">
+  <div class="sticky-3d-button-wrapper">
     <div
       @mousemove="onMousemove"
       @mouseenter="onMouseenter"
       @mouseout="onMouseout"
-      class="hihihi"
-    ></div>
-    <div
-      class="otherside-button"
-      :style="`
-      background: linear-gradient(135.89deg, rgba(185, 102, 123, 0.3) -5.87%, rgba(9, 27, 32, 0.3) 53.43%), rgb(16, 16, 16);
-      will-change: transform;
-      transition: all 1200ms cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s;
-      ${state.tiltButton}
-        `"
-    >
+      class="sticky-3d-event"
+    />
+    <div class="sticky-3d-button" :style="styles.tiltButton">
       <div class="content-wrapper">
         <div class="image-wrapper">
           <img src="@/assets/icon/icon-tech-1.svg" alt="icon-svg" />
         </div>
-        <div class="text-wrapper">Hey, You</div>
+        <div class="text-wrapper">
+          <h2>{{ title }}</h2>
+          <p>{{ description }}</p>
+        </div>
       </div>
       <br />
       <div class="glare-wrapper">
-        <div :style="state.glareButton" class="glare"></div>
+        <div :style="styles.glareButton" class="glare"></div>
       </div>
     </div>
   </div>
@@ -31,49 +26,58 @@
 
 
 <script lang="ts">
-import { defineComponent, onUnmounted, reactive } from "vue";
+import { computed, defineComponent, reactive } from "vue";
 
 export default defineComponent({
-  setup() {
+  props: {
+    title: {
+      type: String,
+      default: "",
+    },
+    description: {
+      type: String,
+      default:
+        "",
+    },
+    borderGradient: {
+      type: String,
+      default:
+        "linear-gradient(135.89deg, rgba(185, 102, 123, 0.3) -5.87%, rgba(9, 27, 32, 0.3) 53.43%), rgb(16, 16, 16)",
+    },
+    glare: {
+      type: String,
+      default:
+        "linear-gradient(0deg,rgba(255, 255, 255, 0) 0%,rgba(185, 102, 123, 0.3) 100%)",
+    },
+  },
+  setup(props) {
     const state: any = reactive({
       buttonPosX: 0,
       buttonPosY: 0,
       mouseX: 0,
       mouseY: 0,
-      test: "hi",
+    });
+
+    const styles: any = reactive({
+      borderColor: computed(() => `background: ${props.borderGradient}`),
       tiltButton:
         "transform: perspective(3000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
+      tiltButtonStyle: computed(() => styles.tiltButton + styles.borderColor),
       glareButton: "opacity: 0",
     });
 
     const tiltButton = (e: any) => {
       const boxPosition = e.target.getBoundingClientRect();
 
-      state.buttonPosX = boxPosition.left;
-      state.buttonPosY = boxPosition.top;
-      state.mouseX = e.clientX;
-      state.mouseY = e.clientY;
+      const mousePosXOnButton = e.clientX - boxPosition.left;
+      const mousePosYOnButton = e.clientY - boxPosition.top;
 
-      const mousePosXOnButton = state.mouseX - state.buttonPosX;
-      const mousePosYOnButton = state.mouseY - state.buttonPosY;
+      //tilting button
 
       const tiltButtonX = 15 - (mousePosYOnButton / 300) * 30;
       const tiltButtonY = -15 + (mousePosXOnButton / 300) * 30;
 
-      state.tiltButton = `transform: perspective(3000px) rotateX(${tiltButtonX}deg) rotateY(${tiltButtonY}deg) scale3d(1, 1, 1)`;
-      state.glareButton = `opacity: 0`;
-    };
-
-    const glare = (e: any) => {
-      const boxPosition = e.target.getBoundingClientRect();
-
-      state.buttonPosX = boxPosition.left;
-      state.buttonPosY = boxPosition.top;
-      state.mouseX = e.clientX;
-      state.mouseY = e.clientY;
-
-      const mousePosXOnButton = state.mouseX - state.buttonPosX;
-      const mousePosYOnButton = state.mouseY - state.buttonPosY;
+      styles.tiltButton = `transform: perspective(3000px) rotateX(${tiltButtonX}deg) rotateY(${tiltButtonY}deg) scale3d(1, 1, 1)`;
 
       const intoAxisX = mousePosXOnButton - 150;
       const intoAxisY = mousePosYOnButton - 150;
@@ -88,46 +92,42 @@ export default defineComponent({
         opacityChange = 0.8;
       }
 
-      state.glareButton = `opacity: ${opacityChange}; transform: rotate(${lineLengthTowardCenter}deg) translate(-50%, -50%);`;
+      styles.glareButton = `opacity: ${opacityChange}; transform: rotate(${lineLengthTowardCenter}deg) translate(-50%, -50%);`;
     };
 
     const onMousemove = (e: any) => {
       tiltButton(e);
-      glare(e);
     };
 
     const onMouseenter = (e: any) => {
       tiltButton(e);
-      glare(e);
     };
 
     const onMouseout = () => {
-      state.tiltButton =
+      styles.tiltButton =
         "transform: perspective(3000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)";
 
-      state.glareButton = `opacity: 0; transform: rotate(0deg) translate(-50%, -50%);`;
+      styles.glareButton = `opacity: 0; transform: rotate(0deg) translate(-50%, -50%);`;
     };
 
-    onUnmounted(() => {});
-
-    return { state, onMousemove, onMouseenter, onMouseout };
+    return { styles, state, props, onMousemove, onMouseenter, onMouseout };
   },
 });
 </script>
 
 <style lang="scss" scoped>
-.otherside-button-wrapper {
+.sticky-3d-button-wrapper {
   position: relative;
   width: 300px;
   height: 300px;
 
-  .hihihi {
+  .sticky-3d-event {
     position: absolute;
     width: 100%;
     height: 100%;
     z-index: 12;
   }
-  .otherside-button {
+  .sticky-3d-button {
     position: relative;
     display: flex;
     align-items: center;
@@ -135,20 +135,20 @@ export default defineComponent({
     width: 100%;
     height: 100%;
     border-radius: 12px;
-    background-color: black;
-    color: white;
-
+    background: v-bind(borderGradient);
+    will-change: transform;
     transform-style: preserve-3d;
+    transition: all 1200ms cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s;
 
     &::before {
       content: "";
       position: absolute;
-      left: 2px;
-      top: 2px;
-      width: calc(100% - 4px);
-      height: calc(100% - 4px);
+      left: 1px;
+      top: 1px;
+      width: calc(100% - 2px);
+      height: calc(100% - 2px);
       border-radius: 12px;
-      background-color: black;
+      background-color: #000;
     }
 
     .content-wrapper {
@@ -159,9 +159,22 @@ export default defineComponent({
         transition: all 1200ms cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s;
       }
 
-      .text-wrapper{
+      .text-wrapper {
         position: relative;
+        padding: 0 40px;
         z-index: 10;
+
+        color: #fff;
+
+        h2 {
+          margin: 8px 0 0 0;
+          padding: 0;
+        }
+
+        p {
+          margin: 8px 0 0 0;
+          opacity: 0.4;
+        }
       }
     }
 
@@ -184,12 +197,7 @@ export default defineComponent({
         width: 544.885px;
         height: 544.885px;
         transform: rotate(0deg) translate(-50%, -50%);
-        opacity: 1;
-        background: linear-gradient(
-          0deg,
-          rgba(255, 255, 255, 0) 0%,
-          rgba(185, 102, 123, 0.3) 100%
-        );
+        background: v-bind(glare);
         transition: opacity 1200ms cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s;
       }
     }
