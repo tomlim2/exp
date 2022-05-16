@@ -1,5 +1,5 @@
 <template>
-  <div class="interaction-page">
+  <div class="page interaction-page">
     <IxBtnA />
   </div>
 </template>
@@ -17,4 +17,12 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang="scss" scoped>
+@import "~@/theme/style.scss";
+
+.page{
+  margin-top: 80px;
+}
+</style>
 
