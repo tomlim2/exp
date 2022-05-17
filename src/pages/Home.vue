@@ -1,16 +1,19 @@
 <template>
   <div class="page">
-    <swiper
-      :slides-per-view="3"
-      :space-between="50"
-      @swiper="onSwiper"
-      @slideChange="onSlideChange"
-    >
-      <swiper-slide>Slide 1</swiper-slide>
-      <swiper-slide>Slide 2</swiper-slide>
-      <swiper-slide>Slide 3</swiper-slide>
-      ...
-    </swiper>
+    <div>
+      <swiper
+        :slides-per-view="3"
+        :space-between="50"
+        @swiper="onSwiper"
+        @slideChange="onSlideChange"
+      >
+        <swiper-slide>Slide 1</swiper-slide>
+        <swiper-slide>Slide 2</swiper-slide>
+        <swiper-slide>Slide 3</swiper-slide>
+        ...
+      </swiper>
+    </div>
+
     <div>
       memo
       <p>
@@ -27,19 +30,21 @@
     </ul> -->
     </div>
   </div>
+  <div><LottieTest /></div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
+import LottieTest from "@/sections/Home/LottiesTest.vue";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
 
 export default defineComponent({
   name: "Home",
-  components: { Swiper, SwiperSlide },
+  components: { Swiper, SwiperSlide, LottieTest },
   setup() {
     const onSwiper = (swiper: any) => {
       console.log(swiper);
@@ -50,6 +55,7 @@ export default defineComponent({
     return {
       onSwiper,
       onSlideChange,
+      LottieTest,
     };
   },
 });

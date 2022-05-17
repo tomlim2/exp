@@ -4,6 +4,6 @@
 
 <style scoped lang="scss" >
 div {
-  font-size: 20px;
+  font-size: 1rem;
 }
 </style>

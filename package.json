@@ -14,7 +14,8 @@
     "swiper": "^8.1.4",
     "vue": "^3.0.0",
     "vue-class-component": "^8.0.0-0",
-    "vue-router": "^4.0.14"
+    "vue-router": "^4.0.14",
+    "vue3-lottie": "^2.1.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.18.0",
