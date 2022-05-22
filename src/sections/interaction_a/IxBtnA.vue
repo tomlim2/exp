@@ -7,7 +7,7 @@
         :borderGradient="item.borderGradient"
         :glare="item.glare"
         title="IxBtnA"
-        description="I wanna icecream, I wanna icecream, I wanna icecream, I wanna icecream"
+        description="Sample"
       />
     </div>
   </div>

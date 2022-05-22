@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">navigation</div>
+  <div class="nav">IxBtnA | OutlineThreeJsA</div>
 </template>
 
 <style scoped lang="scss">
@@ -13,5 +13,6 @@
   height: 8px;
   text-align: center;
   color: $white-0;
+  z-index: 10;
 }
 </style>

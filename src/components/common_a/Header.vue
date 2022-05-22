@@ -26,6 +26,7 @@
   height: 56px;
   padding: 10px 10px;
   text-align: center;
+  z-index: 10;
   
 
   .nav {
