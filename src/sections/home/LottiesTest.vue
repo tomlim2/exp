@@ -9,7 +9,7 @@
 import { Vue3Lottie } from "vue3-lottie";
 import "vue3-lottie/dist/style.css";
 
-const AstronautJSON = require("@/sections/Home/lottie-anmation-dark.json");
+const AstronautJSON = require("@/sections/home/lottie-anmation-dark.json");
 
 export default {
   components: {

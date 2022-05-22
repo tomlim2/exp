@@ -15,7 +15,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import IxBtnA from "@/components/Interaction/IxBtnA.vue";
+import IxBtnA from "@/components/interaction/IxBtnA.vue";
 
 export default defineComponent({
   components: { IxBtnA },
