@@ -37,7 +37,7 @@
 import { defineComponent } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
-import LottieTest from "@/sections/Home/LottiesTest.vue";
+import LottieTest from "@/sections/home/LottiesTest.vue";
 
 // Import Swiper styles
 import "swiper/swiper.scss";

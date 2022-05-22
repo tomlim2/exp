@@ -7,8 +7,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import IxBtnA from "@/sections/Interaction/IxBtnA.vue";
-import OutlineThreejsA from "@/sections/Interaction/OutlineThreejsA.vue";
+import IxBtnA from "@/sections/interaction/IxBtnA.vue";
+import OutlineThreejsA from "@/sections/interaction/OutlineThreejsA.vue";
 
 export default defineComponent({
   components: { IxBtnA, OutlineThreejsA },

@@ -101,7 +101,7 @@
 </template>
 
 <script lang="ts">
-import Rating from "@/components/Forms/Rating.vue";
+import Rating from "@/components/forms/Rating.vue";
 import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
