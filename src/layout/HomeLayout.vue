@@ -8,8 +8,8 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Header from "@/components/Home/Header.vue";
-import Footer from "@/components/Home/Footer.vue";
+import Header from "@/components/home/Header.vue";
+import Footer from "@/components/home/Footer.vue";
 
 export default defineComponent({
   name: "FeedsLayoutDefault",
