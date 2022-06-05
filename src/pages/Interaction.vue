@@ -1,17 +1,21 @@
 <template>
   <div class="page interaction-page">
     <IxBtnA />
-    <OutlineThreejsA />
+    <!-- <OutlineThreejsA /> -->
+    <OutlineThreejsB />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import IxBtnA from "@/sections/interaction/IxBtnA.vue";
-import OutlineThreejsA from "@/sections/interaction/OutlineThreejsA.vue";
+// import OutlineThreejsA from "@/sections/interaction/OutlineThreejsA.vue";
+import OutlineThreejsB from "@/sections/interaction/OutlineThreejsB.vue";
 
 export default defineComponent({
-  components: { IxBtnA, OutlineThreejsA },
+  components: { IxBtnA, 
+  // OutlineThreejsA, 
+  OutlineThreejsB },
   setup() {
     const state: any = {};
 

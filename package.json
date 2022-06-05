@@ -10,8 +10,10 @@
   "dependencies": {
     "@types/three": "^0.140.0",
     "core-js": "^3.6.5",
+    "lil-gui": "^0.16.1",
     "node-sass": "5.0.0",
     "sass-loader": "10.1.1",
+    "spectorjs": "^0.9.27",
     "swiper": "^8.1.4",
     "three": "^0.140.2",
     "vue": "^3.0.0",

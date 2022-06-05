@@ -9,6 +9,7 @@
 import { defineComponent, onMounted, reactive } from "vue";
 
 import * as THREE from "three";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export default defineComponent({
   setup() {
@@ -23,10 +24,12 @@ export default defineComponent({
       );
 
       const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setSize(window.innerWidth/2, window.innerHeight/2);
       (document.querySelector("#render-three") as HTMLElement).appendChild(
         renderer.domElement
       );
+
+      const controls = new OrbitControls(camera, renderer.domElement);
 
       const geometry = new THREE.BoxGeometry();
       const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -35,11 +38,16 @@ export default defineComponent({
 
       camera.position.z = 5;
 
+      controls.update()
+
       function animate() {
         requestAnimationFrame(animate);
 
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
+
+        controls.update()
+        controls.enableDamping = true;
 
         renderer.render(scene, camera);
       }
@@ -56,7 +64,7 @@ export default defineComponent({
 
 .outline-three-js-a {
   width: 100vw;
-  height: 100vh;
+  height: 50vh;
   background-color: $black-100;
 }
 </style>
