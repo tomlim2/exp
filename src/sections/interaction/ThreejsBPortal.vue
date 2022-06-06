@@ -7,7 +7,7 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from "vue";
-import * as dat from "lil-gui";
+// import * as dat from "lil-gui";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
@@ -42,9 +42,9 @@ export default defineComponent({
         portalColorEnd: "",
       };
 
-      const gui = new dat.GUI({
-        width: 400,
-      });
+      // const gui = new dat.GUI({
+      //   width: 400,
+      // });
 
       const canvas = document.querySelector("#render-three") as HTMLElement;
 
@@ -103,6 +103,7 @@ export default defineComponent({
       debugObject.portalColorStart = "#000000";
       debugObject.portalColorEnd = "#ffffff";
 
+      /* 
       gui.addColor(debugObject, "portalColorStart").onChange(() => {
         portalLightMaterial.uniforms.uColorStart.value.set(
           debugObject.portalColorStart
@@ -114,6 +115,7 @@ export default defineComponent({
           debugObject.portalColorEnd
         );
       });
+      */
 
       const portalLightMaterial = new THREE.ShaderMaterial({
         uniforms: {
@@ -204,12 +206,14 @@ export default defineComponent({
         depthWrite: false,
       });
 
-      gui
+      /** 
+       gui
         .add(firefliesMaterial.uniforms.uSize, "value")
         .min(0)
         .max(500)
         .step(1)
         .name("firefliesSize");
+      */
 
       //Points
       const firefiles = new THREE.Points(firefliesGeometry, firefliesMaterial);
@@ -228,9 +232,11 @@ export default defineComponent({
 
       debugObject.clearColor = "#201919";
       renderer.setClearColor(debugObject.clearColor);
-      gui.addColor(debugObject, "clearColor").onChange(() => {
+      /**
+       gui.addColor(debugObject, "clearColor").onChange(() => {
         renderer.setClearColor(debugObject.clearColor);
       });
+       */
 
       /**
        * Camera

@@ -9,7 +9,7 @@
     <div class="sticky-3d-button" :style="styles.tiltButton">
       <div class="content-wrapper">
         <div class="image-wrapper">
-          <img src="@/assets/icon/icon-tech-1.svg" alt="icon-svg" />
+          <img :src="img" alt="icon-svg" />
         </div>
         <div class="text-wrapper">
           <h2>{{ title }}</h2>
@@ -26,18 +26,32 @@
 
 
 <script lang="ts">
-import { computed, defineComponent, reactive } from "vue";
+import { computed, defineComponent, onMounted, reactive } from "vue";
+
+interface IxBtnAState {
+  buttonPosX: Number;
+  buttonPosY: Number;
+  mouseX: Number;
+  mouseY: Number;
+}
+
+interface IxBtnAStyles {
+  borderColor: string;
+  tiltButton: string;
+  tiltButtonStyle: string;
+  glareButton: string;
+}
 
 export default defineComponent({
   props: {
+    img: String,
     title: {
       type: String,
       default: "",
     },
     description: {
       type: String,
-      default:
-        "",
+      default: "",
     },
     borderGradient: {
       type: String,
@@ -51,14 +65,14 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const state: any = reactive({
+    const state: IxBtnAState = reactive({
       buttonPosX: 0,
       buttonPosY: 0,
       mouseX: 0,
       mouseY: 0,
     });
 
-    const styles: any = reactive({
+    const styles: IxBtnAStyles = reactive({
       borderColor: computed(() => `background: ${props.borderGradient}`),
       tiltButton:
         "transform: perspective(3000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)",
@@ -110,6 +124,10 @@ export default defineComponent({
       styles.glareButton = `opacity: 0; transform: rotate(0deg) translate(-50%, -50%);`;
     };
 
+    onMounted(() => {
+      props.img;
+    });
+
     return { styles, state, props, onMousemove, onMouseenter, onMouseout };
   },
 });
@@ -157,6 +175,7 @@ export default defineComponent({
 
       .image-wrapper {
         transition: all 1200ms cubic-bezier(0.03, 0.98, 0.52, 0.99) 0s;
+        background-image: v-bind(img);
       }
 
       .text-wrapper {

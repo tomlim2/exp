@@ -2,7 +2,7 @@
   <div class="page interaction-page">
     <IxBtnA />
     <!-- <OutlineThreejsA /> -->
-    <OutlineThreejsB />
+    <ThreejsBPortal />
   </div>
 </template>
 
@@ -10,12 +10,14 @@
 import { defineComponent } from "vue";
 import IxBtnA from "@/sections/interaction/IxBtnA.vue";
 // import OutlineThreejsA from "@/sections/interaction/OutlineThreejsA.vue";
-import OutlineThreejsB from "@/sections/interaction/OutlineThreejsB.vue";
+import ThreejsBPortal from "@/sections/interaction/ThreejsBPortal.vue";
 
 export default defineComponent({
-  components: { IxBtnA, 
-  // OutlineThreejsA, 
-  OutlineThreejsB },
+  components: {
+    IxBtnA,
+    // OutlineThreejsA,
+    ThreejsBPortal,
+  },
   setup() {
     const state: any = {};
 
