@@ -12,9 +12,19 @@ import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
+import {
+  firefiliesVertex,
+  firefiliesFragment,
+} from "@/sections/interaction/shaders/fireflies";
+import {
+  portalVertex,
+  portalFragment,
+} from "@/sections/interaction/shaders/portal";
 
 interface debugObject {
   clearColor: string;
+  portalColorStart: string;
+  portalColorEnd: string;
 }
 
 export default defineComponent({
@@ -28,6 +38,8 @@ export default defineComponent({
       // Debug
       const debugObject: debugObject = {
         clearColor: "",
+        portalColorStart: "",
+        portalColorEnd: "",
       };
 
       const gui = new dat.GUI({
@@ -37,8 +49,8 @@ export default defineComponent({
       const canvas = document.querySelector("#render-three") as HTMLElement;
 
       const sizes = {
-        width: window.innerWidth / 2,
-        height: window.innerHeight / 2,
+        width: (window.innerWidth / 3) * 2,
+        height: (window.innerHeight / 3) * 2,
       };
 
       /**
@@ -87,8 +99,30 @@ export default defineComponent({
 
       /* Baked material */
       const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
-      const portalLightMaterial = new THREE.MeshBasicMaterial({
-        color: 0xffffff,
+
+      debugObject.portalColorStart = "#000000";
+      debugObject.portalColorEnd = "#ffffff";
+
+      gui.addColor(debugObject, "portalColorStart").onChange(() => {
+        portalLightMaterial.uniforms.uColorStart.value.set(
+          debugObject.portalColorStart
+        );
+      });
+
+      gui.addColor(debugObject, "portalColorEnd").onChange(() => {
+        portalLightMaterial.uniforms.uColorEnd.value.set(
+          debugObject.portalColorEnd
+        );
+      });
+
+      const portalLightMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uColorStart: { value: new THREE.Color(0x000000) },
+          uColorEnd: { value: new THREE.Color(0xffffff) },
+        },
+        vertexShader: portalVertex,
+        fragmentShader: portalFragment,
       });
       const poleLightMaterial = new THREE.MeshBasicMaterial({
         color: 0xffffe5,
@@ -136,17 +170,50 @@ export default defineComponent({
       const firefliesGeometry = new THREE.BufferGeometry();
       const firefliesCount = 30;
       const positionArray = new Float32Array(firefliesCount * 3);
+      const scaleArray = new Float32Array(firefliesCount);
 
       for (let index = 0; index < firefliesCount; index++) {
-        positionArray[index * 3 + 0] = Math.random() * 4;
-        positionArray[index * 3 + 1] = Math.random() * 4;
-        positionArray[index * 3 + 2] = Math.random() * 4;
+        positionArray[index * 3 + 0] = (Math.random() - 0.5) * 4;
+        positionArray[index * 3 + 1] = Math.random() * 1.5;
+        positionArray[index * 3 + 2] = (Math.random() - 0.5) * 4;
+
+        scaleArray[index] = Math.random();
       }
 
       firefliesGeometry.setAttribute(
         "position",
         new THREE.BufferAttribute(positionArray, 3)
       );
+      firefliesGeometry.setAttribute(
+        "aScale",
+        new THREE.BufferAttribute(scaleArray, 1)
+      );
+
+      // Material
+
+      const firefliesMaterial = new THREE.ShaderMaterial({
+        uniforms: {
+          uTime: { value: 0 },
+          uPixelRatio: { value: Math.min(window.devicePixelRatio, 2) },
+          uSize: { value: 100 },
+        },
+        vertexShader: firefiliesVertex,
+        fragmentShader: firefiliesFragment,
+        transparent: true,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      });
+
+      gui
+        .add(firefliesMaterial.uniforms.uSize, "value")
+        .min(0)
+        .max(500)
+        .step(1)
+        .name("firefliesSize");
+
+      //Points
+      const firefiles = new THREE.Points(firefliesGeometry, firefliesMaterial);
+      scene.add(firefiles);
 
       /**
        * Renderer
@@ -189,10 +256,14 @@ export default defineComponent({
       /**
        * Animate
        */
-      // const clock = new THREE.Clock();
+      const clock = new THREE.Clock();
 
       const tick = () => {
-        // const elapsedTime = clock.getElapsedTime();
+        const elapsedTime = clock.getElapsedTime();
+
+        //update material
+        firefliesMaterial.uniforms.uTime.value = elapsedTime;
+        portalLightMaterial.uniforms.uTime.value = elapsedTime;
 
         // Update controls
         controls.update();
