@@ -1,22 +1,25 @@
 <template>
   <div class="page interaction-page">
-    <IxBtnA />
-    <!-- <OutlineThreejsA /> -->
+    <ThreejsCScroll />
+    <ThreejsA />
     <ThreejsBPortal />
+    <IxBtnA />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import IxBtnA from "@/sections/interaction/IxBtnA.vue";
-// import OutlineThreejsA from "@/sections/interaction/OutlineThreejsA.vue";
+import ThreejsA from "@/sections/interaction/ThreejsA.vue";
 import ThreejsBPortal from "@/sections/interaction/ThreejsBPortal.vue";
+import ThreejsCScroll from "@/sections/interaction/ThreejsCScroll.vue";
 
 export default defineComponent({
   components: {
-    IxBtnA,
-    // OutlineThreejsA,
+    ThreejsCScroll,
     ThreejsBPortal,
+    ThreejsA,
+    IxBtnA,
   },
   setup() {
     const state: any = {};

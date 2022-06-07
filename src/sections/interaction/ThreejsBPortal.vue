@@ -1,6 +1,6 @@
 <template>
   <div id="outline-three-js-a" class="outline-three-js-a">
-    <div id="render-three" class="render-three"></div>
+    <div id="render-three-b" class="render-three-b"></div>
   </div>
 </template>
 
@@ -46,7 +46,7 @@ export default defineComponent({
       //   width: 400,
       // });
 
-      const canvas = document.querySelector("#render-three") as HTMLElement;
+      const canvas = document.querySelector("#render-three-b") as HTMLElement;
 
       const sizes = {
         width: (window.innerWidth / 3) * 2,
@@ -293,11 +293,13 @@ export default defineComponent({
 @import "~@/theme/style.scss";
 
 .outline-three-js-a {
+  position: relative;
   width: 100vw;
   height: 100vh;
-  background-color: $black-400;
+  background-color: $black-0;
+  z-index: 20;
 
-  #render-three {
+  #render-three-b {
     width: 400px;
     height: 200px;
   }

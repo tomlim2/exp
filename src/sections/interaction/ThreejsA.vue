@@ -1,6 +1,6 @@
 <template>
   <div id="outline-three-js-a" class="outline-three-js-a">
-    <div id="render-three" class="render-three"></div>
+    <div id="render-three-a" class="render-three-a"></div>
   </div>
 </template>
 
@@ -25,7 +25,7 @@ export default defineComponent({
 
       const renderer = new THREE.WebGLRenderer();
       renderer.setSize(window.innerWidth/2, window.innerHeight/2);
-      (document.querySelector("#render-three") as HTMLElement).appendChild(
+      (document.querySelector("#render-three-a") as HTMLElement).appendChild(
         renderer.domElement
       );
 
@@ -63,9 +63,11 @@ export default defineComponent({
 @import "~@/theme/style.scss";
 
 .outline-three-js-a {
+  position: relative;
   width: 100vw;
   height: 50vh;
   background-color: $black-100;
+  z-index: 20;
 }
 </style>
 
