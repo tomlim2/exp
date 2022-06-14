@@ -61,12 +61,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 .ix-btn-a {
+  position:relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   height: 800px;
   background: black;
+  z-index: 10;
 
   .container {
     display: grid;

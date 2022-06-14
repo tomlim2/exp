@@ -82,7 +82,7 @@ export default defineComponent({
 
       // Draco loader
       const dracoLoader = new DRACOLoader();
-      dracoLoader.setDecoderPath("/draco/");
+      dracoLoader.setDecoderPath("/assets/draco/");
 
       // GLTF loader
       const gltfLoader = new GLTFLoader();
@@ -93,7 +93,7 @@ export default defineComponent({
        */
 
       /* Texture */
-      const bakedTexture = textureLoader.load("/models/portal.jpg");
+      const bakedTexture = textureLoader.load("/assets/models/portal.jpg");
       bakedTexture.flipY = false;
       bakedTexture.encoding = THREE.sRGBEncoding;
 
@@ -131,7 +131,7 @@ export default defineComponent({
       });
 
       gltfLoader.load(
-        "/models/portal.glb",
+        "/assets/models/portal.glb",
         function (gltf) {
           // gltf.scene.traverse((child: any) => {
           //   child.material = bakedMaterial;

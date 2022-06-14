@@ -2,13 +2,13 @@
   <div id="outline-three-js-c" class="outline-three-js-c">
     <div id="render-three-c" class="render-three-c" />
     <section class="section">
-      <h1>My Portfolio</h1>
+      <h1>TEXT1</h1>
     </section>
     <section class="section">
-      <h2>My projects</h2>
+      <h2>TEXT2</h2>
     </section>
     <section class="section">
-      <h2>Contact me</h2>
+      <h2>TEXT3</h2>
     </section>
   </div>
 </template>
@@ -45,13 +45,51 @@ export default defineComponent({
       const scene = new THREE.Scene();
 
       /**
-       * Test cube
+       * Objects
        */
-      const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshBasicMaterial({ color: "#ff0000" })
+
+      const textureLoader = new THREE.TextureLoader();
+      const gradientTexture = textureLoader.load(
+        "/assets/texture/gradients/3.jpg"
       );
-      scene.add(cube);
+      gradientTexture.magFilter = THREE.NearestFilter;
+
+      const toonMaterial = new THREE.MeshToonMaterial({
+        color: parameters.materialColor,
+        gradientMap: gradientTexture,
+      });
+
+      const mesh1 = new THREE.Mesh(
+        new THREE.TorusGeometry(1, 0.4, 16, 60),
+        toonMaterial
+      );
+
+      const mesh2 = new THREE.Mesh(
+        new THREE.ConeGeometry(1, 2, 32),
+        toonMaterial
+      );
+
+      const mesh3 = new THREE.Mesh(
+        new THREE.TorusKnotGeometry(0.8, 0.35, 100, 16),
+        toonMaterial
+      );
+
+      const objectsDistance = 4;
+
+      mesh1.position.y = -objectsDistance * 0;
+      mesh2.position.y = -objectsDistance * 1;
+      mesh3.position.y = -objectsDistance * 2;
+
+      const sectionMeshes = [mesh1, mesh2, mesh3];
+
+      scene.add(mesh1, mesh2, mesh3);
+
+      /**
+       * Lights
+       */
+      const directionalLight = new THREE.DirectionalLight("#ffffff", 1);
+      directionalLight.position.set(1, 1, 0);
+      scene.add(directionalLight);
 
       /**
        * Sizes
@@ -91,7 +129,7 @@ export default defineComponent({
       /**
        * Renderer
        */
-      const renderer = new THREE.WebGLRenderer();
+      const renderer = new THREE.WebGLRenderer({ alpha: true });
       renderer.setSize(sizes.width, sizes.height);
       canvas.appendChild(renderer.domElement);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -99,10 +137,15 @@ export default defineComponent({
       /**
        * Animate
        */
-      //   const clock = new THREE.Clock();
+      const clock = new THREE.Clock();
 
       const tick = () => {
-        // const elapsedTime = clock.getElapsedTime();
+        const elapsedTime = clock.getElapsedTime();
+
+        for (const mesh of sectionMeshes) {
+          mesh.rotation.x = elapsedTime * 0.1;
+          mesh.rotation.y = elapsedTime * 0.12;
+        }
 
         // Render
         renderer.render(scene, camera);
@@ -123,7 +166,7 @@ export default defineComponent({
 @import "~@/theme/style.scss";
 
 .outline-three-js-c {
-  background-color: $black-100;
+  background-color: $black-0;
 
   .render-three-c {
     position: fixed;
