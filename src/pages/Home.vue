@@ -1,6 +1,10 @@
 <template>
-  <div class="page">
-    <div>
+  <main class="page">
+    <section>
+      store.counter: {{ store.counter }} || store.doubleCounter:
+      {{ store.doubleCounter }}
+    </section>
+    <section>
       <swiper
         :slides-per-view="3"
         :space-between="50"
@@ -12,9 +16,9 @@
         <swiper-slide>Slide 3</swiper-slide>
         ...
       </swiper>
-    </div>
+    </section>
 
-    <div>
+    <section>
       memo
       <p>
         <a
@@ -28,9 +32,9 @@
       <li>YCS Store front and data binding</li>
       <li>Doggo front and data binding + 3D modeling for journey (3d experience but delayed)</li>
     </ul> -->
-    </div>
-  </div>
-  <div><LottieTest /></div>
+    </section>
+    <section><LottieTest /></section>
+  </main>
 </template>
 
 <script lang="ts">
@@ -38,6 +42,7 @@ import { defineComponent } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
 import LottieTest from "@/sections/home/LottiesTest.vue";
+import { useStore } from "@/stores/index";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
@@ -46,6 +51,7 @@ export default defineComponent({
   name: "Home",
   components: { Swiper, SwiperSlide, LottieTest },
   setup() {
+    const store = useStore();
     const onSwiper = (swiper: any) => {
       console.log(swiper);
     };
@@ -56,6 +62,7 @@ export default defineComponent({
       onSwiper,
       onSlideChange,
       LottieTest,
+      store,
     };
   },
 });

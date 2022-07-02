@@ -7,6 +7,7 @@ import Home from "../pages/Home.vue";
 import Forms from "../pages/Forms.vue";
 import Feeds from "../pages/Feeds.vue";
 import Interaction from "../pages/Interaction.vue";
+import ThreejsBPortal from "@/sections/interaction/ThreejsBPortal.vue";
 import NotFound from "../pages/NotFound.vue";
 
 
@@ -20,4 +21,5 @@ export default {
     Forms,
     InteractionLayout,
     Interaction,
+    InteractionChildren: { ThreejsBPortal }
 }

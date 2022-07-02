@@ -1,5 +1,6 @@
 <template>
   <div class="page interaction-page">
+    <CopyTextSection />
     <ThreejsCScroll />
     <ThreejsA />
     <ThreejsBPortal />
@@ -13,6 +14,7 @@ import IxBtnA from "@/sections/interaction/IxBtnA.vue";
 import ThreejsA from "@/sections/interaction/ThreejsA.vue";
 import ThreejsBPortal from "@/sections/interaction/ThreejsBPortal.vue";
 import ThreejsCScroll from "@/sections/interaction/ThreejsCScroll.vue";
+import CopyTextSection from "@/sections/interaction/CopyTextSection.vue";
 
 export default defineComponent({
   components: {
@@ -20,6 +22,7 @@ export default defineComponent({
     ThreejsBPortal,
     ThreejsA,
     IxBtnA,
+    CopyTextSection,
   },
   setup() {
     const state: any = {};

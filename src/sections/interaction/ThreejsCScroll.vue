@@ -19,6 +19,7 @@ import { defineComponent, onMounted, reactive } from "vue";
 
 import * as THREE from "three";
 import * as dat from "lil-gui";
+import gsap from "gsap";
 
 export default defineComponent({
   setup() {
@@ -80,9 +81,46 @@ export default defineComponent({
       mesh2.position.y = -objectsDistance * 1;
       mesh3.position.y = -objectsDistance * 2;
 
+      mesh1.position.x = 2;
+      mesh2.position.x = -2;
+      mesh3.position.x = 2;
+
       const sectionMeshes = [mesh1, mesh2, mesh3];
 
       scene.add(mesh1, mesh2, mesh3);
+
+      /**
+       * Particles
+       */
+      //Geometry
+
+      const particlesCount = 200;
+      const positions = new Float32Array(particlesCount * 3);
+
+      for (let index = 0; index < particlesCount; index++) {
+        positions[index * 3 + 0] = (Math.random() - 0.5) * 10;
+        positions[index * 3 + 1] =
+          objectsDistance * 0.5 -
+          Math.random() * objectsDistance * sectionMeshes.length;
+        positions[index * 3 + 2] = (Math.random() - 0.5) * 10;
+      }
+
+      const particlesGeometry = new THREE.BufferGeometry();
+      particlesGeometry.setAttribute(
+        "position",
+        new THREE.BufferAttribute(positions, 3)
+      );
+
+      //Material
+      const particlesMaterial = new THREE.PointsMaterial({
+        color: parameters.materialColor,
+        sizeAttenuation: true,
+        size: 0.03,
+      });
+
+      //Points
+      const particles = new THREE.Points(particlesGeometry, particlesMaterial);
+      scene.add(particles);
 
       /**
        * Lights
@@ -116,6 +154,11 @@ export default defineComponent({
       /**
        * Camera
        */
+
+      //Group
+      const cameraGroup = new THREE.Group();
+      scene.add(cameraGroup);
+
       // Base camera
       const camera = new THREE.PerspectiveCamera(
         35,
@@ -124,7 +167,7 @@ export default defineComponent({
         100
       );
       camera.position.z = 6;
-      scene.add(camera);
+      cameraGroup.add(camera);
 
       /**
        * Renderer
@@ -135,16 +178,68 @@ export default defineComponent({
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
       /**
+       * scroll
+       */
+      let scrollY: number;
+      let currentSection = 0;
+
+      window.addEventListener("scroll", () => {
+        scrollY = window.scrollY;
+        const newSection = Math.round(scrollY / sizes.height);
+
+        if (newSection !== currentSection) {
+          currentSection = newSection;
+          gsap.to(sectionMeshes[currentSection-1].rotation, {
+            duration: 1.5,
+            ease: "power2.inOut",
+            x: "+=6",
+            y: "+=3",
+            z:"+=1.5"
+          });
+          console.log("changed", currentSection);
+        }
+      });
+
+      /**
+       * Cursor
+       */
+      interface Cursor {
+        x: number;
+        y: number;
+      }
+
+      let cursor: Cursor = { x: 0, y: 0 };
+
+      window.addEventListener("mousemove", (event: any) => {
+        cursor.x = event.clientX / sizes.width - 0.5;
+        cursor.y = event.clientY / sizes.height - 0.5;
+      });
+
+      /**
        * Animate
        */
       const clock = new THREE.Clock();
+      let previousTime = 0;
 
       const tick = () => {
         const elapsedTime = clock.getElapsedTime();
+        const deltaTime = elapsedTime - previousTime;
+        previousTime = elapsedTime;
+
+        //animate camera
+        camera.position.y = (-scrollY / sizes.height) * objectsDistance + 4;
+
+        const parallaxX = cursor.x * 0.5;
+        const parallaxY = -cursor.y * 0.5;
+
+        cameraGroup.position.x +=
+          (parallaxX - cameraGroup.position.x) * 5 * deltaTime;
+        cameraGroup.position.y +=
+          (parallaxY - cameraGroup.position.y) * 5 * deltaTime;
 
         for (const mesh of sectionMeshes) {
-          mesh.rotation.x = elapsedTime * 0.1;
-          mesh.rotation.y = elapsedTime * 0.12;
+          mesh.rotation.x += deltaTime * 0.1;
+          mesh.rotation.y += deltaTime * 0.12;
         }
 
         // Render

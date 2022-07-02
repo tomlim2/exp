@@ -10,8 +10,12 @@
   "dependencies": {
     "@types/three": "^0.140.0",
     "core-js": "^3.6.5",
+    "firebase": "^9.8.4",
+    "firebase-tools": "^11.2.0",
+    "gsap": "3.5.1",
     "lil-gui": "^0.16.1",
     "node-sass": "5.0.0",
+    "pinia": "^2.0.14",
     "sass-loader": "10.1.1",
     "spectorjs": "^0.9.27",
     "swiper": "^8.1.4",

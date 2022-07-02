@@ -36,7 +36,8 @@ export default createRouter({
                     component: PageMap.InteractionLayout,
                     children:[
                         {path:"",
-                    component:PageMap.Interaction}
+                    component:PageMap.Interaction},
+                    
                     ]
                 },
             ],
