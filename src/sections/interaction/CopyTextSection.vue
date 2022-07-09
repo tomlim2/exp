@@ -10,8 +10,7 @@
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
 
-
-export default defineComponent({ 
+export default defineComponent({
   setup() {
     const state: any = {};
 
@@ -51,9 +50,9 @@ export default defineComponent({
   justify-content: center;
   gap: 1rem;
   width: 100vw;
-  height: 90vh;
+  height: 100vh;
   background-color: $black-0;
-  color: #fff;
+  color: $white-300;
   z-index: 1;
 
   .copy-text {
@@ -69,7 +68,7 @@ export default defineComponent({
     cursor: pointer;
 
     &:hover {
-      text-shadow: red -2px -1px, cyan 2px 1px;
+      text-shadow: $chart-negative-primary -2px -1px, $system-link 2px 1px;
       cursor: pointer;
     }
   }

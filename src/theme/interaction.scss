@@ -1,0 +1,7 @@
+@mixin hover-link-color {
+  transition: 250ms color ease-in-out;
+  cursor: pointer;
+  &:hover {
+    color: $system-link;
+  }
+}

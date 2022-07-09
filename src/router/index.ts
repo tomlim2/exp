@@ -9,7 +9,18 @@ export default createRouter({
             component: PageMap.DefaultLayout,
             children: [
                 {
-                    path: "",
+                    path: "/",
+                    component: PageMap.InteractionLayout,
+                    children: [
+                        {
+                            path: "",
+                            component: PageMap.Interaction
+                        },
+
+                    ]
+                },
+                {
+                    path: "/practice",
                     component: PageMap.HomeLayout,
                     children: [
                         {
@@ -31,15 +42,7 @@ export default createRouter({
                     path: "/forms",
                     component: PageMap.Forms
                 },
-                {
-                    path: "/interaction",
-                    component: PageMap.InteractionLayout,
-                    children:[
-                        {path:"",
-                    component:PageMap.Interaction},
-                    
-                    ]
-                },
+
             ],
         },
         {

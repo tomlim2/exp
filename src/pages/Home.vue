@@ -1,8 +1,9 @@
 <template>
   <main class="page">
     <section>
-      store.counter: {{ store.counter }} || store.doubleCounter:
-      {{ store.doubleCounter }}
+      store.counter: {{ name }} || doubleValue:
+      {{ doubleValue }}
+      <button class="double-count" @click="onClick">double count</button>
     </section>
     <section>
       <swiper
@@ -38,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
 import LottieTest from "@/sections/home/LottiesTest.vue";
@@ -52,17 +53,25 @@ export default defineComponent({
   components: { Swiper, SwiperSlide, LottieTest },
   setup() {
     const store = useStore();
+    const { name, doubleCounter } = store;
     const onSwiper = (swiper: any) => {
       console.log(swiper);
     };
     const onSlideChange = () => {
       console.log("slide change");
     };
+    const onClick = () => {
+      console.log(doubleCounter);
+
+      doubleCounter;
+    };
     return {
       onSwiper,
       onSlideChange,
       LottieTest,
-      store,
+      doubleValue: computed(() => store.counter),
+      name,
+      onClick,
     };
   },
 });
@@ -70,4 +79,12 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
+
+button.double-count {
+  padding: 8px 12px;
+  background-color: $system-link;
+  color: $black-0;
+  border: $white-0 1px solid;
+  border-radius: 12px;
+}
 </style>

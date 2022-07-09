@@ -3,7 +3,6 @@
     <Header />
     <router-view />
     <ModalArea />
-    
   </div>
 </template>
 

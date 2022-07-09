@@ -18,7 +18,7 @@
 import { defineComponent, onMounted, reactive } from "vue";
 
 import * as THREE from "three";
-import * as dat from "lil-gui";
+// import * as dat from "lil-gui";
 import gsap from "gsap";
 
 export default defineComponent({
@@ -28,13 +28,13 @@ export default defineComponent({
       /**
        * Debug
        */
-      const gui = new dat.GUI();
+      // const gui = new dat.GUI();
 
       const parameters = {
         materialColor: "#ffeded",
       };
 
-      gui.addColor(parameters, "materialColor");
+      // gui.addColor(parameters, "materialColor");
 
       /**
        * Base
@@ -276,7 +276,7 @@ export default defineComponent({
     height: 100vh;
     position: relative;
     font-family: "Cabin", sans-serif;
-    color: #ffeded;
+    color: $white-300;
     text-transform: uppercase;
     font-size: 7vmin;
     padding-left: 10%;

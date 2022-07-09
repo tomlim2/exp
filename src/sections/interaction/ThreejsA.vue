@@ -66,7 +66,7 @@ export default defineComponent({
   position: relative;
   width: 100vw;
   height: 50vh;
-  background-color: $black-100;
+  background-color: $black-0;
   z-index: 20;
 }
 </style>

@@ -1,10 +1,10 @@
 <template>
   <header class="header">
     <div class="nav">
-      <router-link to="/">home</router-link> |
-      <router-link to="/feeds">feeds</router-link> |
-      <router-link to="/forms">forms</router-link>
-      <router-link to="/interaction">interaction</router-link>
+      <router-link to="/">HOME</router-link> |
+      <router-link to="/feeds">FEEDS</router-link> |
+      <router-link to="/forms">FORMS</router-link> |
+      <router-link to="/practice">PRACTICE</router-link>
     </div>
   </header>
 </template>
@@ -26,8 +26,7 @@
   height: 56px;
   padding: 10px 10px;
   text-align: center;
-  z-index: 10;
-  
+  z-index: 999;
 
   .nav {
     a {
@@ -36,9 +35,12 @@
       color: $white-100;
       text-decoration: none;
 
+      @include hover-link-color;
+
       &.router-link-active {
-        color: $black-300;
+        color: $black-200;
         background-color: $white-300;
+        cursor: default;
       }
     }
   }

@@ -60,14 +60,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+@import "~@/theme/style.scss";
 .ix-btn-a {
-  position:relative;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
-  height: 800px;
-  background: black;
+  height: 100vh;
+  background: $black-0;
   z-index: 10;
 
   .container {
