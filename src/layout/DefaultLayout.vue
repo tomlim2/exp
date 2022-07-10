@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="my-page">
     <Header />
     <router-view />
     <ModalArea />

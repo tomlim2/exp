@@ -1,5 +1,5 @@
 <template>
-  <div class="page interaction-page">
+  <div class="interaction">
     <CopyTextSection />
     <ThreejsCScroll />
     <ThreejsBPortal />

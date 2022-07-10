@@ -1,5 +1,8 @@
 <template>
-  <div class="interaction-nav">
+  <div class="interaction-nav" ref="pageLengthLine">
+    <div class="interaction-page-max-length" ref="pageLengthLine">
+      <div class="interaction-page-length-line" ref="pageLengthLine" />
+    </div>
     <div class="interaction-nav-menu-list">
       <div
         class="menu-item"
@@ -53,12 +56,14 @@
   </div>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from "vue";
+import { defineComponent, onMounted, reactive, ref } from "vue";
 export default defineComponent({
   setup() {
     const state: any = reactive({
       currentSection: 0,
     });
+
+    const pageLengthLine = ref([]);
 
     const sizes = {
       width: window.innerWidth,
@@ -66,12 +71,18 @@ export default defineComponent({
     };
 
     const moveTo = (id: number) => {
-      window.scrollTo(0, id * sizes.height);
+      window.scrollTo({ top: id * sizes.height, left: 0, behavior: "smooth" });
     };
 
     onMounted(() => {
+      console.log(pageLengthLine);
+
       let scrollY: number;
       window.addEventListener("scroll", () => {
+        console.log();
+        console.log(pageLengthLine.value.style.height);
+
+        pageLengthLine.value.style.height = window.scrollY + "px";
         scrollY = window.scrollY;
         state.currentSection = ~~(scrollY / sizes.height);
       });
@@ -79,6 +90,7 @@ export default defineComponent({
     return {
       state,
       moveTo,
+      pageLengthLine,
     };
   },
 });
@@ -89,20 +101,35 @@ export default defineComponent({
 
 .interaction-nav {
   position: fixed;
-  left: 5rem;
+  left: 0;
   top: 10rem;
-  height: 8px;
   z-index: 998;
+  .interaction-page-max-length {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1px;
+    height: 0;
 
+    .interaction-page-length-line {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 1px;
+      height: 0;
+      background-color: $white-300;
+    }
+  }
   .interaction-nav-menu-list {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-left: 6rem;
 
     .menu-item {
       display: inline-block;
       position: relative;
-      color: $white-300;
+      color: $black-400;
       @include hover-link-color;
 
       .menu-item-line {
@@ -110,7 +137,7 @@ export default defineComponent({
         top: 50%;
         width: 4.5rem;
         height: 2px;
-        margin-left: -5rem;
+        margin-left: -6rem;
         margin-top: -1px;
         background-color: $black-400;
         transform: scaleX(0);
@@ -122,7 +149,7 @@ export default defineComponent({
       }
 
       &.activated {
-        color: $black-400;
+        color: $white-300;
         cursor: default;
       }
     }

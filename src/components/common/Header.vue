@@ -32,7 +32,7 @@
     a {
       padding: 5px 15px;
       border-radius: 2px;
-      color: $white-100;
+      color: $black-400;
       text-decoration: none;
 
       @include hover-link-color;

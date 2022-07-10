@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="interaction-page">
     <Navigation />
     <router-view />
   </div>

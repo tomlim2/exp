@@ -293,6 +293,9 @@ export default defineComponent({
 @import "~@/theme/style.scss";
 
 .outline-three-js-a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100vw;
   height: 100vh;
@@ -300,8 +303,8 @@ export default defineComponent({
   z-index: 20;
 
   #render-three-b {
-    width: 400px;
-    height: 200px;
+    width: 100vw/3*2;
+    height: 100vh/3*2;
   }
 }
 </style>
