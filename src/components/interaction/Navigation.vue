@@ -1,6 +1,6 @@
 <template>
-  <div class="interaction-nav" ref="pageLengthLine">
-    <div class="interaction-page-max-length" ref="pageLengthLine">
+  <div class="interaction-nav">
+    <div class="interaction-page-max-length">
       <div class="interaction-page-length-line" ref="pageLengthLine" />
     </div>
     <div class="interaction-nav-menu-list">
@@ -63,7 +63,7 @@ export default defineComponent({
       currentSection: 0,
     });
 
-    const pageLengthLine = ref([]);
+    const pageLengthLine = ref();
 
     const sizes = {
       width: window.innerWidth,
@@ -75,14 +75,14 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log(pageLengthLine);
-
       let scrollY: number;
+      console.log(document.documentElement.scrollHeight);
       window.addEventListener("scroll", () => {
-        console.log();
-        console.log(pageLengthLine.value.style.height);
-
-        pageLengthLine.value.style.height = window.scrollY + "px";
+        window.innerWidth;
+        pageLengthLine.value.style.width =
+          (window.scrollY * window.innerWidth) /
+            (document.documentElement.scrollHeight-window.innerHeight) +
+          "px";
         scrollY = window.scrollY;
         state.currentSection = ~~(scrollY / sizes.height);
       });
@@ -105,18 +105,19 @@ export default defineComponent({
   top: 10rem;
   z-index: 998;
   .interaction-page-max-length {
-    position: absolute;
+    position: fixed;
     left: 0;
     top: 0;
-    width: 1px;
-    height: 0;
+    width: 100vw;
+    height: 8px;
+    background-color: $black-400;
 
     .interaction-page-length-line {
       position: absolute;
       left: 0;
       top: 0;
-      width: 1px;
-      height: 0;
+      width: 0;
+      height: 8px;
       background-color: $white-300;
     }
   }

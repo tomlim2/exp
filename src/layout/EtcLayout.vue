@@ -12,7 +12,7 @@ import Header from "@/components/home/Header.vue";
 import Footer from "@/components/home/Footer.vue";
 
 export default defineComponent({
-  name: "FeedsLayoutDefault",
+  name: "EtcLayoutDefault",
   components: {
     Header,
     Footer,

@@ -1,9 +1,18 @@
 <template>
   <main class="page">
     <section>
-      store.counter: {{ name }} || doubleValue:
-      {{ doubleValue }}
-      <button class="double-count" @click="onClick">double count</button>
+      store.name: {{ main.name }}
+      <br />
+      store.counter: {{ main.counter }} ||
+      <br />
+      doubleValue:
+      <br />
+      <button class="double-count" @click="onClick('random')">
+        random count
+      </button>
+      <button class="double-count" @click="onClick('add')">
+        increment count
+      </button>
     </section>
     <section>
       <swiper
@@ -39,39 +48,51 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent, onMounted } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
 import LottieTest from "@/sections/home/LottiesTest.vue";
-import { useStore } from "@/stores/index";
+import { useCounterStore } from "@/stores/index";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
 
 export default defineComponent({
-  name: "Home",
+  name: "Etc",
   components: { Swiper, SwiperSlide, LottieTest },
   setup() {
-    const store = useStore();
-    const { name, doubleCounter } = store;
+    const main = useCounterStore();
+
     const onSwiper = (swiper: any) => {
       console.log(swiper);
     };
+
     const onSlideChange = () => {
       console.log("slide change");
     };
-    const onClick = () => {
-      console.log(doubleCounter);
 
-      doubleCounter;
+    const onClick = (id: string) => {
+      switch (id) {
+        case "random":
+          main.randomizeCounter()
+          break;
+
+        case "add":
+          main.increment()
+          break;
+      }
     };
+
+    onMounted(() => {
+      console.log(main.counter);
+    });
+
     return {
       onSwiper,
       onSlideChange,
       LottieTest,
-      doubleValue: computed(() => store.counter),
-      name,
       onClick,
+      main,
     };
   },
 });
@@ -79,7 +100,9 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
-
+.page {
+  padding-top: 60px;
+}
 button.double-count {
   padding: 8px 12px;
   background-color: $system-link;

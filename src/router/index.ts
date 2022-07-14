@@ -20,12 +20,12 @@ export default createRouter({
                     ]
                 },
                 {
-                    path: "/practice",
-                    component: PageMap.HomeLayout,
+                    path: "/etc",
+                    component: PageMap.EtcLayout,
                     children: [
                         {
                             path: "",
-                            component: PageMap.HomeChildren.Home
+                            component: PageMap.EtcChildren.Etc
                         }]
                 },
                 {
@@ -49,7 +49,7 @@ export default createRouter({
             path: "/404",
             component: PageMap.DefaultLayout,
             children: [
-                { path: "", component: PageMap.HomeChildren.NotFound }
+                { path: "", component: PageMap.EtcChildren.NotFound }
             ]
         },
         {
