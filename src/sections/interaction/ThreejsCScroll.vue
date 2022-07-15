@@ -15,7 +15,7 @@
 
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive } from "vue";
+import { defineComponent, onMounted, onUnmounted, reactive } from "vue";
 
 import * as THREE from "three";
 // import * as dat from "lil-gui";
@@ -189,12 +189,12 @@ export default defineComponent({
 
         if (newSection !== currentSection) {
           currentSection = newSection;
-          gsap.to(sectionMeshes[currentSection-1].rotation, {
+          gsap.to(sectionMeshes[currentSection - 1].rotation, {
             duration: 1.5,
             ease: "power2.inOut",
             x: "+=6",
             y: "+=3",
-            z:"+=1.5"
+            z: "+=1.5",
           });
           console.log("changed", currentSection);
         }
@@ -252,9 +252,19 @@ export default defineComponent({
       tick();
     });
 
+    //destroy needed. this is why react better than vue... :(
+    onUnmounted(() => {
+      window.removeEventListener("mousemove", () => {});
+      window.removeEventListener("resize", () => {});
+      window.removeEventListener("scroll", () => {});
+    });
+
     return { state };
   },
 });
+
+
+
 </script>
 
 <style lang="scss" scoped>

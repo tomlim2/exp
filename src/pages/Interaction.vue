@@ -31,8 +31,4 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
-
-.page {
-  
-}
 </style>

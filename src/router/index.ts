@@ -29,14 +29,9 @@ export default createRouter({
                         }]
                 },
                 {
-                    path: "/feeds",
-                    component: PageMap.FeedsLayout,
-                    children: [
-                        {
-                            path: "",
-                            component: PageMap.FeedsChildren.Feeds
-                        }
-                    ]
+                    name: 'Three Page',
+                    path: "/three",
+                    component: PageMap.ThreePage,
                 },
                 {
                     path: "/forms",

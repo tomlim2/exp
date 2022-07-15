@@ -2,7 +2,7 @@
   <header class="header">
     <div class="nav">
       <router-link to="/">HOME</router-link> |
-      <router-link to="/feeds">FEEDS</router-link> |
+      <router-link to="/three">Three</router-link> |
       <router-link to="/forms">FORMS</router-link> |
       <router-link to="/etc">etc</router-link>
     </div>

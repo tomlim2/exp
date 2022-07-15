@@ -1,5 +1,5 @@
 <template>
-  <div id="outline-three-js-a" class="outline-three-js-a">
+  <div id="three-js-a-section" class="three-js-a-section">
     <div id="render-three-a" class="render-three-a"></div>
   </div>
 </template>
@@ -9,27 +9,68 @@
 import { defineComponent, onMounted, reactive } from "vue";
 
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
+// import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export default defineComponent({
   setup() {
     const state = reactive({});
+
     onMounted(() => {
+      /**
+       * Resize
+       */
+      const sizes = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+      };
+
+      window.addEventListener("resize", () => {
+        sizes.width = window.innerWidth;
+        sizes.height = window.innerHeight;
+        
+        // for perspective camera
+        // camera.aspect = sizes.width / sizes.height;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+
+      /**
+       * cursor
+       */
+      const cursor = {
+        x: 0,
+        y: 0,
+      };
+
+      window.addEventListener("mousemove", (event) => {
+        console.log(event.clientX);
+        cursor.x = event.clientX / sizes.width - 0.5;
+        cursor.y = -(event.clientY / sizes.height - 0.5);
+      });
+
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
-        75,
-        window.innerWidth / window.innerHeight,
+      const aspectRatio = sizes.width / sizes.height;
+      const camera = new THREE.OrthographicCamera(
+        -1 * aspectRatio,
+        1 * aspectRatio,
+        1,
+        -1,
         0.1,
-        1000
+        100
       );
+      // const camera = new THREE.PerspectiveCamera(
+      //   75,
+      //   aspectRatio,
+      //   1,
+      //   1000
+      // );
 
       const renderer = new THREE.WebGLRenderer();
-      renderer.setSize(window.innerWidth/2, window.innerHeight/2);
+      renderer.setSize(sizes.width, sizes.height);
       (document.querySelector("#render-three-a") as HTMLElement).appendChild(
         renderer.domElement
       );
 
-      const controls = new OrbitControls(camera, renderer.domElement);
+      // const controls = new OrbitControls(camera, renderer.domElement);
 
       const geometry = new THREE.BoxGeometry();
       const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
@@ -37,17 +78,20 @@ export default defineComponent({
       scene.add(cube);
 
       camera.position.z = 5;
+      camera.lookAt(cube.position);
 
-      controls.update()
+      // controls.update();
 
       function animate() {
         requestAnimationFrame(animate);
 
-        cube.rotation.x += 0.01;
-        cube.rotation.y += 0.01;
+        camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
+        camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
+        camera.position.y = cursor.y * 3;
+        camera.lookAt(cube.position);
 
-        controls.update()
-        controls.enableDamping = true;
+        // controls.update();
+        // controls.enableDamping = true;
 
         renderer.render(scene, camera);
       }
@@ -62,11 +106,11 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
 
-.outline-three-js-a {
+.three-js-a-section {
   position: relative;
   width: 100vw;
-  height: 50vh;
-  background-color: $black-0;
+  height: 100vh;
+  background-color: $black-200;
   z-index: 20;
 }
 </style>
