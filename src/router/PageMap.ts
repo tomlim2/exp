@@ -1,16 +1,18 @@
 import EtcLayout from "@/layout/EtcLayout.vue"
 import FeedsLayout from "@/layout/FeedsLayout.vue"
 import InteractionLayout from "@/layout/InteractionLayout.vue"
+import WebglLayout from "@/layout/WebglLayout.vue"
 import DefaultLayout from "@/layout/DefaultLayout.vue"
 
 import Etc from "../pages/Etc.vue";
-import ThreePage from "../pages/ThreePage.vue";
 import Forms from "../pages/Forms.vue";
 import Feeds from "../pages/Feeds.vue";
 import Interaction from "../pages/Interaction.vue";
 import ThreejsBPortal from "@/sections/interaction/ThreejsBPortal.vue";
 import NotFound from "../pages/NotFound.vue";
 
+import ThreeJourneyGeometryPage from "@/pages/threeJourney/ThreeJourneyGeometryPage.vue";
+import ThreeJourneyTexturePage from "@/pages/threeJourney/ThreeJourneyTexturePage.vue";
 
 
 export default {
@@ -20,7 +22,8 @@ export default {
     FeedsLayout,
     FeedsChildren: { Feeds },
     Forms,
-    ThreePage,
+    WebglLayout,
+    ThreeJourneyChildren: { ThreeJourneyGeometryPage, ThreeJourneyTexturePage },
     InteractionLayout,
     Interaction,
     InteractionChildren: { ThreejsBPortal }

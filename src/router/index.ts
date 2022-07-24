@@ -5,6 +5,7 @@ export default createRouter({
     history: createWebHistory(),
     routes: [
         {
+            name: 'Home',
             path: "/",
             component: PageMap.DefaultLayout,
             children: [
@@ -13,6 +14,7 @@ export default createRouter({
                     component: PageMap.InteractionLayout,
                     children: [
                         {
+                            name: 'InteractionPage',
                             path: "",
                             component: PageMap.Interaction
                         },
@@ -20,27 +22,43 @@ export default createRouter({
                     ]
                 },
                 {
-                    path: "/etc",
+                    path: "webgl",
+                    component: PageMap.WebglLayout,
+                    redirect: "/webgl/threejs/journey/geometry",
+                    children: [
+                        {
+                            name: 'ThreejsJourneyGeometry',
+                            path: "threejs/journey/geometry",
+                            component: PageMap.ThreeJourneyChildren.ThreeJourneyGeometryPage
+                        },
+                        {
+                            name: 'ThreejsJourneyTexture',
+                            path: "threejs/journey/texture",
+                            component: PageMap.ThreeJourneyChildren.ThreeJourneyTexturePage
+                        }
+                    ]
+                },
+                {
+                    path: "etc",
                     component: PageMap.EtcLayout,
                     children: [
                         {
+                            name: 'ETCPage',
                             path: "",
                             component: PageMap.EtcChildren.Etc
                         }]
                 },
+
                 {
-                    name: 'Three Page',
-                    path: "/three",
-                    component: PageMap.ThreePage,
-                },
-                {
-                    path: "/forms",
+                    name: 'FormPage',
+                    path: "forms",
                     component: PageMap.Forms
                 },
 
             ],
         },
         {
+            name: 'ErrorPage',
             path: "/404",
             component: PageMap.DefaultLayout,
             children: [
@@ -49,7 +67,7 @@ export default createRouter({
         },
         {
             path: "/:pathMatch(.*)*",
-            redirect: "/404",
+            redirect: "404",
         },
     ]
 })

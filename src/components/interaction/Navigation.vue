@@ -57,42 +57,43 @@
 </template>
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from "vue";
+
 export default defineComponent({
-  setup() {
-    const state: any = reactive({
-      currentSection: 0,
-    });
-
-    const pageLengthLine = ref();
-
-    const sizes = {
-      width: window.innerWidth,
-      height: window.innerHeight,
-    };
-
-    const moveTo = (id: number) => {
-      window.scrollTo({ top: id * sizes.height, left: 0, behavior: "smooth" });
-    };
-
-    onMounted(() => {
-      let scrollY: number;
-      console.log(document.documentElement.scrollHeight);
-      window.addEventListener("scroll", () => {
-        window.innerWidth;
-        pageLengthLine.value.style.width =
-          (window.scrollY * window.innerWidth) /
-            (document.documentElement.scrollHeight-window.innerHeight) +
-          "px";
-        scrollY = window.scrollY;
-        state.currentSection = ~~(scrollY / sizes.height);
-      });
-    });
-    return {
-      state,
-      moveTo,
-      pageLengthLine,
-    };
-  },
+    setup() {
+        const state: any = reactive({
+            currentSection: 0,
+        });
+        const pageLengthLine = ref();
+        const rotatingTypo = ref();
+        const sizes = {
+            width: window.innerWidth,
+            height: window.innerHeight,
+        };
+        const moveTo = (id: number) => {
+            window.scrollTo({ top: id * sizes.height, left: 0, behavior: "smooth" });
+        };
+        onMounted(() => {
+            let scrollY: number;
+            
+            window.addEventListener("scroll", () => {
+              window.innerWidth;
+                scrollY = window.scrollY;
+              state.currentSection = ~~(scrollY / sizes.height);
+                pageLengthLine.value.style.width =
+                    (window.scrollY * window.innerWidth) /
+                        (document.documentElement.scrollHeight - window.innerHeight) +
+                        "px";
+                
+            });
+        });
+        return {
+            state,
+            moveTo,
+            pageLengthLine,
+            rotatingTypo,
+        };
+    },
+    
 });
 </script>
 

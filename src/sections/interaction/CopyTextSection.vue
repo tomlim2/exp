@@ -1,22 +1,24 @@
 <template>
   <div class="copy-text-section">
-    <div class="copy-text">Copy <span class="allow-to-copy">ONE</span></div>
-    <div class="copy-text">Copy <span class="allow-to-copy">TWO</span></div>
-    <div class="copy-text">Copy <span class="allow-to-copy">THREE</span></div>
-    <div class="copy-text">Copy <span class="allow-to-copy">FOUR</span></div>
+    <div class="buttons-wrapper">
+      <div class="copy-text">Copy <span class="allow-to-copy">ONE</span></div>
+      <div class="copy-text">Copy <span class="allow-to-copy">TWO</span></div>
+      <div class="copy-text">Copy <span class="allow-to-copy">THREE</span></div>
+      <div class="copy-text">Copy <span class="allow-to-copy">FOUR</span></div>
+    </div>
+    <SpinningStarComponent />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, onMounted } from "vue";
+import SpinningStarComponent from "@/components/interaction/SpinningStarComponent.vue";
 
 export default defineComponent({
   setup() {
     const state: any = {};
-
     onMounted(() => {
       const targetElements = document.getElementsByClassName("allow-to-copy");
-
       for (let index = 0; index < targetElements.length; index++) {
         const singleElement = targetElements[index] as HTMLElement;
         singleElement.onclick = function () {
@@ -34,9 +36,9 @@ export default defineComponent({
         });
       }
     });
-
     return { state };
   },
+  components: { SpinningStarComponent },
 });
 </script>
 
@@ -44,16 +46,24 @@ export default defineComponent({
 @import "~@/theme/style.scss";
 
 .copy-text-section {
-  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
+  position: relative;
   width: 100vw;
   height: 100vh;
   background-color: $black-0;
   color: $white-300;
-  z-index: 1;
+  
+  overflow: hidden;
+
+  .buttons-wrapper {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 10;
+  }
 
   .copy-text {
     padding: 16px 64px;

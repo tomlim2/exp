@@ -1,6 +1,6 @@
 <template>
-  <div id="three-js-a-section" class="three-js-a-section">
-    <div id="render-three-a" class="render-three-a"></div>
+  <div id="three-journey-geometry" class="three-journey-geometry">
+    <div id="render-three-a" class="render-three-a" />
   </div>
 </template>
 
@@ -27,7 +27,7 @@ export default defineComponent({
       window.addEventListener("resize", () => {
         sizes.width = window.innerWidth;
         sizes.height = window.innerHeight;
-        
+
         // for perspective camera
         // camera.aspect = sizes.width / sizes.height;
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -42,7 +42,6 @@ export default defineComponent({
       };
 
       window.addEventListener("mousemove", (event) => {
-        console.log(event.clientX);
         cursor.x = event.clientX / sizes.width - 0.5;
         cursor.y = -(event.clientY / sizes.height - 0.5);
       });
@@ -72,9 +71,30 @@ export default defineComponent({
 
       // const controls = new OrbitControls(camera, renderer.domElement);
 
-      const geometry = new THREE.BoxGeometry();
-      const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+      const geometry = new THREE.BufferGeometry();
+      const count = 150;
+      // const positionArray = new Float32Array([
+      //   0,0,0,
+      //   0,1,0,
+      //   1,0,0
+      // ])
+      const positionsArray = new Float32Array(count * 3 * 3);
+
+      for (let i = 0; i < count * 3 * 3; i++) {
+        positionsArray[i] = (Math.random() - 0.5) *2;
+      }
+
+      const positionsAttribute = new THREE.BufferAttribute(positionsArray, 3);
+      geometry.setAttribute("position", positionsAttribute);
+
+      const material = new THREE.MeshBasicMaterial({
+        color: 0x00ff00,
+        wireframe: true,
+      });
+
       const cube = new THREE.Mesh(geometry, material);
+      console.log();
+
       scene.add(cube);
 
       camera.position.z = 5;
@@ -88,10 +108,12 @@ export default defineComponent({
         camera.position.x = Math.sin(cursor.x * Math.PI * 2) * 3;
         camera.position.z = Math.cos(cursor.x * Math.PI * 2) * 3;
         camera.position.y = cursor.y * 3;
+
         camera.lookAt(cube.position);
 
         // controls.update();
         // controls.enableDamping = true;
+        // cube.rotation.z += .001
 
         renderer.render(scene, camera);
       }
@@ -106,7 +128,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
 
-.three-js-a-section {
+.three-journey-geometry {
   position: relative;
   width: 100vw;
   height: 100vh;
