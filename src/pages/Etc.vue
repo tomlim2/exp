@@ -1,5 +1,10 @@
 <template>
   <main class="page">
+    <DatePickerVue3Section />
+    <section>
+      Original DataPicker
+      <DataPicker />
+    </section>
     <section>
       store.name: {{ main.name }}
       <br />
@@ -51,15 +56,23 @@
 import { defineComponent, onMounted } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
-import LottieTest from "@/sections/home/LottiesTest.vue";
 import { useCounterStore } from "@/stores/index";
+import LottieTest from "@/sections/home/LottiesTest.vue";
+import DataPicker from "@/components/etc/DataPicker.vue";
+import DatePickerVue3Section from "@/sections/etc/DatePickerVue3Section.vue";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
 
 export default defineComponent({
   name: "Etc",
-  components: { Swiper, SwiperSlide, LottieTest },
+  components: {
+    Swiper,
+    SwiperSlide,
+    LottieTest,
+    DataPicker,
+    DatePickerVue3Section,
+  },
   setup() {
     const main = useCounterStore();
 
@@ -74,11 +87,11 @@ export default defineComponent({
     const onClick = (id: string) => {
       switch (id) {
         case "random":
-          main.randomizeCounter()
+          main.randomizeCounter();
           break;
 
         case "add":
-          main.increment()
+          main.increment();
           break;
       }
     };
@@ -102,7 +115,98 @@ export default defineComponent({
 @import "~@/theme/style.scss";
 .page {
   padding-top: 60px;
+
+  section {
+    margin: 32px;
+    padding: 32px;
+    background-color: rgba($color: #111, $alpha: 1);
+  }
 }
+
+// date-picker
+.date-picker {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  height: 60px;
+  background-color: #fff;
+  margin: 30px auto;
+  box-shadow: 0px 3px 10px rgba(0, 0, 0, 0.2);
+
+  cursor: pointer;
+  user-select: none;
+}
+
+.date-picker:hover {
+  background-color: #f3f3f3;
+}
+
+.date-picker .selected-date {
+  width: 100%;
+  height: 100%;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: #313131;
+  font-size: 28px;
+}
+
+.date-picker .dates {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+
+  background-color: #fff;
+}
+
+.date-picker .dates.active {
+  display: block;
+}
+
+.date-picker .dates .month {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #eee;
+}
+
+.date-picker .dates .month .arrows {
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #313131;
+  font-size: 20px;
+}
+
+.date-picker .dates .month .arrows:hover {
+  background-color: #f3f3f3;
+}
+
+.date-picker .dates .month .arrows:active {
+  background-color: #00ca85;
+}
+
+.date-picker .dates .days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  height: 200px;
+}
+.date-picker .dates .days .day {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #313131;
+}
+.date-picker .dates .days .day.selected {
+  background-color: #00ca85;
+}
+//
 button.double-count {
   padding: 8px 12px;
   background-color: $system-link;
