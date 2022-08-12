@@ -1,9 +1,27 @@
 <template>
   <main class="page">
-    <DatePickerVue3Section />
+    <section>
+      <div class="hi">
+        <div class="hihi">
+          fefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefe
+        </div>
+      </div>
+      <div class="hi">
+        <div class="hihi2"><div class="hihi21">hi</div></div>
+      </div>
+    </section>
+
+    <section>
+      Loading Test
+      <IsLoadingSection />
+    </section>
+    <section>
+      DataPickerVue3Component
+      <DatePickerVue3Section />
+    </section>
     <section>
       Original DataPicker
-      <DataPicker />
+      <DatePickerOriginal />
     </section>
     <section>
       store.name: {{ main.name }}
@@ -58,11 +76,12 @@ import { defineComponent, onMounted } from "vue";
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
 import { useCounterStore } from "@/stores/index";
 import LottieTest from "@/sections/home/LottiesTest.vue";
-import DataPicker from "@/components/etc/DataPicker.vue";
 import DatePickerVue3Section from "@/sections/etc/DatePickerVue3Section.vue";
 
 // Import Swiper styles
 import "swiper/swiper.scss";
+import IsLoadingSection from "@/sections/etc/IsLoadingSection.vue";
+import DatePickerOriginal from "../components/etc/datePicker/DatePickerOriginal.vue";
 
 export default defineComponent({
   name: "Etc",
@@ -70,8 +89,9 @@ export default defineComponent({
     Swiper,
     SwiperSlide,
     LottieTest,
-    DataPicker,
     DatePickerVue3Section,
+    IsLoadingSection,
+    DatePickerOriginal,
   },
   setup() {
     const main = useCounterStore();
@@ -113,6 +133,30 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
+
+.hi {
+  display: flex;
+
+  .hihi {
+    width: 100px;
+    height: 100px;
+    background-color: #00ca85;
+    overflow-y: scroll;
+    word-break: break-all;
+  }
+  .hihi2 {
+    display: flex;
+    width: 100px;
+    height: 100px;
+    background-color: #313131;
+
+    .hihi21 {
+      height: 200vh;
+      background-color: #00ca85;
+      overflow-y: scroll;
+    }
+  }
+}
 .page {
   padding-top: 60px;
 

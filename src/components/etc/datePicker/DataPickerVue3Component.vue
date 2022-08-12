@@ -41,7 +41,8 @@
           :key="index"
           :class="{
             current: date.monthNumber === state.month.number,
-            selected: isSelectedDate(date),
+            today: isToday(date),
+            selected: isSelectedDate(date) && props.selectedDate,
           }"
           @click="selectDay(date)"
           v-for="(date, index) of state.calendarDaysContainer"
@@ -73,12 +74,19 @@ export default defineComponent({
     },
     language: {
       type: String,
-      default: null,
+      default: "en-us",
+    },
+    error: {
+      type: Boolean,
+      default: false,
+    },
+    disabled: {
+      type: Boolean,
+      default: false,
     },
   },
   setup(props, { emit }) {
     const state: any = reactive({
-      languageForWeekday: "default",
       language: "default",
       year: new Day().year,
       date: new Day(),
@@ -117,15 +125,15 @@ export default defineComponent({
 
     const goToPreviousYear = () => {
       state.year -= 1;
-      state.month = new Month(new Date(state.year, 11), state.language);
-      state.calendar = new Calendar(state.year, state.month, state.language);
+      state.month = new Month(new Date(state.year, 11));
+      state.calendar = new Calendar(state.year, state.month);
       renderCalendarDateContainer();
     };
 
     const goToNextYear = () => {
       state.year += 1;
-      state.month = new Month(new Date(state.year, 0), state.language);
-      state.calendar = new Calendar(state.year, state.month, state.language);
+      state.month = new Month(new Date(state.year, 0));
+      state.calendar = new Calendar(state.year, state.month);
       renderCalendarDateContainer();
     };
 
@@ -135,8 +143,8 @@ export default defineComponent({
       }
 
       const prevMonth = state.month.number - 2;
-      state.month = new Month(new Date(state.year, prevMonth), state.language);
-      state.calendar = new Calendar(state.year, state.month, state.language);
+      state.month = new Month(new Date(state.year, prevMonth));
+      state.calendar = new Calendar(state.year, state.month);
       renderCalendarDateContainer();
     };
 
@@ -145,32 +153,26 @@ export default defineComponent({
         return goToNextYear();
       }
       const nextMonth = state.month.number + 1 - 1;
-      state.month = new Month(new Date(state.year, nextMonth), state.language);
-      state.calendar = new Calendar(state.year, state.month, state.language);
+      state.month = new Month(new Date(state.year, nextMonth));
+      state.calendar = new Calendar(state.year, state.month);
 
       renderCalendarDateContainer();
     };
 
     const getPreviousMonth = () => {
       if (state.month.number === 1) {
-        return new Month(new Date(state.year - 1, 11), state.language);
+        return new Month(new Date(state.year - 1, 11));
       }
 
-      return new Month(
-        new Date(state.year, state.month.number - 2),
-        state.language
-      );
+      return new Month(new Date(state.year, state.month.number - 2));
     };
 
     const getNextMonth = () => {
       if (state.month.number === 12) {
-        return new Month(new Date(state.year + 1, 0), state.language);
+        return new Month(new Date(state.year + 1, 0));
       }
 
-      return new Month(
-        new Date(state.year, state.month.number),
-        state.language
-      );
+      return new Month(new Date(state.year, state.month.number));
     };
 
     const getMonthDaysGrid = () => {
@@ -210,14 +212,13 @@ export default defineComponent({
 
     const getData = () => {
       state.date = new Day(
-        props.selectedDate ? new Date(props.selectedDate) : null,
-        state.language
+        props.selectedDate ? new Date(props.selectedDate) : null
       );
       state.year = state.date.year;
-      state.month = new Month(state.date.Date, state.language);
-      state.formattedDate = state.date.format(dateFormat);
-
-      console.log(state.month);
+      state.month = new Month(state.date.Date);
+      state.formattedDate = props.selectedDate
+        ? state.date.format(dateFormat)
+        : "Select";
 
       if (!isCurrentCalendarMonth()) {
         goToDate(state.date.monthNumber, state.date.year);
@@ -226,10 +227,20 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      state.languageForWeekday = props.language ?? window.navigator.language;
-      getWeekDays(state.languageForWeekday);
+      state.language = props.language ?? window.navigator.language;
+
+      getWeekDays(state.language);
       getData();
     });
+
+    const isToday = (date: any) => {
+      const today = new Day();
+      return (
+        date.date === today.date &&
+        date.monthNumber === today.monthNumber &&
+        date.year === today.year
+      );
+    };
 
     const isSelectedDate = (date: any) => {
       return (
@@ -257,7 +268,7 @@ export default defineComponent({
     };
 
     const goToDate = (monthNumber: number, year: number) => {
-      state.month = new Month(new Date(year, monthNumber - 1), state.language);
+      state.month = new Month(new Date(year, monthNumber - 1));
       state.year = year;
     };
 
@@ -283,7 +294,10 @@ export default defineComponent({
       if (day.monthNumber > state.month.number) {
         nextMonth();
       }
-      emit("onDateSelect", { id: props.id, selectedDate: state.date.Date });
+      emit("onDateSelect", {
+        id: props.id,
+        selectedDate: state.date.format("YYYY-MM-D"),
+      });
       toggleCalendar();
     };
 
@@ -305,6 +319,7 @@ export default defineComponent({
       props,
       state,
       getMonthDaysGrid,
+      isToday,
       isSelectedDate,
       toggleButton,
       calendarDropDown,
@@ -360,6 +375,20 @@ export default defineComponent({
 
   &:hover {
     background-color: rgba(28, 32, 42, 0.5);
+  }
+
+  &.error {
+    border: 1px red solid;
+  }
+
+  &.focus {
+    outline: none !important;
+    border: 1px solid #00bfa5;
+    box-shadow: none;
+  }
+
+  &:disabled {
+    opacity: 0.4;
   }
 }
 
@@ -486,6 +515,11 @@ export default defineComponent({
 .month-day.current {
   color: #cdd1da;
   background-color: #444857;
+}
+
+.month-day.today {
+  color: #cdd1da;
+  background-color: #1f514a;
 }
 
 .month-day.selected {

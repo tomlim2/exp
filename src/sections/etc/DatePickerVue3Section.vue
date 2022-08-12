@@ -1,38 +1,48 @@
 <template>
-  <section class="date-picker-vue3-section">
-    DataPickerVue3Component
+  <div class="date-picker-vue3-section">
     <div class="date-pickers">
+      {{ state.startDate }}
       <DataPickerVue3Component
         id="startDate"
         :selectedDate="state.startDate"
-        @onDateSelect="onDateSelect"
-      />
-      <DataPickerVue3Component
-        id="endDate"
-        :selectedDate="state.endDate"
+        :error="state.hasError"
+        :language="state.language"
+        :disabled="state.isDisabled"
         @onDateSelect="onDateSelect"
       />
     </div>
-  </section>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
-import DataPickerVue3Component from "@/components/etc/DataPickerVue3Component.vue";
+import { defineComponent, onMounted, reactive } from "vue";
+import DataPickerVue3Component from "@/components/etc/datePicker/DataPickerVue3Component.vue";
 
 export default defineComponent({
   components: {
     DataPickerVue3Component,
   },
   setup() {
-    const state = {
+    const state = reactive({
       startDate: "",
-      endDate: "2020-01-31",
-    };
+      language: "ko",
+      hasError: false,
+      isDisabled: false,
+    });
 
     const onDateSelect = (params: any) => {
       console.log(params);
+
+      switch (params.id) {
+        case "startDate":
+          state.startDate = params.selectedDate;
+          break;
+      }
     };
+
+    onMounted(() => {
+      state.startDate = "";
+    });
 
     return { state, onDateSelect };
   },

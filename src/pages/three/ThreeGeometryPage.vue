@@ -93,7 +93,6 @@ export default defineComponent({
       });
 
       const cube = new THREE.Mesh(geometry, material);
-      console.log();
 
       scene.add(cube);
 

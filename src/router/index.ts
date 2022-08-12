@@ -23,18 +23,24 @@ export default createRouter({
                 },
                 {
                     path: "webgl",
-                    component: PageMap.WebglLayout,
+                    component: PageMap.ThreeLayout,
                     redirect: "/webgl/threejs/journey/geometry",
                     children: [
                         {
-                            name: 'ThreejsJourneyGeometry',
+                            name: 'ThreejsGeometry',
                             path: "threejs/journey/geometry",
-                            component: PageMap.ThreeJourneyChildren.ThreeJourneyGeometryPage
+                            component: PageMap.ThreeChildren.ThreeGeometryPage
                         },
                         {
-                            name: 'ThreejsJourneyTexture',
+                            name: 'ThreejsTexture',
                             path: "threejs/journey/texture",
-                            component: PageMap.ThreeJourneyChildren.ThreeJourneyTexturePage
+                            component: PageMap.ThreeChildren.Three11TexturePage
+                        }
+                        ,
+                        {
+                            name: 'ThreejsMaterial',
+                            path: "threejs/journey/material",
+                            component: PageMap.ThreeChildren.Three12MaterialsPage
                         }
                     ]
                 },

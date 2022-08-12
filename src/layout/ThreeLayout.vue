@@ -1,18 +1,18 @@
 <template>
   <div class="webgl-layout">
-    <WebglNavigator />
+    <ThreeNavigator />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import WebglNavigator from "@/components/webgl/WebglNavigator.vue";
+import ThreeNavigator from "@/components/three/ThreeNavigator.vue";
 
 export default defineComponent({
-  name: "webglLayout",
+  name: "threeLayout",
   components: {
-    WebglNavigator,
+    ThreeNavigator,
   },
 });
 </script>

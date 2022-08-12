@@ -10,8 +10,8 @@ const isLeapYear = (year: number) => {
 };
 
 export class Day {
-    private Date: Date;
-    private date: number;
+    public Date: Date;
+    public date: number;
     public day: string;
     public dayNumber: number;
     public dayShort: string;
@@ -23,7 +23,7 @@ export class Day {
     public timestamp: number;
     public week: number;
 
-    constructor(date: Date | null = null, lang = "default") {
+    constructor(date: Date | null = null, lang = "en-us") {
         date = date ?? new Date();
         this.Date = date;
         this.date = date.getDate();
@@ -64,7 +64,7 @@ export class Day {
             .replace(/\bDDDD\b/, this.day)
             .replace(/\bDDD\b/, this.dayShort)
             .replace(/\bDD\b/, this.day.toString().padStart(2, "0"))
-            .replace(/\bD\b/, String(this.Date.toLocaleString('default', { day: '2-digit' })))
+            .replace(/\bD\b/, String(this.Date.toLocaleString('en-us', { day: '2-digit' })))
             .replace(/\bMMMM\b/, this.month)
             .replace(/\bMMM\b/, this.monthShort)
             .replace(/\bMM\b/, this.monthNumber.toString().padStart(2, "0"))
@@ -73,7 +73,7 @@ export class Day {
 }
 
 export class Month {
-    private lang: string;
+    public lang: string;
     public name: string;
     public number: number;
     public displayedNumber: string;
@@ -81,7 +81,7 @@ export class Month {
     public numberOfDays: number;
     public [Symbol.iterator]: any;
 
-    constructor(date: Date | null = null, lang = "default") {
+    constructor(date: Date | null = null, lang = "en-us") {
         const day = new Day(date, lang);
         const monthsSize = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
         this.lang = lang;
@@ -123,7 +123,7 @@ export class Calendar {
     constructor(
         year: number | null = null,
         monthNumber: number | null = null,
-        lang: string = "default"
+        lang: string = "en-us"
     ) {
         this.today = new Day(null, lang);
         this.year = year ?? this.today.year;

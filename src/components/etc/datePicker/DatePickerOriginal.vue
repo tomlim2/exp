@@ -1,7 +1,6 @@
 <template>
   <div class="calendar-wrapper">
     <date-picker ref="startDate" @click="getDate"></date-picker>
-    <date-picker date="2022-02-02" ref="endDate"></date-picker>
   </div>
 </template>
 
@@ -12,8 +11,6 @@ import { useDatePicker } from "./DatePicker";
 export default defineComponent({
   setup() {
     const startDate = ref();
-    const endDate = ref();
-    
     useDatePicker();
 
     const getDate = () => {
@@ -21,12 +18,11 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      endDate.value.date.Date
+      // startDate.value.date.Date
     });
 
     return {
       startDate,
-      endDate,
       getDate,
     };
   },

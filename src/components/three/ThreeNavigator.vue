@@ -3,6 +3,7 @@
     <div class="nav">
       <router-link to="/webgl/threejs/journey/geometry">Geometry</router-link>
       <router-link to="/webgl/threejs/journey/texture">Texture</router-link>
+      <router-link to="/webgl/threejs/journey/material">Material</router-link>
     </div>
   </aside>
 </template>
