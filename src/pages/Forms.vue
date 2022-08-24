@@ -101,11 +101,10 @@
 </template>
 
 <script lang="ts">
-import Rating from "@/components/forms/Rating.vue";
 import { defineComponent, reactive } from "vue";
 
 export default defineComponent({
-  components: { Rating },
+  components: {  },
   setup() {
     const state = reactive({
       userName: "" as string,

@@ -1,15 +1,27 @@
 <template>
   <header class="header">
     <div class="nav">
-      <router-link to="/">HOME</router-link> |
-      <router-link to="/webgl">Three</router-link> |
-      <router-link to="/forms">FORMS</router-link> |
-      <router-link to="/etc">etc</router-link>
+      <a :class="{ selected: state.route == '' }" href="/">HOME</a> |
+      <a :class="{ selected: state.route == 'webgl' }" href="/webgl">Three</a> |
+      <a :class="{ selected: state.route == 'forms' }" href="/forms">FORMS</a> |
+      <a :class="{ selected: state.route == 'etc' }" href="/etc">etc</a>
     </div>
   </header>
 </template>
 
 <script lang="ts">
+import { defineComponent, computed, reactive } from "vue-demi";
+import { useRoute } from "vue-router";
+
+export default defineComponent({
+  setup() {
+    const route = useRoute();
+    const state = reactive({
+      route: computed(() => route.fullPath.split("/")[1]),
+    });
+    return { state };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -37,10 +49,9 @@
 
       @include hover-link-color;
 
-      &.router-link-active {
-        color: $black-200;
-        background-color: $white-300;
-        cursor: default;
+      &.selected {
+        color: $white-200;
+        background-color: $black-200;
       }
     }
   }

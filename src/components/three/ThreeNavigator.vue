@@ -1,14 +1,37 @@
 <template>
   <aside class="webgl-navigator">
     <div class="nav">
-      <router-link to="/webgl/threejs/journey/geometry">Geometry</router-link>
-      <router-link to="/webgl/threejs/journey/texture">Texture</router-link>
-      <router-link to="/webgl/threejs/journey/material">Material</router-link>
+      <a
+        v-for="(route, index) in routerList"
+        :key="index"
+        :class="{
+          selected:
+            state.route == route.name.replace('Threejs', '').toLowerCase(),
+        }"
+        :href="'/webgl/' + route.path"
+        >{{ route.name.replace("Threejs", "") }}</a
+      >
     </div>
   </aside>
 </template>
 
 <script lang="ts">
+import { defineComponent, computed, reactive } from "vue-demi";
+import { useRoute } from "vue-router";
+import { route as routeList } from "@/router/index";
+
+export default defineComponent({
+  setup() {
+    const route = useRoute();
+    const state = reactive({
+      route: computed(() => route.fullPath.split("/")[4]),
+    });
+
+    const routerList: any = routeList[0].children[1].children;
+
+    return { state, routerList };
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -33,7 +56,7 @@
 
       @include hover-link-color;
 
-      &.router-link-active {
+      &.selected {
         color: $black-200;
         background-color: $white-300;
         cursor: default;

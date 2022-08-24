@@ -100,6 +100,8 @@ export default defineComponent({
       /* Baked material */
       const bakedMaterial = new THREE.MeshBasicMaterial({ map: bakedTexture });
 
+      bakedMaterial.side = THREE.DoubleSide;
+
       debugObject.portalColorStart = "#000000";
       debugObject.portalColorEnd = "#ffffff";
 
@@ -303,8 +305,8 @@ export default defineComponent({
   z-index: 20;
 
   #render-three-b {
-    width: 100vw/3*2;
-    height: 100vh/3*2;
+    width: 100vw/3 * 2;
+    height: 100vh/3 * 2;
   }
 }
 </style>

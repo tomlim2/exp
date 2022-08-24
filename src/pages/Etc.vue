@@ -1,6 +1,18 @@
 <template>
   <main class="page">
     <section>
+      <div class="title">Moment</div>
+      <div class="main">
+        {{ testMoment() }}
+      </div>
+      <br>
+      <div class="title">Convert number</div>
+      <div class="main">
+        8900109
+        {{ convertNumberForFeed(8900109) }}
+      </div>
+    </section>
+    <section>
       <div class="hi">
         <div class="hihi">
           fefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefe
@@ -82,6 +94,7 @@ import DatePickerVue3Section from "@/sections/etc/DatePickerVue3Section.vue";
 import "swiper/swiper.scss";
 import IsLoadingSection from "@/sections/etc/IsLoadingSection.vue";
 import DatePickerOriginal from "../components/etc/datePicker/DatePickerOriginal.vue";
+import moment from "moment";
 
 export default defineComponent({
   name: "Etc",
@@ -94,6 +107,37 @@ export default defineComponent({
     DatePickerOriginal,
   },
   setup() {
+    const convertNumberForFeed = (number: number) => {
+      if (number > 999 && number < 1000000) {
+        return (number / 1000).toFixed(1) + "K"; // convert to K for number from > 1000 < 1 million
+      } else if (number > 1000000) {
+        return (number / 1000000).toFixed(1) + "M"; // convert to M for number from > 1 million
+      } else if (number < 900) {
+        return number; // if value < 1000, nothing to do
+      }
+    };
+
+    const testMoment = () => {
+      // const sample = "2022-08-12T23:53:39.000Z";
+      // const sample2 = "2022-08-10T03:00:00.000Z";
+      const sample3 = "2022-08-13T11:57:00.000Z";
+      // moment().format("lll");
+
+      const diff = moment(sample3).diff(moment(), "milliseconds");
+      const duration = moment.duration(diff);
+
+      const result = `SAMPLE: ${sample3}
+      Local: ${moment(sample3).format("lll")} 
+      Local Now Formated UTC: ${moment.utc().format(`M D, YYYY h:mm A`)}
+      Local Now Formated:  ${moment().format(`M D, YYYY h:mm A`)}
+      Day from now: ${moment(sample3).fromNow()}
+      Duration: ${duration}
+      Duration days: ${Math.abs(duration.days())}
+       `;
+
+      return result;
+    };
+
     const main = useCounterStore();
 
     const onSwiper = (swiper: any) => {
@@ -126,6 +170,8 @@ export default defineComponent({
       LottieTest,
       onClick,
       main,
+      testMoment,
+      convertNumberForFeed,
     };
   },
 });
@@ -133,6 +179,10 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
+
+.main {
+  white-space: pre-line;
+}
 
 .hi {
   display: flex;
@@ -151,7 +201,7 @@ export default defineComponent({
     background-color: #313131;
 
     .hihi21 {
-      height: 200vh;
+      height: 10vh;
       background-color: #00ca85;
       overflow-y: scroll;
     }

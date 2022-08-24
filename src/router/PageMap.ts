@@ -14,6 +14,8 @@ import NotFound from "../pages/NotFound.vue";
 import ThreeGeometryPage from "@/pages/three/ThreeGeometryPage.vue";
 import Three11TexturePage from "@/pages/three/Three11TexturePage.vue";
 import Three12MaterialsPage from "@/pages/three/Three12MaterialsPage.vue";
+import Three13TextPage from "@/pages/three/Three13TextPage.vue";
+import Three14LightPage from "@/pages/three/Three14LightPage.vue";
 
 
 export default {
@@ -24,7 +26,7 @@ export default {
     FeedsChildren: { Feeds },
     Forms,
     ThreeLayout,
-    ThreeChildren: { ThreeGeometryPage, Three11TexturePage, Three12MaterialsPage },
+    ThreeChildren: { ThreeGeometryPage, Three11TexturePage, Three12MaterialsPage, Three13TextPage, Three14LightPage },
     InteractionLayout,
     Interaction,
     InteractionChildren: { ThreejsBPortal }
