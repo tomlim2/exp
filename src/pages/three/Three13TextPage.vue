@@ -81,7 +81,7 @@ export default defineComponent({
           textGeometry.center();
 
           const mtcapTexture = textureLoader.load(
-            "/assets/texture/matcaps/3.png"
+            "/assets/texture/matcaps/7.png"
           );
           const textMaterial = new THREE.MeshMatcapMaterial();
           textMaterial.matcap = mtcapTexture;

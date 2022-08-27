@@ -9,12 +9,14 @@
 import { defineComponent, onMounted, onUnmounted, reactive } from "vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import * as THREE from "three";
+import * as dat from "lil-gui";
 
 export default defineComponent({
   setup() {
     const state = reactive({ roughness: 0.5, metalness: 0.65 });
 
     onMounted(() => {
+      const gui = new dat.GUI();
       const canvas = document.querySelector(
         "#render-journey-texture"
       ) as HTMLElement;
@@ -26,27 +28,30 @@ export default defineComponent({
        *Light
        */
 
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0);
+      const directionalLight = new THREE.DirectionalLight(0x00fffc, 0);
+      const hemisphereLight = new THREE.HemisphereLight(0xff0000,0x0000ff, 0);
+      const pointLight = new THREE.PointLight(0xffffff, 0);
+      const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1)
 
-      const pointLight = new THREE.PointLight(0xffffff, 0.5);
+      gui.add(ambientLight, "intensity").min(0).max(1).step(0.01);
+      gui.add(directionalLight, "intensity").min(0).max(1).step(0.01);
+      gui.add(hemisphereLight, "intensity").min(0).max(1).step(0.01);
+      gui.add(pointLight, "intensity").min(0).max(1).step(0.01);
+      gui.add(rectAreaLight, "intensity").min(0).max(1).step(0.01);
 
+      pointLight.distance = 3
       pointLight.position.x = 2;
       pointLight.position.y = 3;
       pointLight.position.z = 4;
 
-      scene.add(ambientLight, pointLight);
 
-      /**
-       * texture
-       */
-      const textureLoader = new THREE.TextureLoader();
-      const matcapTexture = textureLoader.load("/assets/texture/matcaps/8.png");
+      scene.add(pointLight, ambientLight, hemisphereLight, directionalLight, rectAreaLight);
 
       /**
        * material
        */
-      const material = new THREE.MeshMatcapMaterial();
-      material.matcap = matcapTexture;
+      const material = new THREE.MeshStandardMaterial();
 
       /**
        * Object
