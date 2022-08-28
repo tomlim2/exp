@@ -30,23 +30,43 @@ export default defineComponent({
 
       const ambientLight = new THREE.AmbientLight(0xffffff, 0);
       const directionalLight = new THREE.DirectionalLight(0x00fffc, 0);
-      const hemisphereLight = new THREE.HemisphereLight(0xff0000,0x0000ff, 0);
+      const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0);
       const pointLight = new THREE.PointLight(0xffffff, 0);
-      const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1)
+      pointLight.distance = 3;
+      pointLight.position.x = 2;
+      pointLight.position.y = 3;
+      pointLight.position.z = 4;
+
+      const rectAreaLight = new THREE.RectAreaLight(0x4e00ff, 2, 1, 1);
+      rectAreaLight.position.set(-1.5, 0, 1.5);
+      rectAreaLight.lookAt(new THREE.Vector3());
 
       gui.add(ambientLight, "intensity").min(0).max(1).step(0.01);
       gui.add(directionalLight, "intensity").min(0).max(1).step(0.01);
       gui.add(hemisphereLight, "intensity").min(0).max(1).step(0.01);
       gui.add(pointLight, "intensity").min(0).max(1).step(0.01);
-      gui.add(rectAreaLight, "intensity").min(0).max(1).step(0.01);
+      gui.add(rectAreaLight, "intensity").min(0).max(3).step(0.01);
 
-      pointLight.distance = 3
-      pointLight.position.x = 2;
-      pointLight.position.y = 3;
-      pointLight.position.z = 4;
+      const spotLight = new THREE.SpotLight(
+        0x78ff00,
+        0.5,
+        10,
+        Math.PI * 0.1,
+        0.25,
+        1
+      );
 
+      scene.add(
+        pointLight,
+        ambientLight,
+        hemisphereLight,
+        directionalLight,
+        rectAreaLight,
+        spotLight,
+        spotLight.target
+      );
 
-      scene.add(pointLight, ambientLight, hemisphereLight, directionalLight, rectAreaLight);
+      spotLight.target.position.x = -0.75;
 
       /**
        * material
@@ -64,20 +84,23 @@ export default defineComponent({
 
       sphere.position.x = -1.5;
 
-      const plane = new THREE.Mesh(
-        new THREE.PlaneBufferGeometry(1, 1, 100, 100),
+      const cube = new THREE.Mesh(
+        new THREE.BoxBufferGeometry(0.8, 0.8, 0.8),
         material
       );
 
-      plane.geometry.setAttribute(
-        "uv2",
-        new THREE.BufferAttribute(plane.geometry.attributes.uv.array, 2)
+      const plane = new THREE.Mesh(
+        new THREE.PlaneBufferGeometry(10, 10, 100, 100),
+        material
       );
+      plane.position.y = -1;
+      plane.rotation.x = -(Math.PI * 1) / 2;
 
       const tours = new THREE.Mesh(
         new THREE.TorusBufferGeometry(0.3, 0.2, 16, 32),
         material
       );
+
       tours.geometry.setAttribute(
         "uv2",
         new THREE.BufferAttribute(tours.geometry.attributes.uv.array, 2)
@@ -85,7 +108,7 @@ export default defineComponent({
 
       tours.position.x = 1.5;
 
-      scene.add(sphere, plane, tours);
+      scene.add(sphere, plane, tours, cube);
 
       /**
        * Resize
@@ -148,11 +171,11 @@ export default defineComponent({
 
         //update objects
         sphere.rotation.y = 0.1 * elapsedTime;
-        plane.rotation.y = 0.1 * elapsedTime;
+        cube.rotation.y = 0.1 * elapsedTime;
         tours.rotation.y = 0.1 * elapsedTime;
 
         sphere.rotation.x = 0.15 * elapsedTime;
-        plane.rotation.x = 0.15 * elapsedTime;
+        cube.rotation.x = 0.15 * elapsedTime;
         tours.rotation.x = 0.15 * elapsedTime;
 
         // Update controls

@@ -12,10 +12,13 @@ import ThreejsBPortal from "@/sections/interaction/ThreejsBPortal.vue";
 import NotFound from "../pages/NotFound.vue";
 
 import ThreeGeometryPage from "@/pages/three/ThreeGeometryPage.vue";
-import Three11TexturePage from "@/pages/three/Three11TexturePage.vue";
-import Three12MaterialsPage from "@/pages/three/Three12MaterialsPage.vue";
-import Three13TextPage from "@/pages/three/Three13TextPage.vue";
-import Three14LightPage from "@/pages/three/Three14LightPage.vue";
+import Three1TexturePage from "@/pages/three/Three1TexturePage.vue";
+import Three1MaterialsPage from "@/pages/three/Three1MaterialsPage.vue";
+import Three1TextPage from "@/pages/three/Three1TextPage.vue";
+import Three2LightPage from "@/pages/three/Three2LightPage.vue";
+import Three2ShadowPage from "@/pages/three/Three2ShadowPage.vue";
+import Three2ParticlePage from "@/pages/three/Three2ParticlePage.vue";
+import Three2GalaxyPage from "@/pages/three/Three2GalaxyPage.vue";
 
 
 export default {
@@ -26,7 +29,7 @@ export default {
     FeedsChildren: { Feeds },
     Forms,
     ThreeLayout,
-    ThreeChildren: { ThreeGeometryPage, Three11TexturePage, Three12MaterialsPage, Three13TextPage, Three14LightPage },
+    ThreeChildren: { ThreeGeometryPage, Three1TexturePage, Three1MaterialsPage, Three1TextPage, Three2LightPage,Three2ShadowPage,Three2ParticlePage, Three2GalaxyPage },
     InteractionLayout,
     Interaction,
     InteractionChildren: { ThreejsBPortal }

@@ -31,23 +31,37 @@ export const route: any = [
                     {
                         name: 'ThreejsTexture',
                         path: "threejs/journey/texture",
-                        component: PageMap.ThreeChildren.Three11TexturePage
+                        component: PageMap.ThreeChildren.Three1TexturePage
                     },
                     {
                         name: 'ThreejsMaterial',
                         path: "threejs/journey/material",
-                        component: PageMap.ThreeChildren.Three12MaterialsPage
+                        component: PageMap.ThreeChildren.Three1MaterialsPage
                     },
                     {
                         name: 'ThreejsText',
                         path: "threejs/journey/text",
-                        component: PageMap.ThreeChildren.Three13TextPage
-                    }
-                    ,
+                        component: PageMap.ThreeChildren.Three1TextPage
+                    },
                     {
                         name: 'ThreejsLight',
                         path: "threejs/journey/light",
-                        component: PageMap.ThreeChildren.Three14LightPage
+                        component: PageMap.ThreeChildren.Three2LightPage
+                    },
+                    {
+                        name: 'ThreejsShadow',
+                        path: "threejs/journey/shadow",
+                        component: PageMap.ThreeChildren.Three2ShadowPage
+                    },
+                    {
+                        name: 'ThreejsParticle',
+                        path: "threejs/journey/particle",
+                        component: PageMap.ThreeChildren.Three2ParticlePage
+                    },
+                    {
+                        name: 'ThreejsGalaxy',
+                        path: "threejs/journey/galaxy",
+                        component: PageMap.ThreeChildren.Three2GalaxyPage
                     }
                 ]
             },
