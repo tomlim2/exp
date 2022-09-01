@@ -50,7 +50,6 @@ export class Resources extends EventEmitter {
 
     sourceLoaded(source: any, file: any) {
         this.items[source.name] = file
-        console.log(this.items, 3);
         this.loaded++
 
         if (this.loaded === this.toLoad) {

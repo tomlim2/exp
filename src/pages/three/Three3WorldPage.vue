@@ -10,8 +10,9 @@ import { defineComponent, onMounted, onUnmounted, reactive } from "vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { useSizes } from "@/libs/three/Sizes";
 import { useResource } from "@/libs/three/Resources";
-import sources from "@/pages/three/Three3WorldResources";
+import sources from "@/pages/three/Three3WorldPage/Three3WorldResources";
 import * as THREE from "three";
+import * as dat from "lil-gui";
 
 export default defineComponent({
   setup() {
@@ -49,7 +50,7 @@ export default defineComponent({
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     };
 
-    const setEnvironmentMap = async (envSources: any, scene: any) => {
+    const setEnvironmentMap = (envSources: any, scene: any) => {
       const environmentMap: any = {};
       environmentMap.intensity = 0.4;
       environmentMap.texture = envSources.items.environmentMapTexture;
@@ -71,7 +72,40 @@ export default defineComponent({
       environmentMap.updateMaterials();
     };
 
+    const setFloor = (resources: any, scene: any) => {
+      const floorGeo = new THREE.CircleGeometry(5, 64);
+
+      let textures: any = {};
+
+      textures.color = resources.items.grassColorTexture;
+      textures.color.encoding = THREE.sRGBEncoding;
+      textures.color.repeat.set(1.5, 1.5);
+      textures.color.wrapS = THREE.RepeatWrapping;
+      textures.color.wrapT = THREE.RepeatWrapping;
+
+      textures.normal = resources.items.grassNormalTexture;
+      textures.normal.repeat.set(1.5, 1.5);
+      textures.normal.wrapS = THREE.RepeatWrapping;
+      textures.normal.wrapT = THREE.RepeatWrapping;
+
+      let material = new THREE.MeshStandardMaterial({
+        map: textures.color,
+        normalMap: textures.normal,
+      });
+
+      let mesh = new THREE.Mesh(floorGeo, material);
+
+      mesh.rotation.x = -Math.PI * 0.5;
+      mesh.receiveShadow = true;
+
+      scene.add(mesh);
+    };
+
     onMounted(() => {
+      const gui = new dat.GUI();
+      let isLoaded = false;
+      let animation: any = {};
+
       const canvas = document.querySelector(
         "#render-journey-texture"
       ) as HTMLElement;
@@ -82,12 +116,62 @@ export default defineComponent({
       /**
        * Object
        */
-      const cube = new THREE.Mesh(
-        new THREE.BoxGeometry(1, 1, 1),
-        new THREE.MeshStandardMaterial()
-      );
+      animation.play = (name: any) => {
+        const newAction = animation.actions[name];
+        const oldAction = animation.actions.current
+          ? animation.actions.current
+          : newAction;
 
-      scene.add(cube);
+        newAction.reset();
+        newAction.play();
+        newAction.crossFadeFrom(oldAction, 1);
+
+        animation.actions.current = newAction;
+      };
+
+      resources.on("ready", () => {
+        setFloor(resources, scene);
+        const model = resources.items.foxModel.scene;
+        model.scale.set(0.02, 0.02, 0.02);
+
+        scene.add(model);
+        animation.mixer = new THREE.AnimationMixer(model);
+
+        animation.actions = {};
+
+        animation.actions.idle = animation.mixer.clipAction(
+          resources.items.foxModel.animations[0]
+        );
+        animation.actions.walking = animation.mixer.clipAction(
+          resources.items.foxModel.animations[1]
+        );
+        animation.actions.running = animation.mixer.clipAction(
+          resources.items.foxModel.animations[2]
+        );
+
+        animation.play("walking");
+
+        const debugObject = {
+            playIdle:()=>animation.play('idle'),
+            playWalking:()=>animation.play('walking'),
+            playRunning:()=>animation.play('running'),
+        };
+        const folder = gui.addFolder('fox')
+        folder.add(debugObject, 'playIdle')
+        folder.add(debugObject, 'playWalking')
+        folder.add(debugObject, 'playRunning')
+        console.log(gui);
+        
+
+        model.traverse((child: any) => {
+          if (child instanceof THREE.Mesh) {
+            child.castShadow = true;
+          }
+        });
+
+        setEnvironmentMap(resources, scene);
+        isLoaded = true;
+      });
 
       /**
        * Light
@@ -95,10 +179,6 @@ export default defineComponent({
       const sunLight = new THREE.DirectionalLight("#ffffff", 4);
 
       setSunLight(sunLight, scene);
-
-      resources.on("ready", () => {
-        setEnvironmentMap(resources, scene);
-      });
 
       /**
        * Camera
@@ -127,6 +207,7 @@ export default defineComponent({
       const renderer = new THREE.WebGLRenderer({
         antialias: false,
       });
+
       canvas.appendChild(renderer.domElement);
 
       setRender(renderer, sizes);
@@ -136,10 +217,15 @@ export default defineComponent({
        */
 
       //   const clock = new THREE.Clock();
+      //   let delta = 0;
+      //   const current = Date.now();
 
       const tick = () => {
         // const elapsedTime = clock.getElapsedTime();
-        // console.log(elapsedTime);
+        // delta = Date.now() - current;
+        if (isLoaded) {
+          animation.mixer.update(0.01);
+        }
 
         controls.update();
         renderer.render(scene, camera);
