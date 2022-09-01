@@ -62,6 +62,17 @@ export const route: any = [
                         name: 'ThreejsGalaxy',
                         path: "threejs/journey/galaxy",
                         component: PageMap.ThreeChildren.Three2GalaxyPage
+                    },
+                    {
+                        name: 'ThreejsRayCast',
+                        path: "threejs/journey/raycast",
+                        component: PageMap.ThreeChildren.Three2RaycastPage
+                    }
+                    ,
+                    {
+                        name: 'ThreejsWorld',
+                        path: "threejs/journey/world",
+                        component: PageMap.ThreeChildren.Three3WorldPage
                     }
                 ]
             },

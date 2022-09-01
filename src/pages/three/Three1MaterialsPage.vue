@@ -81,14 +81,19 @@ export default defineComponent({
 
       const cubeTextureLoader = new THREE.CubeTextureLoader();
 
-      const environmentMapTexture = cubeTextureLoader.load([
-        "/assets/texture/environmentMaps/1/px.jpg",
-        "/assets/texture/environmentMaps/1/nx.jpg",
-        "/assets/texture/environmentMaps/1/py.jpg",
-        "/assets/texture/environmentMaps/1/ny.jpg",
-        "/assets/texture/environmentMaps/1/pz.jpg",
-        "/assets/texture/environmentMaps/1/nz.jpg",
-      ]);
+      const environmentMapTexture = cubeTextureLoader.load(
+        [
+          "/assets/texture/environmentMaps/1/px.jpg",
+          "/assets/texture/environmentMaps/1/nx.jpg",
+          "/assets/texture/environmentMaps/1/py.jpg",
+          "/assets/texture/environmentMaps/1/ny.jpg",
+          "/assets/texture/environmentMaps/1/pz.jpg",
+          "/assets/texture/environmentMaps/1/nz.jpg",
+        ],
+        (file:any) => {
+          console.log(file, "???");
+        }
+      );
 
       /**
        * Object
@@ -106,8 +111,8 @@ export default defineComponent({
       // const material = new THREE.MeshNormalMaterial()
       // material.flatShading = true
 
-      const matcapMaterial = new THREE.MeshMatcapMaterial()
-      matcapMaterial.matcap = mtcapTexture
+      const matcapMaterial = new THREE.MeshMatcapMaterial();
+      matcapMaterial.matcap = mtcapTexture;
 
       // const material = new THREE.MeshDepthMaterial()
       // const material = new THREE.MeshLambertMaterial();
@@ -129,13 +134,13 @@ export default defineComponent({
       material.roughnessMap = doorRoughnessTexture;
       material.normalMap = doorNormalTexture;
       material.normalScale.set(0.1, 0.1);
-      material.transparent = true
-      material.alphaMap = doorAlphaTexture
+      material.transparent = true;
+      material.alphaMap = doorAlphaTexture;
 
       const envMaterial = new THREE.MeshStandardMaterial();
       envMaterial.metalness = 1;
       envMaterial.roughness = 0.2;
-      envMaterial.envMap = environmentMapTexture
+      envMaterial.envMap = environmentMapTexture;
 
       gui.add(material, "metalness").min(0).max(1).step(0.0001);
       gui.add(material, "roughness").min(0).max(1).step(0.0001);
@@ -144,7 +149,6 @@ export default defineComponent({
       const sphere = new THREE.Mesh(
         new THREE.SphereBufferGeometry(0.5, 16, 16),
         envMaterial
-        
       );
 
       sphere.geometry.setAttribute(

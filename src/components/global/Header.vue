@@ -3,7 +3,6 @@
     <div class="nav">
       <a :class="{ selected: state.route == '' }" href="/">HOME</a> |
       <a :class="{ selected: state.route == 'webgl' }" href="/webgl">Three</a> |
-      <a :class="{ selected: state.route == 'forms' }" href="/forms">FORMS</a> |
       <a :class="{ selected: state.route == 'etc' }" href="/etc">etc</a>
     </div>
   </header>
