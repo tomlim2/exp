@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Experience } from "../Experience";
+import { Experience } from "@/pages/three/Three3RefactorPage/Experience";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export default class Camera {
@@ -10,8 +10,8 @@ export default class Camera {
     instance: any
     controls: any
 
-    constructor(canvas: any) {
-        this.experience = new Experience(canvas)
+    constructor(experience: Experience) {
+        this.experience = experience
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
@@ -23,11 +23,9 @@ export default class Camera {
     }
 
     setInstance() {
-        if (!this.sizes) return
-
         this.instance = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, .1, 100)
         this.instance.position.set(6, 4, 8)
-        this.scene?.add(this.instance)
+        this.scene.add(this.instance)
     }
 
     setControls() {
@@ -36,12 +34,10 @@ export default class Camera {
     }
 
     resize() {
-        if (!this.sizes) return
-
         this.instance.aspect = this.sizes.width / this.sizes.height
-        this.instance.updateProjectMatrix()
+        this.instance.updateProjectionMatrix()
     }
-    
+
     update() {
         this.controls.update()
     }

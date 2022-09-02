@@ -32,6 +32,7 @@ export default defineComponent({
       const directionalLight = new THREE.DirectionalLight(0x00fffc, 0);
       const hemisphereLight = new THREE.HemisphereLight(0xff0000, 0x0000ff, 0);
       const pointLight = new THREE.PointLight(0xffffff, 0);
+      
       pointLight.distance = 3;
       pointLight.position.x = 2;
       pointLight.position.y = 3;

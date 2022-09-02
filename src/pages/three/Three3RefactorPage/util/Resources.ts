@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import EventEmitter from '../webglExperience/utils/EventEmitter';
+import EventEmitter from './EventEmitter';
 
-export class Resources extends EventEmitter {
+export default class Resources extends EventEmitter {
     sources
     items: any
     toLoad
@@ -54,11 +54,6 @@ export class Resources extends EventEmitter {
 
         if (this.loaded === this.toLoad) {
             this.trigger('ready')
-            console.log(this.trigger);
         }
     }
-}
-
-export const useResource = (sources: any) => {
-    return new Resources(sources)
 }

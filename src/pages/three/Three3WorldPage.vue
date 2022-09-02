@@ -6,9 +6,9 @@
 
 
 <script lang="ts">
-import { defineComponent, onMounted, onUnmounted, reactive } from "vue";
+import { defineComponent, onMounted, onUnmounted, reactive, watch } from "vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import { useSizes } from "@/libs/three/Sizes";
+import Sizes from "./Three3RefactorPage/util/Sizes";
 import { useResource } from "@/libs/three/Resources";
 import sources from "@/pages/three/Three3WorldPage/Three3WorldResources";
 import * as THREE from "three";
@@ -18,9 +18,18 @@ export default defineComponent({
   setup() {
     const state: any = reactive({
       resources: undefined,
+      animationCurrentAction: "idle",
     });
+    let animation: any = {};
 
-    const sizes = useSizes();
+    watch(
+      () => state.animationCurrentAction,
+      () => {
+        animation.play(state.animationCurrentAction);
+      }
+    );
+
+    const sizes = new Sizes();
     const resources = useResource(sources);
 
     const setSunLight = (sunLight: any, scene: any) => {
@@ -104,7 +113,6 @@ export default defineComponent({
     onMounted(() => {
       const gui = new dat.GUI();
       let isLoaded = false;
-      let animation: any = {};
 
       const canvas = document.querySelector(
         "#render-journey-texture"
@@ -129,9 +137,11 @@ export default defineComponent({
         animation.actions.current = newAction;
       };
 
+      let model: any;
+
       resources.on("ready", () => {
         setFloor(resources, scene);
-        const model = resources.items.foxModel.scene;
+        model = resources.items.foxModel.scene;
         model.scale.set(0.02, 0.02, 0.02);
 
         scene.add(model);
@@ -149,19 +159,18 @@ export default defineComponent({
           resources.items.foxModel.animations[2]
         );
 
-        animation.play("walking");
+        animation.play(state.animationCurrentAction);
 
         const debugObject = {
-            playIdle:()=>animation.play('idle'),
-            playWalking:()=>animation.play('walking'),
-            playRunning:()=>animation.play('running'),
+          playIdle: () => animation.play("idle"),
+          playWalking: () => animation.play("walking"),
+          playRunning: () => animation.play("running"),
         };
-        const folder = gui.addFolder('fox')
-        folder.add(debugObject, 'playIdle')
-        folder.add(debugObject, 'playWalking')
-        folder.add(debugObject, 'playRunning')
-        console.log(gui);
-        
+
+        const folder = gui.addFolder("fox");
+        folder.add(debugObject, "playIdle");
+        folder.add(debugObject, "playWalking");
+        folder.add(debugObject, "playRunning");
 
         model.traverse((child: any) => {
           if (child instanceof THREE.Mesh) {
@@ -220,11 +229,19 @@ export default defineComponent({
       //   let delta = 0;
       //   const current = Date.now();
 
+      let toword = { x: 1, z: 2 };
+
       const tick = () => {
         // const elapsedTime = clock.getElapsedTime();
         // delta = Date.now() - current;
         if (isLoaded) {
           animation.mixer.update(0.01);
+          if (toword.x > model.position.x && toword.z > model.position.z) {
+            state.animationCurrentAction = "walking";
+            model.position.z += 0.01;
+          } else {
+            state.animationCurrentAction = "idle";
+          }
         }
 
         controls.update();
@@ -243,6 +260,24 @@ export default defineComponent({
 
         renderer.setSize(sizes.width, sizes.height);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+      });
+
+      let drag = false;
+
+      window.addEventListener("mousedown", () => {
+        drag = false;
+      });
+      window.addEventListener("mousemove", () => {
+        drag = true;
+      });
+      window.addEventListener("mouseup", () => {
+        if (!drag) {
+          if (state.animationCurrentAction !== "walking") {
+            state.animationCurrentAction = "walking";
+          } else {
+            state.animationCurrentAction = "idle";
+          }
+        }
       });
     });
 

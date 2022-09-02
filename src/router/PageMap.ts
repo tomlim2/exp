@@ -21,6 +21,8 @@ import Three2ParticlePage from "@/pages/three/Three2ParticlePage.vue";
 import Three2GalaxyPage from "@/pages/three/Three2GalaxyPage.vue";
 import Three2RaycastPage from "@/pages/three/Three2RaycastPage.vue";
 import Three3WorldPage from "@/pages/three/Three3WorldPage.vue";
+import Three3RefactoringPage from "@/pages/three/Three3RefactoringPage.vue";
+
 
 
 export default {
@@ -31,7 +33,7 @@ export default {
     FeedsChildren: { Feeds },
     Forms,
     ThreeLayout,
-    ThreeChildren: { ThreeGeometryPage, Three1TexturePage, Three1MaterialsPage, Three1TextPage, Three2LightPage, Three2ShadowPage, Three2ParticlePage, Three2GalaxyPage, Three2RaycastPage, Three3WorldPage },
+    ThreeChildren: { ThreeGeometryPage, Three1TexturePage, Three1MaterialsPage, Three1TextPage, Three2LightPage, Three2ShadowPage, Three2ParticlePage, Three2GalaxyPage, Three2RaycastPage, Three3WorldPage, Three3RefactoringPage },
     InteractionLayout,
     Interaction,
     InteractionChildren: { ThreejsBPortal }

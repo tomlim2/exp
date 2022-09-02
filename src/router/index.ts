@@ -21,8 +21,23 @@ export const route: any = [
             {
                 path: "webgl",
                 component: PageMap.ThreeLayout,
-                redirect: "/webgl/threejs/journey/geometry",
+                redirect: "/webgl/threejs/journey/refactor",
                 children: [
+                    {
+                        name: 'ThreejsRefactor',
+                        path: "threejs/journey/refactor",
+                        component: PageMap.ThreeChildren.Three3RefactoringPage
+                    },
+                    {
+                        name: 'ThreejsWorld',
+                        path: "threejs/journey/world",
+                        component: PageMap.ThreeChildren.Three3WorldPage
+                    },
+                    {
+                        name: 'ThreejsRayCast',
+                        path: "threejs/journey/raycast",
+                        component: PageMap.ThreeChildren.Three2RaycastPage
+                    },
                     {
                         name: 'ThreejsGeometry',
                         path: "threejs/journey/geometry",
@@ -62,17 +77,6 @@ export const route: any = [
                         name: 'ThreejsGalaxy',
                         path: "threejs/journey/galaxy",
                         component: PageMap.ThreeChildren.Three2GalaxyPage
-                    },
-                    {
-                        name: 'ThreejsRayCast',
-                        path: "threejs/journey/raycast",
-                        component: PageMap.ThreeChildren.Three2RaycastPage
-                    }
-                    ,
-                    {
-                        name: 'ThreejsWorld',
-                        path: "threejs/journey/world",
-                        component: PageMap.ThreeChildren.Three3WorldPage
                     }
                 ]
             },
