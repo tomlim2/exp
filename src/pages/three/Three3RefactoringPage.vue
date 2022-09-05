@@ -7,22 +7,26 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, reactive } from "vue";
-import { useExperience } from "./Three3RefactorPage/Experience";
+import Experience from "./Three3RefactorPage/Experience";
 
 export default defineComponent({
   setup() {
-    const experience = useExperience;
     const state = reactive({});
 
     onMounted(() => {
-      experience(document.querySelector("#render-journey-texture"));
+      const experience = new Experience(
+        document.querySelector("#render-journey-texture")
+      );
+      experience;
     });
 
-    onUnmounted(()=>{
-      console.log('bye');
-      
-      experience(document.querySelector("#render-journey-texture")).destroy
-    })
+    onUnmounted(() => {
+      const experience = new Experience(
+        document.querySelector("#render-journey-texture")
+      );
+
+      experience.destroy;
+    });
 
     return { state };
   },

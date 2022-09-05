@@ -1,11 +1,22 @@
 <template>
   <main class="page">
     <section>
+      <div class="title">On/Offline</div>
+      <div
+        class="main navigator-status"
+        :class="{
+          onLine: state.isOnline,
+        }"
+      >
+        You are {{ state.isOnline ? "online" : "offline" }}
+      </div>
+    </section>
+    <section>
       <div class="title">Moment</div>
       <div class="main">
         {{ testMoment() }}
       </div>
-      <br>
+      <br />
       <div class="title">Convert number</div>
       <div class="main">
         8900109
@@ -13,6 +24,7 @@
       </div>
     </section>
     <section>
+      <div class="title">Scroll</div>
       <div class="hi">
         <div class="hihi">
           fefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefe
@@ -30,10 +42,6 @@
     <section>
       DataPickerVue3Component
       <DatePickerVue3Section />
-    </section>
-    <section>
-      Original DataPicker
-      <DatePickerOriginal />
     </section>
     <section>
       store.name: {{ main.name }}
@@ -70,8 +78,9 @@
           href="https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-started-with-MetaMask"
           target="_blank"
           rel="noopener noreferrer"
-          >https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-started-with-MetaMask</a
         >
+          https://metamask.zendesk.com/hc/en-us/articles/360015489531-Getting-started-with-MetaMask
+        </a>
       </p>
       <!-- <ul>
       <li>YCS Store front and data binding</li>
@@ -83,7 +92,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent, onMounted, reactive, watch } from "vue";
 // Import Swiper Vue.js components
 import { Swiper, SwiperSlide } from "swiper/vue/swiper-vue.js";
 import { useCounterStore } from "@/stores/index";
@@ -93,7 +102,6 @@ import DatePickerVue3Section from "@/sections/etc/DatePickerVue3Section.vue";
 // Import Swiper styles
 import "swiper/swiper.scss";
 import IsLoadingSection from "@/sections/etc/IsLoadingSection.vue";
-import DatePickerOriginal from "../components/etc/datePicker/DatePickerOriginal.vue";
 import moment from "moment";
 
 export default defineComponent({
@@ -104,9 +112,27 @@ export default defineComponent({
     LottieTest,
     DatePickerVue3Section,
     IsLoadingSection,
-    DatePickerOriginal,
   },
   setup() {
+    const state = reactive({
+      isOnline: true,
+    });
+
+    onMounted(() => {
+      state.isOnline = window.navigator.onLine;
+    });
+
+    watch(
+      () => window.navigator.onLine,
+      () => {
+        if (window.navigator.onLine) {
+          state.isOnline = true;
+        } else {
+          state.isOnline = false;
+        }
+      }
+    );
+
     const convertNumberForFeed = (number: number) => {
       if (number > 999 && number < 1000000) {
         return (number / 1000).toFixed(1) + "K"; // convert to K for number from > 1000 < 1 million
@@ -172,6 +198,7 @@ export default defineComponent({
       main,
       testMoment,
       convertNumberForFeed,
+      state,
     };
   },
 });
@@ -179,6 +206,14 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
+
+.navigator-status {
+  color: red;
+}
+
+.onLine {
+  color: green;
+}
 
 .main {
   white-space: pre-line;

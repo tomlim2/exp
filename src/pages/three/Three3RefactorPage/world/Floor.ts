@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Experience from '../Experience'
 
 export default class Floor {
     experience
@@ -9,7 +10,7 @@ export default class Floor {
     material: any
     mesh: any
 
-    constructor(experience: any) {
+    constructor(experience: Experience) {
         this.experience = experience
         this.scene = this.experience.scene
         this.resources = this.experience.resources

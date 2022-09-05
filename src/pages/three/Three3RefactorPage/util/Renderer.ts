@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Experience from '../Experience'
 
 export default class Renderer {
     experience
@@ -8,7 +9,7 @@ export default class Renderer {
     camera
     instance: any
 
-    constructor(experience: any) {
+    constructor(experience: Experience) {
         this.experience = experience
         this.canvas = this.experience.canvas
         this.sizes = this.experience.sizes

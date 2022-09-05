@@ -1,6 +1,7 @@
 import Environment from './Environment'
 import Floor from './Floor'
 import Fox from './Fox'
+import Experience from '../Experience'
 
 export default class World {
     experience
@@ -10,7 +11,7 @@ export default class World {
     fox: any
     environment: any
 
-    constructor(experience: any) {
+    constructor(experience: Experience) {
         this.experience = experience
         this.scene = this.experience.scene
         this.resources = this.experience.resources

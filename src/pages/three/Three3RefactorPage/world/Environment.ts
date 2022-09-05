@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Experience from '../Experience'
 
 export default class Environment {
     experience
@@ -9,7 +10,7 @@ export default class Environment {
     sunLight: any
     environmentMap: any
 
-    constructor(experience: any) {
+    constructor(experience: Experience) {
         this.experience = experience
         this.scene = this.experience.scene
         this.resources = this.experience.resources
@@ -70,9 +71,7 @@ export default class Environment {
         this.environmentMap = {}
         this.environmentMap.intensity = .4
         this.environmentMap.texture = this.resources.items.environmentMapTexture
-
         this.environmentMap.texture.encoding = THREE.sRGBEncoding
-
         this.scene.environment = this.environmentMap.texture
         this.environmentMap.updateMaterials = () => {
             this.scene.traverse((child: any) => {

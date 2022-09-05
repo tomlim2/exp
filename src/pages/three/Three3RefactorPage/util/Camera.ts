@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import { Experience } from "@/pages/three/Three3RefactorPage/Experience";
+import Experience from "@/pages/three/Three3RefactorPage/Experience";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
 export default class Camera {

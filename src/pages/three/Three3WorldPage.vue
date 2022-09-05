@@ -9,7 +9,7 @@
 import { defineComponent, onMounted, onUnmounted, reactive, watch } from "vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import Sizes from "./Three3RefactorPage/util/Sizes";
-import { useResource } from "@/libs/three/Resources";
+import Resources from "@/pages/three/Three3RefactorPage/util/Resources";
 import sources from "@/pages/three/Three3WorldPage/Three3WorldResources";
 import * as THREE from "three";
 import * as dat from "lil-gui";
@@ -30,7 +30,7 @@ export default defineComponent({
     );
 
     const sizes = new Sizes();
-    const resources = useResource(sources);
+    const resources = new Resources(sources);
 
     const setSunLight = (sunLight: any, scene: any) => {
       sunLight.castShadow = true;

@@ -9,10 +9,10 @@ import sources from "./sources";
 import Resources from "./util/Resources";
 import Debug from "./util/Debug";
 
-export class Experience {
+export default class Experience {
     canvas
     scene
-    debug
+    debug: any
     resources
     world
     camera
@@ -21,8 +21,9 @@ export class Experience {
     time
 
     constructor(canvas: any) {
+
+
         this.canvas = canvas
-        this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
@@ -30,6 +31,7 @@ export class Experience {
         this.world = new World(this)
         this.camera = new Camera(this)
         this.renderer = new Renderer(this)
+        this.debug = new Debug()
 
 
         this.sizes.on('resize', () => {
@@ -70,12 +72,8 @@ export class Experience {
 
         this.camera.controls.dispose()
         this.renderer.instance.dispose()
-        if(this.debug.active){
+        if (this.debug.active) {
             this.debug.ui?.destroy()
         }
     }
-}
-
-export const useExperience = (canvas: any) => {
-    return new Experience(canvas)
 }

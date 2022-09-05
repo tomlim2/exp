@@ -1,4 +1,5 @@
 import * as THREE from 'three'
+import Experience from '../Experience'
 
 export default class Fox {
     experience
@@ -10,7 +11,7 @@ export default class Fox {
     model: any
     animation: any
 
-    constructor(experience: any) {
+    constructor(experience: Experience) {
 
         this.experience = experience
         this.scene = this.experience.scene

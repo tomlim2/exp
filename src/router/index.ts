@@ -3,26 +3,30 @@ import PageMap from "./PageMap";
 
 export const route: any = [
     {
-        name: 'Home',
+        name: 'Showcase',
         path: "/",
         component: PageMap.DefaultLayout,
         children: [
             {
                 path: "/",
-                component: PageMap.InteractionLayout,
+                component: PageMap.EtcLayout,
                 children: [
                     {
-                        name: 'InteractionPage',
+                        name: 'ETCPage',
                         path: "",
-                        component: PageMap.Interaction
-                    },
-                ]
+                        component: PageMap.EtcChildren.Etc
+                    }]
             },
             {
                 path: "webgl",
                 component: PageMap.ThreeLayout,
-                redirect: "/webgl/threejs/journey/refactor",
+                redirect: "/webgl/threejs/journey/shader",
                 children: [
+                    {
+                        name: 'ThreejsShader',
+                        path: "threejs/journey/shader",
+                        component: PageMap.ThreeChildren.Three4ShadersPage
+                    },
                     {
                         name: 'ThreejsRefactor',
                         path: "threejs/journey/refactor",
@@ -81,16 +85,16 @@ export const route: any = [
                 ]
             },
             {
-                path: "etc",
-                component: PageMap.EtcLayout,
+                path: "showcase",
+                component: PageMap.InteractionLayout,
                 children: [
                     {
-                        name: 'ETCPage',
+                        name: 'InteractionPage',
                         path: "",
-                        component: PageMap.EtcChildren.Etc
-                    }]
+                        component: PageMap.Interaction
+                    },
+                ]
             },
-
             {
                 name: 'FormPage',
                 path: "forms",
