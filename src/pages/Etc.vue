@@ -2,13 +2,11 @@
   <main class="page">
     <section>
       <div class="title">On/Offline</div>
-      <div
-        class="main navigator-status"
-        :class="{
-          onLine: state.isOnline,
-        }"
-      >
-        You are {{ state.isOnline ? "online" : "offline" }}
+      <div class="main">
+        Your network is
+        <span class="navigator-status" :class="{ onLine: state.isOnline }">{{
+          state.isOnline ? "ONLINE" : "OFFLINE"
+        }}</span>
       </div>
     </section>
     <section>
@@ -207,12 +205,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
 
-.navigator-status {
+span.navigator-status {
   color: red;
-}
 
-.onLine {
-  color: green;
+  &.onLine {
+    color: green;
+  }
 }
 
 .main {

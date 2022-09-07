@@ -23,8 +23,7 @@ import Three2RaycastPage from "@/pages/three/Three2RaycastPage.vue";
 import Three3WorldPage from "@/pages/three/Three3WorldPage.vue";
 import Three3RefactoringPage from "@/pages/three/Three3RefactoringPage.vue";
 import Three4ShadersPage from "@/pages/three/Three4ShadersPage.vue";
-
-
+import Three0CheckerBoardPage from "@/pages/three/Three0CheckerBoardPage.vue";
 
 export default {
     DefaultLayout,
@@ -34,7 +33,7 @@ export default {
     FeedsChildren: { Feeds },
     Forms,
     ThreeLayout,
-    ThreeChildren: { ThreeGeometryPage, Three1TexturePage, Three1MaterialsPage, Three1TextPage, Three2LightPage, Three2ShadowPage, Three2ParticlePage, Three2GalaxyPage, Three2RaycastPage, Three3WorldPage, Three3RefactoringPage, Three4ShadersPage },
+    ThreeChildren: { ThreeGeometryPage, Three1TexturePage, Three1MaterialsPage, Three1TextPage, Three2LightPage, Three2ShadowPage, Three2ParticlePage, Three2GalaxyPage, Three2RaycastPage, Three3WorldPage, Three3RefactoringPage, Three4ShadersPage, Three0CheckerBoardPage},
     InteractionLayout,
     Interaction,
     InteractionChildren: { ThreejsBPortal }
