@@ -35,12 +35,18 @@ export default defineComponent({
       const scene = new THREE.Scene();
 
       // Setting
-      // const settings = {
-      //   progress1: 0,
-      //   progress2: 0,
-      //   progress3: 0,
-      //   progress4: 0,
-      // };
+      const settings = {
+        speed: 0.01,
+        progress1: 0,
+        progress2: 0,
+        progress3: 0,
+        progress4: 0,
+        color1: 0xff00cc,
+        color2: 0xff007f,
+        color3: 0xff0033,
+        color4: 0xffffff,
+        offset: -0.05,
+      };
 
       /**
        * Object
@@ -76,10 +82,14 @@ export default defineComponent({
         },
         uniforms: {
           time: { value: 0 },
-          uProgress1: { value: 0 },
-          uProgress2: { value: 0 },
-          uProgress3: { value: 0 },
-          uProgress4: { value: 0 },
+          uProgress1: { value: settings.offset * 0 },
+          uProgress2: { value: settings.offset * 1 },
+          uProgress3: { value: settings.offset * 2 },
+          uProgress4: { value: settings.offset * 3 },
+          uColor1: { value: settings.color1 },
+          uColor2: { value: settings.color2 },
+          uColor3: { value: settings.color3 },
+          uColor4: { value: settings.color4 },
         },
         vertexShader: CheckerBoardTextShader.vertexShader,
         fragmentShader: CheckerBoardTextShader.fragmentShader,
@@ -90,8 +100,8 @@ export default defineComponent({
       fontLoader.load(
         "/assets/fonts/helvetiker_regular.typeface.json",
         (font) => {
-          //messgae
-          const message = "Hi,\nThere\nWhat's up?";
+          //messges
+          const message = "Hi,\nThere.\nWhat's up?";
           const textGeometry = new TextGeometry(message, {
             font: font,
             size: 0.5,
@@ -177,17 +187,18 @@ export default defineComponent({
        * Renderer
        */
       const renderer = new THREE.WebGLRenderer({
-        antialias: false,
+        antialias: true,
       });
       canvas.appendChild(renderer.domElement);
       renderer.setSize(sizes.width, sizes.height);
       renderer.setClearColor(0x111111, 1);
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-
       window.addEventListener("click", () => {
-        textMaterial.uniforms.uProgress3.value = 0;
-        textMaterial.uniforms.uProgress4.value = 0;
+        textMaterial.uniforms.uProgress1.value = settings.offset*0;
+        textMaterial.uniforms.uProgress2.value = settings.offset*1;
+        textMaterial.uniforms.uProgress3.value = settings.offset*2;
+        textMaterial.uniforms.uProgress4.value = settings.offset*3;
       });
 
       /**
@@ -195,14 +206,39 @@ export default defineComponent({
        */
       // const clock = new THREE.Clock();
 
+      gui.add(settings, "speed", 0, 0.02, 0.001).onChange(() => {
+        textMaterial.uniforms.uProgress1.value = settings.progress1;
+      });
+
+      gui.add(settings, "offset", -.1, 0, .01)
+
+      gui.addColor(settings, "color1").onChange(() => {
+        textMaterial.uniforms.uColor1.value = settings.color1;
+      });
+      gui.addColor(settings, "color2").onChange(() => {
+        textMaterial.uniforms.uColor2.value = settings.color2;
+      });
+      gui.addColor(settings, "color3").onChange(() => {
+        textMaterial.uniforms.uColor3.value = settings.color3;
+      });
+      gui.addColor(settings, "color4").onChange(() => {
+        textMaterial.uniforms.uColor4.value = settings.color4;
+      });
+
       const tick = () => {
         // const elapsedTime = clock.getElapsedTime();
 
         if (textMaterial.uniforms.uProgress4.value < 3) {
-          textMaterial.uniforms.uProgress3.value = textMaterial.uniforms.uProgress3.value + .02;
-          textMaterial.uniforms.uProgress4.value = textMaterial.uniforms.uProgress4.value + .019 ;
+          textMaterial.uniforms.uProgress1.value =
+            textMaterial.uniforms.uProgress1.value + settings.speed;
+          textMaterial.uniforms.uProgress2.value =
+            textMaterial.uniforms.uProgress2.value + settings.speed;
+          textMaterial.uniforms.uProgress3.value =
+            textMaterial.uniforms.uProgress3.value + settings.speed;
+          textMaterial.uniforms.uProgress4.value =
+            textMaterial.uniforms.uProgress4.value + settings.speed;
         }
-        
+
         // Update controls
         controls.update();
 
@@ -212,8 +248,6 @@ export default defineComponent({
         // Call tick again on the next frame
         window.requestAnimationFrame(tick);
       };
-
-      
 
       tick();
     });

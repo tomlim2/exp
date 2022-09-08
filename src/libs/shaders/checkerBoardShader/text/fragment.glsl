@@ -12,6 +12,11 @@ uniform float uProgress2;
 uniform float uProgress3;
 uniform float uProgress4;
 
+uniform int uColor1;
+uniform int uColor2;
+uniform int uColor3;
+uniform int uColor4;
+
 float rand(float n) {
     return fract(sin(n) * 43758.5453123);
 }
@@ -36,11 +41,24 @@ float map(float value, float min1, float max1, float min2, float max2) {
     return min2 + (value - min1) * (max2 - min2) / (max1 - min1);
 }
 
-void main() {
-    vec3 pink = vec3(.834, 0.066, 0.788);
+vec3 hexToRgb(int u_color) {
+    float rValue = float(u_color / 256 / 256);
+    float gValue = float(u_color / 256 - int(rValue * 256.0));
+    float bValue = float(u_color - int(rValue * 256.0 * 256.0) - int(gValue * 256.0));
+    return vec3(rValue / 255.0f, gValue / 255.0f, bValue / 255.0f);
 
-    vec4 l3 = vec4(pink, 1.);
-    vec4 l4 = vec4(vec3(1.), 1.);
+}
+
+void main() {
+    vec3 layer1Color = hexToRgb(uColor1);
+    vec3 layer2Color = hexToRgb(uColor2);
+    vec3 layer3Color = hexToRgb(uColor3);
+    vec3 layer4Color = hexToRgb(uColor4);
+
+    vec4 l1 = vec4(layer1Color, 1.);
+    vec4 l2 = vec4(layer2Color, 1.);
+    vec4 l3 = vec4(layer3Color, 1.);
+    vec4 l4 = vec4(layer4Color, 1.);
 
     float x = floor(vUv.x * 10. * 2.);
     float y = floor(vUv.y * 10. * 2.);
@@ -48,21 +66,35 @@ void main() {
 
     float w = .5;
 
+    float p1 = uProgress1;
+    p1 = map(p1, 0., 1., -w, 1.);
+    p1 = smoothstep(p1, p1 + w, vUv.x);
+    float mix1 = 2. * p1 - pattern;
+    mix1 = clamp(mix1, 0., 1.);
+
+    float p2 = uProgress2;
+    p2 = map(p2, 0., 1., -w, 1.);
+    p2 = smoothstep(p2, p2 + w, vUv.x);
+    float mix2 = 2. * p2 - pattern;
+    mix2 = clamp(mix2, 0., 1.);
+
     float p3 = uProgress3;
     p3 = map(p3, 0., 1., -w, 1.);
     p3 = smoothstep(p3, p3 + w, vUv.x);
     float mix3 = 2. * p3 - pattern;
-    mix3 = clamp(mix3,0., 1.); 
+    mix3 = clamp(mix3, 0., 1.);
 
     float p4 = uProgress4;
     p4 = map(p4, 0., 1., -w, 1.);
     p4 = smoothstep(p4, p4 + w, vUv.x);
     float mix4 = 2. * p4 - pattern;
-    mix4 = clamp(mix4,0., 1. ); 
+    mix4 = clamp(mix4, 0., 1.);
 
-    vec4 layer3 = mix(vec4(0.),l3,1.-mix3);
-    vec4 layer4 = mix(layer3,l4,1.-mix4);
-    
+    vec4 layer1 = mix(vec4(0.), l1, 1. - mix1);
+    vec4 layer2 = mix(layer1, l2, 1. - mix2);
+    vec4 layer3 = mix(layer2, l3, 1. - mix3);
+    vec4 layer4 = mix(layer3, l4, 1. - mix4);
+
     // gl_FragColor = vec4(uProgress1 * 1.0, 0.0, 0.0, 1.);
     // gl_FragColor = l3;
     // gl_FragColor = vec4(vec3(pattern), 1.);
