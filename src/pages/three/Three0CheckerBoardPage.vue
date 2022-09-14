@@ -8,13 +8,12 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from "vue";
 import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 import * as dat from "lil-gui";
 
-import CheckerBoardTextShader from "@/libs/shaders/checkerBoardShader/text/index.js";
-import CheckerBoardMask1Shader from "@/libs/shaders/checkerBoardShader/boardMask_1/index.js";
+import CheckerBoardTextShader from "@/shaders/checkerBoardShader/text/index.js";
+import CheckerBoardMask1Shader from "@/shaders/checkerBoardShader/boardMask_1/index.js";
 
 export default defineComponent({
   setup() {
@@ -106,12 +105,7 @@ export default defineComponent({
             font: font,
             size: 0.5,
             height: 0,
-            curveSegments: 12,
-            bevelEnabled: true,
-            bevelThickness: 0,
-            bevelSize: 0,
-            bevelOffset: 0,
-            bevelSegments: 0,
+            curveSegments: 128,
           });
 
           // textGeometry.computeBoundingBox();
@@ -127,6 +121,7 @@ export default defineComponent({
 
           const text = new THREE.Mesh(textGeometry, textMaterial);
           scene.add(text);
+          
         }
       );
 
@@ -157,7 +152,7 @@ export default defineComponent({
         sizes.height = window.innerHeight;
 
         // Update camera
-        camera.aspect = sizes.width / sizes.height;
+        
         camera.updateProjectionMatrix();
 
         // Update renderer
@@ -170,24 +165,25 @@ export default defineComponent({
        */
 
       // Base camera
-      const camera = new THREE.PerspectiveCamera(
-        150,
-        sizes.width / sizes.height,
-        0.1,
+      const aspectRatio = sizes.width/sizes.height
+      const camera = new THREE.OrthographicCamera(
+        -2 * aspectRatio,
+        2 * aspectRatio,
+         2,
+         -2,
+        .1,
         100
       );
-      camera.position.z = 0.5;
+      camera.position.z = 1;
       scene.add(camera);
 
       // Controls
-      const controls = new OrbitControls(camera, canvas);
-      controls.enableDamping = true;
 
       /**
        * Renderer
        */
       const renderer = new THREE.WebGLRenderer({
-        antialias: true,
+        antialias: false,
       });
       canvas.appendChild(renderer.domElement);
       renderer.setSize(sizes.width, sizes.height);
@@ -238,9 +234,6 @@ export default defineComponent({
           textMaterial.uniforms.uProgress4.value =
             textMaterial.uniforms.uProgress4.value + settings.speed;
         }
-
-        // Update controls
-        controls.update();
 
         // Render
         renderer.render(scene, camera);

@@ -9,7 +9,7 @@
 import * as THREE from "three";
 import { defineComponent, onMounted, reactive } from "vue";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import TestShader_b from "@/libs/shaders/test/TestShader_b.js";
+import TestShader_b from "@/shaders/test/TestShader_b.js";
 import * as dat from "lil-gui";
 
 export default defineComponent({

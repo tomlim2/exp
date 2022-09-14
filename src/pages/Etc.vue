@@ -1,5 +1,13 @@
 <template>
   <main class="page">
+    <section id="section-searchBar">
+      <div class="title">SearchBar</div>
+      <div class="main">
+        <div class="right-align">
+          <SearchBarComponent />
+        </div>
+      </div>
+    </section>
     <section>
       <div class="title">On/Offline</div>
       <div class="main">
@@ -101,6 +109,7 @@ import DatePickerVue3Section from "@/sections/etc/DatePickerVue3Section.vue";
 import "swiper/swiper.scss";
 import IsLoadingSection from "@/sections/etc/IsLoadingSection.vue";
 import moment from "moment";
+import SearchBarComponent from "@/components/SearchBarComponent.vue";
 
 export default defineComponent({
   name: "Etc",
@@ -110,6 +119,7 @@ export default defineComponent({
     LottieTest,
     DatePickerVue3Section,
     IsLoadingSection,
+    SearchBarComponent,
   },
   setup() {
     const state = reactive({
@@ -205,12 +215,21 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
 
+#section-searchBar{
+  background-color: #aaa;
+}
+
 span.navigator-status {
   color: red;
 
   &.onLine {
     color: green;
   }
+}
+
+.right-align{
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .main {

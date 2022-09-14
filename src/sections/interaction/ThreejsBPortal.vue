@@ -15,11 +15,11 @@ import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 import {
   firefiliesVertex,
   firefiliesFragment,
-} from "@/sections/interaction/shaders/fireflies";
+} from "@/shaders/portal/fireflies";
 import {
   portalVertex,
   portalFragment,
-} from "@/sections/interaction/shaders/portal";
+} from "@/shaders/portal/portal";
 
 interface debugObject {
   clearColor: string;

@@ -20,8 +20,13 @@ export const route: any = [
             {
                 path: "webgl",
                 component: PageMap.ThreeLayout,
-                redirect: "/webgl/threejs/journey/checker",
+                redirect: "/webgl/threejs/journey/patterns",
                 children: [
+                    {
+                        name: 'ThreejsPatterns',
+                        path: "threejs/journey/patterns",
+                        component: PageMap.ThreeChildren.Three4ShaderPatternsPage
+                    },
                     {
                         name: 'ThreejsChecker',
                         path: "threejs/journey/checker",
