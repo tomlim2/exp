@@ -1,5 +1,11 @@
 <template>
   <main class="page">
+    <section>
+      <div class="title">hashtag</div>
+      <div>
+        
+      </div>
+    </section>
     <section id="section-searchBar">
       <div class="title">SearchBar</div>
       <div class="main">

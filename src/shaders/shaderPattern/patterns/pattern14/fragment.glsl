@@ -8,6 +8,11 @@ void main() {
     barY *= step(.4, mod(vUv.y * 10., 1.));
 
     float strength = barX + barY;
+    strength = clamp(strength, 0., 1.);
 
-    gl_FragColor = vec4(vec3(strength), 1.);
+    vec3 blackColor = vec3(0.0);
+    vec3 uvColor = vec3(vUv, 1.0);
+    vec3 mixedColor = mix(blackColor, uvColor, strength);
+
+    gl_FragColor = vec4(mixedColor, 1.);
 }

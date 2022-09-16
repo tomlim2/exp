@@ -7,5 +7,9 @@ void main() {
     float lightY = .15 / (distance(lightUvY, vec2(.5)));
     float strength = lightX * lightY;
 
-    gl_FragColor = vec4(vec3(strength), 1.);
+    vec3 blackColor = vec3(.0);
+    vec3 uvColor = vec3(vUv, 1.0);
+    vec3 mixedColor = mix(blackColor, uvColor, strength);
+
+    gl_FragColor = vec4(vec3(mixedColor), 1.);
 }
