@@ -41,7 +41,7 @@ import pattern47 from './patterns/pattern47/index.js'
 import pattern48 from './patterns/pattern48/index.js'
 import pattern49 from './patterns/pattern49/index.js'
 import pattern50 from './patterns/pattern50/index.js'
-import pattern51 from './patterns/pattern51/index.js'
+
 
 const shaderPatterns = {
     pattern1,
@@ -87,7 +87,7 @@ const shaderPatterns = {
     pattern48,
     pattern49,
     pattern50,
-    pattern51,
+    
 }
 
 export default shaderPatterns
