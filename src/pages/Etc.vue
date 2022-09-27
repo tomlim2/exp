@@ -9,7 +9,7 @@
     <section id="section-searchBar">
       <div class="title">SearchBar</div>
       <div class="main">
-        <div class="right-align">
+        <div class="left-align">
           <SearchBarComponent />
         </div>
       </div>
@@ -233,9 +233,8 @@ span.navigator-status {
   }
 }
 
-.right-align{
+.left-align{
   display: flex;
-  flex-direction: row-reverse;
 }
 
 .main {
