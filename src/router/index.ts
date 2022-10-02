@@ -20,8 +20,18 @@ export const route: any = [
             {
                 path: "webgl",
                 component: PageMap.ThreeLayout,
-                redirect: "/webgl/threejs/journey/galaxyv2",
+                redirect: "/webgl/threejs/journey/mixhtml",
                 children: [
+                    {
+                        name: 'ThreejsMixhtml',
+                        path: "threejs/journey/mixhtml",
+                        component: PageMap.ThreeChildren.Three5MixHtmlPage
+                    },
+                    {
+                        name: 'ThreejsModifiedmat',
+                        path: "threejs/journey/modifiedmat",
+                        component: PageMap.ThreeChildren.Three4ModifiedMatPage
+                    },
                     {
                         name: 'ThreejsGalaxyv2',
                         path: "threejs/journey/galaxyv2",

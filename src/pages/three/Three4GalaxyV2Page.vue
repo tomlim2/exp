@@ -7,9 +7,9 @@
 
 <script lang="ts">
 import { defineComponent, onMounted, reactive } from "vue";
-import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 import galaxyV2 from "@/shaders/galaxyV2/index";
+import * as THREE from "three";
 import * as dat from "lil-gui";
 
 export default defineComponent({
@@ -116,7 +116,7 @@ export default defineComponent({
 
         material = new THREE.ShaderMaterial({
           uniforms:{
-            uSize:{ value: 1 * renderer.getPixelRatio() },
+            uSize:{ value: 20 * renderer.getPixelRatio() },
             uTime:{ value: 0 }
           },
           vertexShader:galaxyV2.vertexShader,
