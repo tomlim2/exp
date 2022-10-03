@@ -10,6 +10,7 @@
       @click="checkCursorPosition"
       @scroll="matchScrollTop"
     />
+    
     <div
       ref="displayAreaRef"
       class="textarea display"
@@ -68,7 +69,7 @@ export interface TagItem {
   count: number
 }
 
-import { computed, defineComponent, PropType, reactive, ref, watch } from "vue";
+import { defineComponent, PropType, reactive, ref, watch } from "vue";
 import { onBeforeRouteLeave } from "vue-router";
 import { linkDetails, TextItemDetail, TextItemDetails } from './RichText';
 
@@ -103,6 +104,8 @@ export default defineComponent({
 
     const onInput = (event: any) => {
       state.raw = event.target.value;
+      console.log(props.tagListInSearch);
+      
       convertToRichText(state.raw);
       
       emit('onTextInput', state.raw);
@@ -182,9 +185,6 @@ export default defineComponent({
             state.mentionList.push(tagItem);
           }
 
-          console.log(state.mentionList, 'state.mentionList');
-
-
           convertToRichText(state.raw);
           updateSelectedDetail();
 
@@ -206,7 +206,9 @@ export default defineComponent({
     };
 
     const checkLinkInArea = () => {
-      state.allTagList.forEach((linkItem: TextItemDetail, index: number) => {
+      console.log(state.allTagList);
+      
+      state.allTagList.forEach((linkItem: TextItemDetail) => {
         if (linkItem.startIndexInAllText < state.cursorEndPosition && state.cursorEndPosition <= linkItem.endIndexInAllText ) {
           if (linkItem.type == "hashTag") {
             state.isSearchingTag = true;
@@ -382,7 +384,10 @@ export default defineComponent({
   }
 
   .textInput {
-    color: rgba($color: #000000, $alpha: 0);
+    font-family: Avenir, Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 20px;
+    color: rgba($color: #000000, $alpha: 0.2);
     caret-color: black;
     opacity: 1;
     resize: none;

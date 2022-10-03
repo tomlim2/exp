@@ -11,8 +11,8 @@ export interface TextItemDetail {
     url: string;
 }
 
-export type TextItemDetails = TextItemDetail []
-export type TextItemDetailsList = TextItemDetails []
+export type TextItemDetails = TextItemDetail[]
+export type TextItemDetailsList = TextItemDetails[]
 
 interface ConvertToTagDetails {
     tagDetailsList: TextItemDetailsList
@@ -27,26 +27,26 @@ const patterns = {
 };
 
 const convertToTagDetails = (text: string, mentionList: any = null): ConvertToTagDetails => {
-    let textArrayByLineBreak: string[] = text.split("\n");    
+    let textArrayByLineBreak: string[] = text.split("\n");
     let tagDetailsList: TextItemDetailsList = [];
     let tagDetails: TextItemDetails = []
     let prevTextLength: number = 0;
 
     for (let textArrayIndex = 0; textArrayIndex < textArrayByLineBreak.length; textArrayIndex++) {
-      const currentRowText = textArrayByLineBreak[textArrayIndex];
-      const tagDetailRow = formatTagDetailRow(currentRowText, prevTextLength, mentionList)
-      
-      tagDetailsList[textArrayIndex] = tagDetailRow
-      tagDetails = [...tagDetails, ...tagDetailRow];
-      prevTextLength = prevTextLength + textArrayByLineBreak[textArrayIndex].length + 1;
+        const currentRowText = textArrayByLineBreak[textArrayIndex];
+        const tagDetailRow = formatTagDetailRow(currentRowText, prevTextLength, mentionList)
+
+        tagDetailsList[textArrayIndex] = tagDetailRow
+        tagDetails = [...tagDetails, ...tagDetailRow];
+        prevTextLength = prevTextLength + textArrayByLineBreak[textArrayIndex].length + 1;
     }
 
-    const convertedTags = {tagDetailsList, tagDetails}
+    const convertedTags = { tagDetailsList, tagDetails }
 
     return convertedTags;
 };
 
-const formatTagDetailRow = (text:string, prevTextLength:number, mentionList: any = null): TextItemDetails => {
+const formatTagDetailRow = (text: string, prevTextLength: number, mentionList: any = null): TextItemDetails => {
     let linkDetailsInRow: TextItemDetails = [];
 
     let urlsListInRow: TextItemDetails = [];
@@ -61,7 +61,7 @@ const formatTagDetailRow = (text:string, prevTextLength:number, mentionList: any
         if (matchedUrlsInRow) {
             let beforeIndex = 0;
 
-            for ( let urlIndex = 0; urlIndex < matchedUrlsInRow.length; urlIndex++) {
+            for (let urlIndex = 0; urlIndex < matchedUrlsInRow.length; urlIndex++) {
                 const currentUrl = matchedUrlsInRow[urlIndex];
                 const indexOfUrl = text.indexOf(
                     currentUrl,
@@ -92,9 +92,9 @@ const formatTagDetailRow = (text:string, prevTextLength:number, mentionList: any
                     matchedHashTagsInRow[hashTagIndex],
                     beforeIndex
                 );
-                
+
                 // currentUrl
-                let linkUrl = "/" + currentHashTag.slice(1,currentHashTag.length);
+                let linkUrl = "/" + currentHashTag.slice(1, currentHashTag.length);
 
                 const currentHashTagDetail = formatDetail('hashTag', currentHashTag, indexOfHashTag, prevTextLength, linkUrl)
 
@@ -102,7 +102,7 @@ const formatTagDetailRow = (text:string, prevTextLength:number, mentionList: any
                 beforeIndex = indexOfHashTag + currentHashTag.length;
             }
         }
-        
+
         if (matchedMentionInRow) {
             let beforeIndex = 0;
 
@@ -114,10 +114,10 @@ const formatTagDetailRow = (text:string, prevTextLength:number, mentionList: any
                 );
 
                 let currentMentionUserId: number | undefined
-                
-                if(mentionList){
-                    mentionList.forEach((mention: any)=>{
-                        if("@"+mention.nickname === currentMention){
+
+                if (mentionList) {
+                    mentionList.forEach((mention: any) => {
+                        if ("@" + mention.nickname === currentMention) {
                             currentMentionUserId = mention.userId
                         }
                     })
@@ -125,7 +125,7 @@ const formatTagDetailRow = (text:string, prevTextLength:number, mentionList: any
 
                 // currentUrl
                 let linkUrl = currentMentionUserId ? "/" + String(currentMentionUserId) : '';
-    
+
                 const currentMentionDetail = formatDetail('mention', currentMention, indexOfMention, prevTextLength, linkUrl)
 
                 mentionListInRow.push(currentMentionDetail);
@@ -161,46 +161,50 @@ const formatDetail = (id: string, text: string, indexOfText: number, prevTextLen
 
 const processDetailsInRow = (linkList: TextItemDetails, allText: string, prevTextLength: number): TextItemDetails => {
     const sortedList = linkList.sort((a, b) => {
-      return a.startIndexInSentence - b.startIndexInSentence;
+        return a.startIndexInSentence - b.startIndexInSentence;
     });
 
     let processedTexts: TextItemDetails = [];
     let beforeIndex = 0;
 
     for (let i = 0; i < sortedList.length; i++) {
-      const sortedItem = sortedList[i];
-      const startIndexInSentence = sortedItem.startIndexInSentence;
+        const sortedItem = sortedList[i];
+        const startIndexInSentence = sortedItem.startIndexInSentence;
 
-      if (startIndexInSentence > 0) {
-        const text = allText.slice(beforeIndex, startIndexInSentence);
-        const sortedTextDetails = formatDetail("plain", text, beforeIndex, prevTextLength)
+        if (startIndexInSentence > 0) {
+            const text = allText.slice(beforeIndex, startIndexInSentence);
+            const sortedTextDetails = formatDetail("plain", text, beforeIndex, prevTextLength)
 
-        processedTexts.push(sortedTextDetails);
-      }
+            processedTexts.push(sortedTextDetails);
+        }
 
-      processedTexts.push(sortedList[i]);
-      beforeIndex = sortedList[i].endIndexInSenctence;
+        processedTexts.push(sortedList[i]);
+        beforeIndex = sortedList[i].endIndexInSenctence;
     }
 
     if (beforeIndex < allText.length) {
-      const leftText = allText.slice(beforeIndex, allText.length);
-      const leftTextDetails = formatDetail("plain", leftText, beforeIndex, prevTextLength)
+        const leftText = allText.slice(beforeIndex, allText.length);
+        const leftTextDetails = formatDetail("plain", leftText, beforeIndex, prevTextLength)
 
-      processedTexts.push(leftTextDetails);
+        processedTexts.push(leftTextDetails);
     }
-    
-    return processedTexts;
-  };
 
-export const linkDetails = ( text: string, mentionList: any = null): TextItemDetails =>{
+    return processedTexts;
+};
+
+export const linkDetails = (text: string, mentionList: any = null): TextItemDetails => {
     return convertToTagDetails(text, mentionList).tagDetails;
 }
 
-export const linkDetailsList = ( text: string, mentionList: any = null): TextItemDetailsList =>{
+export const linkDetailsList = (text: string, mentionList: any = null): TextItemDetailsList => {
     return convertToTagDetails(text, mentionList).tagDetailsList;
 }
 
 
-export const searchResult = (text: string, result: any): any => {
-    return result.filter((tag:any) => tag.tag.startsWith(text));
+export const searchHashTag = (text: string, result: any): any => {
+    return { tags: result.filter((tag: any) => tag.tag.startsWith(text)) }
+}
+
+export const searchMention = (text: string, result: any): any => {
+    return { mentions: result.filter((mention: any) => mention.nickname.startsWith(text)) }
 } 

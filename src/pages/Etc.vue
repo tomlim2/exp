@@ -2,12 +2,16 @@
   <main class="page">
     <section>
       <div class="title">hashtag</div>
+      <div class="main">
+        <RichTextComponent/>
+      </div>
       <div>
         
       </div>
     </section>
     <section id="section-searchBar">
       <div class="title">SearchBar</div>
+      <br>
       <div class="main">
         <div class="left-align">
           <SearchBarComponent />
@@ -116,6 +120,7 @@ import "swiper/swiper.scss";
 import IsLoadingSection from "@/sections/etc/IsLoadingSection.vue";
 import moment from "moment";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
+import RichTextComponent from "@/components/RichText/RichTextComponent.vue";
 
 export default defineComponent({
   name: "Etc",
@@ -126,6 +131,7 @@ export default defineComponent({
     DatePickerVue3Section,
     IsLoadingSection,
     SearchBarComponent,
+    RichTextComponent,
   },
   setup() {
     const state = reactive({
@@ -220,10 +226,6 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "~@/theme/style.scss";
-
-#section-searchBar{
-  background-color: #aaa;
-}
 
 span.navigator-status {
   color: red;

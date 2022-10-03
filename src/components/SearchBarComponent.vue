@@ -38,12 +38,13 @@ export default defineComponent({
   width: fit-content;
   height: 48px;
   border-radius: 48px;
-  padding: 0 0 0 20px;
-  transition: 150ms background-color ease-in-out;
+  padding: 0;
+  transition: 150ms background-color ease-in-out, 150ms padding ease-in-out;
   z-index: 1000;
 
   &.open {
-    background-color: #dddddd;
+    padding: 0 0 0 20px;
+    background-color: #000;
 
     .search-input {
       width: 240px;
@@ -53,13 +54,13 @@ export default defineComponent({
 
   &:hover {
     .search-button {
-      background-color: #dddddd;
+      background-color: #000;
     }
   }
 }
 
 .search-button {
-  color: #333333;
+  color: #ddd;
   float: right;
   width: 48px;
   height: 48px;
@@ -73,6 +74,7 @@ export default defineComponent({
   border-radius: 24px;
   background-color: rgba($color: #000000, $alpha: 0);
   z-index: 1000;
+  cursor: pointer;
 
   &::before {
     content: "";
@@ -93,9 +95,9 @@ export default defineComponent({
   outline: none;
   float: left;
   padding: 0;
-  color: #333333;
+  color: #ddd;
   font-size: 16px;
-  transition: all 200ms ease-in-out;
+  transition: all 150ms ease-in-out;
   width: 0px;
   opacity: 0;
 }

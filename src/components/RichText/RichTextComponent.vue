@@ -1,30 +1,20 @@
 <template>
   <div class="docs">
     <div>
-    <h1 class="title">{{ state.title }}</h1>
-    <div class="description" v-html="state.description" />
-    <h1>RichTextInputArea</h1>
-    <br>
-    <RichTextInputArea 
-      class="rich-text-area" 
-      :tagListInSearch="state.tagListInSearch" 
-      @onTextInput='onTextInput' 
-      @onTagInSearch='onTagInSearch'
-    />
-    <br>
-    <br><br>
-    <h1>Where to post</h1>
-    <br>
-    <RichText :contentsText="state.gotText" class="rich-text"/>
-    <br>
-    <h1>Search by hashtag (Check console log) </h1>
-    <br>
-    <div style="display: flex">
-      <input class="temp" type="text" :value='state.searchKeyword' @input='onSearchKeywordInput'>
-      <button class="submit" @click="onClick">
-        Get ({{state.searchKeyword}})
-      </button>
-    </div>
+        <RichTextInputArea 
+        class="rich-text-area" 
+        :tagListInSearch="state.tagListInSearch" 
+        @onTextInput='onTextInput' 
+        @onTagInSearch='onTagInSearch'
+        />
+        <br>
+        <div style="display: flex">
+        <button class="submit" @click="onSubmit('post')">toPost</button>
+        </div>
+        <br><br>
+        <h1>ReadOnly</h1>
+        <br>
+        <RichText :contentsText="state.gotText" class="rich-text"/>
     </div>
 
   </div>
@@ -35,7 +25,7 @@ import RichTextInputArea from "@/components/RichText/RichTextInputArea.vue";
 import RichText from "@/components/RichText/RichText.vue";
 
 import { defineComponent, onMounted, reactive } from "vue";
-import { TextItemDetail, linkDetails, searchResult } from '@/components/RichText/RichText'
+import { TextItemDetail, linkDetails, searchHashTag, searchMention } from '@/components/RichText/RichText'
 
 export default defineComponent({
   components: {RichTextInputArea, RichText},
@@ -70,9 +60,8 @@ export default defineComponent({
     const searchTagKeyword = async ( tagType: string, text: string ) => {
       if(text){
         if(tagType == "hashTag"){
-          // const result = await model.Tags.getHashTagsForSearching(text);
           const dummyList = [{tag: 'hi', count: 10}, {tag:'why', count:10}, {tag:'slow', count:10}]
-          const result = searchResult(text, dummyList);
+          const result = searchHashTag(text, dummyList);
           
           if(result.tags){
             state.tagListInSearch = result.tags;
@@ -80,9 +69,8 @@ export default defineComponent({
             state.tagListInSearch = []
           }
         } else if(tagType == "mention"){
-          // const result = await model.Tags.getMentionsForSearching(text);
-          const dummyList = [{tag: 'johnson', count: 10}, {tag:'amy', count: 30}, {tag:'야근', count: 10}];
-          const result = searchResult(text, dummyList);
+          const dummyList = [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150'}, {nickname:'amy', profileUri: 'https://via.placeholder.com/250'}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120'}];
+          const result = searchMention(text, dummyList);
 
           if(result.mentions){
             state.tagListInSearch = result.mentions;
@@ -99,19 +87,30 @@ export default defineComponent({
       window.scrollTo(0, 0)
     })
 
+    const onSubmit = async ( id: string) => {
+      let result
+      const contents = state.rawText;
+      const tags = linkDetails(state.rawText).filter((links:TextItemDetail)=>links.type === "hashTag").map(((links:TextItemDetail)=>links.text.slice(1,links.text.length))).join();
+
+      if (id == "post"){
+        
+          state.gotText = contents
+      }
+      console.log(result, contents, tags);
+    }
+
     return {
       state,
       onSearchKeywordInput,
       onTextInput,
       onTagInSearch,
+      onSubmit,
     };
   },
 });
 </script>
 
 <style lang="scss">
-@import "~@/assets/scss/mixin.scss";
-
 input.temp{
   background-color: #1c1c1c;
   color: white;
@@ -119,8 +118,6 @@ input.temp{
 
 .docs {
   display: flex;
-  flex-direction: column;
-  align-items: center;
 
   .rich-text{
     width: 40vw;
@@ -181,26 +178,4 @@ input.temp{
   }
 }
 
-@include tablet {
-  .docs {
-    display: flex;
-    flex-direction: column;
-
-    .description {
-      padding: 0 40px;
-    }
-  }
-}
-
-@include mobile {
-  .docs {
-    display: flex;
-    flex-direction: column;
-
-    .description {
-      margin-top: 40px;
-      padding: 0 20px;
-    }
-  }
-}
 </style>

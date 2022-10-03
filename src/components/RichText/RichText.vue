@@ -20,7 +20,6 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, watch } from "vue";
 import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { linkDetailsList, TextItemDetailsList } from "./RichText";
 
 interface RichTextState {
@@ -42,7 +41,6 @@ export default defineComponent({
   emits: [],
   setup(props) {
     const router = useRouter()
-    const store = useStore()
     const state: RichTextState = reactive({
       textDetailsList: []
     });
@@ -54,13 +52,9 @@ export default defineComponent({
           break;
 
         case "hashTag":
-          
           break;
         
         case "mention":
-          store.dispatch("modals/postModal", { show: false, item: {} });
-          store.dispatch("modals/feedModal", { show: false, item: {} });
-          
           router.push(url);
           break;
 
@@ -77,8 +71,6 @@ export default defineComponent({
     watch(
       ()=>props.contentsText,
       ()=>{
-        console.log(props.mentionList);
-        
         state.textDetailsList = linkDetailsList(props.contentsText, props.mentionList);
       })
 
