@@ -14,7 +14,7 @@
         <br><br>
         <h1>ReadOnly</h1>
         <br>
-        <RichText :contentsText="state.gotText" class="rich-text"/>
+        <RichText :contentsText="state.gotText" :mentionList="state.mentionList" class="rich-text"/>
     </div>
 
   </div>
@@ -38,7 +38,8 @@ export default defineComponent({
       gotText: "",
       searchingKeyword: "",
       hasKeywordMatched: false,
-      searchKeyword:''
+      searchKeyword:'',
+      mentionList: [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150'}, {nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120'}]
     });
 
     const onSearchKeywordInput = (event: any) => {
@@ -69,7 +70,7 @@ export default defineComponent({
             state.tagListInSearch = []
           }
         } else if(tagType == "mention"){
-          const dummyList = [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150'}, {nickname:'amy', profileUri: 'https://via.placeholder.com/250'}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120'}];
+          const dummyList = [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150'}, {nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120'}];
           const result = searchMention(text, dummyList);
 
           if(result.mentions){

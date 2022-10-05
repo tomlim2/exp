@@ -1,17 +1,23 @@
 <template>
   <main class="page">
     <section>
-      <div class="title">hashtag</div>
-      <div class="main">
-        <RichTextComponent/>
-      </div>
+      <h2 class="title">Get youtube link</h2>
       <div>
-        
+        <p>
+          <EmbedPlayerComponent />
+        </p>
       </div>
     </section>
+    <section>
+      <h2 class="title">hashtag</h2>
+      <div class="main">
+        <RichTextComponent />
+      </div>
+      <div></div>
+    </section>
     <section id="section-searchBar">
-      <div class="title">SearchBar</div>
-      <br>
+      <h2 class="title">SearchBar</h2>
+      <br />
       <div class="main">
         <div class="left-align">
           <SearchBarComponent />
@@ -19,7 +25,7 @@
       </div>
     </section>
     <section>
-      <div class="title">On/Offline</div>
+      <h2 class="title">On/Offline</h2>
       <div class="main">
         Your network is
         <span class="navigator-status" :class="{ onLine: state.isOnline }">{{
@@ -28,19 +34,19 @@
       </div>
     </section>
     <section>
-      <div class="title">Moment</div>
+      <h2 class="title">Moment</h2>
       <div class="main">
         {{ testMoment() }}
       </div>
       <br />
-      <div class="title">Convert number</div>
+      <h2 class="title">Convert number</h2>
       <div class="main">
         8900109
         {{ convertNumberForFeed(8900109) }}
       </div>
     </section>
     <section>
-      <div class="title">Scroll</div>
+      <h2 class="title">Scroll</h2>
       <div class="hi">
         <div class="hihi">
           fefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefefe
@@ -121,6 +127,7 @@ import IsLoadingSection from "@/sections/etc/IsLoadingSection.vue";
 import moment from "moment";
 import SearchBarComponent from "@/components/SearchBarComponent.vue";
 import RichTextComponent from "@/components/RichText/RichTextComponent.vue";
+import EmbedPlayerComponent from "@/components/EmbedPlayer/EmbedPlayerComponent.vue";
 
 export default defineComponent({
   name: "Etc",
@@ -132,13 +139,17 @@ export default defineComponent({
     IsLoadingSection,
     SearchBarComponent,
     RichTextComponent,
+    EmbedPlayerComponent,
   },
   setup() {
     const state = reactive({
+      videoUrl:"",
       isOnline: true,
+      videoData: {},
     });
 
     onMounted(() => {
+      
       state.isOnline = window.navigator.onLine;
     });
 
@@ -207,7 +218,74 @@ export default defineComponent({
     };
 
     onMounted(() => {
-      console.log(main.counter);
+      const videoData = {
+        ogSiteName: "YouTube",
+        ogUrl: "https://www.youtube.com/watch?v=LL9dq7jmjps",
+        ogTitle:
+          "[디아블로2 레저렉션] 면역 파괴참 변경사항 추가 됐습니다....... 너프??",
+        ogDescription:
+          "각종 문의 : 오픈톡 대유잼tv검색(일대일채팅)                     mooncadamoon@naver.com듣기좋은목소리, 라디오같은 방송진행 게임유튜버 대유잼입니다.즐겁게 시청해주세요 !!매너채팅 필수!!#디아블로2레저렉션래더2#디아블로2파괴참#디아블로2레저렉션파...",
+        alIosAppStoreId: "544007664",
+        alIosAppName: "YouTube",
+        alIosUrl:
+          "vnd.youtube://www.youtube.com/watch?v=LL9dq7jmjps&feature=applinks",
+        alAndroidUrl:
+          "vnd.youtube://www.youtube.com/watch?v=LL9dq7jmjps&feature=applinks",
+        alWebUrl: "http://www.youtube.com/watch?v=LL9dq7jmjps&feature=applinks",
+        ogType: "video.other",
+        alAndroidAppName: "YouTube",
+        alAndroidPackage: "com.google.android.youtube",
+        twitterCard: "player",
+        twitterSite: "@youtube",
+        twitterUrl: "https://www.youtube.com/watch?v=LL9dq7jmjps",
+        twitterTitle:
+          "[디아블로2 레저렉션] 면역 파괴참 변경사항 추가 됐습니다....... 너프??",
+        twitterDescription:
+          "각종 문의 : 오픈톡 대유잼tv검색(일대일채팅)                     mooncadamoon@naver.com듣기좋은목소리, 라디오같은 방송진행 게임유튜버 대유잼입니다.즐겁게 시청해주세요 !!매너채팅 필수!!#디아블로2레저렉션래더2#디아블로2파괴참#디아블로2레저렉션파...",
+        twitterAppNameiPhone: "YouTube",
+        twitterAppIdiPhone: "544007664",
+        twitterAppNameiPad: "YouTube",
+        twitterAppIdiPad: "544007664",
+        twitterAppUrliPhone:
+          "vnd.youtube://www.youtube.com/watch?v=LL9dq7jmjps&feature=applinks",
+        twitterAppUrliPad:
+          "vnd.youtube://www.youtube.com/watch?v=LL9dq7jmjps&feature=applinks",
+        twitterAppNameGooglePlay: "YouTube",
+        twitterAppIdGooglePlay: "com.google.android.youtube",
+        twitterAppUrlGooglePlay: "https://www.youtube.com/watch?v=LL9dq7jmjps",
+        ogImage: {
+          url: "https://i.ytimg.com/vi/LL9dq7jmjps/maxresdefault.jpg",
+          width: "1280",
+          height: "720",
+          type: "jpg",
+        },
+        ogVideo: {
+          url: "https://www.youtube.com/embed/LL9dq7jmjps",
+          width: "1280",
+          height: "720",
+          type: "text/html",
+        },
+        twitterImage: {
+          url: "https://i.ytimg.com/vi/LL9dq7jmjps/maxresdefault.jpg",
+          width: null,
+          height: null,
+          alt: null,
+        },
+        twitterPlayer: {
+          url: "https://www.youtube.com/embed/LL9dq7jmjps",
+          width: "1280",
+          height: "720",
+          stream: null,
+        },
+        ogLocale: "ko-KR",
+        ogDate: "2022-10-03",
+        favicon: "https://www.youtube.com/s/desktop/b00eb1fd/img/favicon.ico",
+        charset: "utf8",
+        requestUrl: "https://www.youtube.com/watch?v=LL9dq7jmjps",
+        success: true,
+      };
+
+      state.videoData = videoData
     });
 
     return {
@@ -235,7 +313,7 @@ span.navigator-status {
   }
 }
 
-.left-align{
+.left-align {
   display: flex;
 }
 

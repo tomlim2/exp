@@ -30,6 +30,8 @@ import Three4ModifiedMatPage from "@/pages/three/Three4ModifiedMatPage.vue";
 import Three5MixHtmlPage from "@/pages/three/Three5MixHtmlPage.vue";
 import Three0CheckerBoardPage from "@/pages/three/Three0CheckerBoardPage.vue";
 
+import Patterns from "@/pages/Patterns.vue";
+
 export default {
     DefaultLayout,
     EtcLayout,
@@ -60,5 +62,6 @@ export default {
         },
     InteractionLayout,
     Interaction,
-    InteractionChildren: { ThreejsBPortal }
+    InteractionChildren: { ThreejsBPortal },
+    Patterns,
 }

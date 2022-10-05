@@ -130,6 +130,10 @@ export const route: any = [
                 path: "forms",
                 component: PageMap.Forms
             },
+            {
+                path: "/patterns",
+                component: PageMap.Patterns,
+            },
 
         ],
     },

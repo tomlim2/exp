@@ -1,6 +1,6 @@
 <template>
   <div class="rich-text">
-    <div v-for="(textDetails, index) in state.textDetailsList" :key="index">
+    <p v-for="(textDetails, index) in state.textDetailsList" :key="index">
       <span 
         v-for="(textDetail) in textDetails"
         :key="textDetail.startIndexInAllText" 
@@ -8,12 +8,13 @@
           hashTag: textDetail.type == 'hashTag',
           url: textDetail.type == 'url',
           mention: textDetail.type == 'mention' && textDetail.url,
-        }, `${textDetail.type}-${textDetail.startIndexInAllText}`]"
+        }, 
+        `${textDetail.type}-${textDetail.startIndexInAllText}`]"
         @click="navigateTo(textDetail.type, textDetail.url)"
         >
         {{textDetail.text}}
       </span>
-    </div>
+    </p>
   </div>
 </template>
 
@@ -86,7 +87,7 @@ export default defineComponent({
 
 <style lang="scss" scoped>
   .rich-text {
-    div {
+    p {
       min-height: 20px;
       min-width: 1px;
       line-break: anywhere;
@@ -96,7 +97,8 @@ export default defineComponent({
       line-height: 20px;
 
       &.hashTag {
-        color: blue;
+        background-color: white;
+        color: purple;
         cursor: pointer;
 
         &:hover{
@@ -105,7 +107,8 @@ export default defineComponent({
       }
 
       &.url {
-        color: blue;
+        background-color: blue;
+        color: white;
         cursor: pointer;
 
         &:hover{
@@ -114,7 +117,8 @@ export default defineComponent({
       }
 
       &.mention {
-        color: red;
+        background-color: red;
+        color: white;
         cursor: pointer;
 
         &:hover{

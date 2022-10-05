@@ -107,8 +107,6 @@ export default defineComponent({
       console.log(props.tagListInSearch);
       
       convertToRichText(state.raw);
-      
-      emit('onTextInput', state.raw);
 
       if(state.mentionList) {
         let newMentionList: any = [];
@@ -124,6 +122,7 @@ export default defineComponent({
 
     const convertToRichText = (text: string) => {
       state.allTagList = linkDetails(text)
+      emit('onTextInput', state.raw);
     }
 
     const checkCursorPosition = (event:any) => {

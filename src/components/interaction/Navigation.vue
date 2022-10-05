@@ -104,7 +104,7 @@ export default defineComponent({
   position: fixed;
   left: 0;
   top: 10rem;
-  z-index: 998;
+  z-index: 9999;
   .interaction-page-max-length {
     position: fixed;
     left: 0;

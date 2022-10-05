@@ -27,8 +27,8 @@ const patterns = {
 };
 
 const convertToTagDetails = (text: string, mentionList: any = null): ConvertToTagDetails => {
-    let textArrayByLineBreak: string[] = text.split("\n");
-    let tagDetailsList: TextItemDetailsList = [];
+    const textArrayByLineBreak: string[] = text.split("\n");
+    const tagDetailsList: TextItemDetailsList = [];
     let tagDetails: TextItemDetails = []
     let prevTextLength: number = 0;
 
@@ -49,9 +49,9 @@ const convertToTagDetails = (text: string, mentionList: any = null): ConvertToTa
 const formatTagDetailRow = (text: string, prevTextLength: number, mentionList: any = null): TextItemDetails => {
     let linkDetailsInRow: TextItemDetails = [];
 
-    let urlsListInRow: TextItemDetails = [];
-    let hashTagListInRow: TextItemDetails = [];
-    let mentionListInRow: TextItemDetails = [];
+    const urlsListInRow: TextItemDetails = [];
+    const hashTagListInRow: TextItemDetails = [];
+    const mentionListInRow: TextItemDetails = [];
 
     const matchedUrlsInRow = String(text).match(patterns.url);
     const matchedHashTagsInRow = String(text).match(patterns.hashTag);
