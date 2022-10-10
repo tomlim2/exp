@@ -3,29 +3,36 @@
     <div>
       <button class="copy-btn" @click="onClick">https://www.youtube.com/watch?v=n9ZNGVvMOSQ</button> 
       <br>
+      <button class="copy-btn" @click="onClick">https://youtu.be/sw-o790XD2w</button> 
+      <br>
       <button class="copy-btn" @click="onClick">https://vimeo.com/76979871</button>
       <br>
       <button class="copy-btn" @click="onClick">https://gfycat.com/honesthomelygoldfish</button>
       <br>
       <button class="copy-btn" @click="onClick">https://coub.com/view/38b8n0</button>
+      <br>
+      <button class="copy-btn" @click="onClick">https://dai.ly/x8e70bk</button>
     </div>
-    <div class="input-area">
-      <input v-model="state.userInput" type="text"> 
-      <button @click="onSubmit">Embed</button>
-    </div>
+    <form @submit="onSubmit" class="input-area">
+      <input class="input" ref="inputArea" v-model="state.userInput" @focus="selectAllCharacter" type="text"> 
+      <button >Embed</button>
+    </form>
     <div class="preview" :key="state.userInput">
       userUnput: {{state.userInput}}
       <br>
       videoUrl: {{state.userInput}}
     </div>
     <br>
-    <EmbedPlayer :videoUrl="state.videoUrl" />
+    <div class="embed-player-wrapper">
+      <EmbedPlayer :videoUrl="state.videoUrl" />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
+import { defineComponent, reactive, ref } from "vue";
 import EmbedPlayer from "./EmbedPlayer.vue";
+import { copyByClick } from "@/libs/utils"
 
 export default defineComponent({
   components: { EmbedPlayer },
@@ -35,60 +42,32 @@ export default defineComponent({
     const state = reactive({
       videoUrl:"",
       userInput:""
-  })
-    
-    
-  const onSubmit = () => {
+    })
+
+    const inputArea = ref()
+
+    const onSubmit = (event: any) => {
+      event.preventDefault()
       state.videoUrl = state.userInput;
-  }
-
-  const onClick = (event:any) => {
-   copyByClick(event.target.innerText);
-  }
-
-  const copyByClick = ( textToCopy: string) => {
-
-    copyTextToClipboard(textToCopy)
-
-    const fallbackCopyTextToClipboard = (text:string) => {
-      let textArea = document.createElement("textarea");
-      textArea.value = text;
-
-      // Avoid scrolling to bottom
-      textArea.style.top = "0";
-      textArea.style.left = "0";
-      textArea.style.position = "fixed";
-
-      document.body.appendChild(textArea);
-      textArea.focus();
-      textArea.select();
-
-      try {
-        const successful = document.execCommand('copy');
-        const msg = successful ? 'successful' : 'unsuccessful';
-        alert('Copied ' + msg);
-      } catch (err) {
-        alert('Fallback: Oops, unable to copy ' + err);
-      }
-
-      document.body.removeChild(textArea);
     }
 
-    function copyTextToClipboard(text: string) {
-      if (!navigator.clipboard) {
-        fallbackCopyTextToClipboard(text);
-        return;
-      }
-      navigator.clipboard.writeText(text).then(function() {
-        alert('Copied!');
-      }, function(err) {
-        alert('Fallback: Oops, unable to copy ' + err);
-      });
+    const onClick = (event: any) => {
+      copyByClick(event.target.innerText);
+      inputArea.value.focus()
     }
-  }
 
-    return { state, onClick, onSubmit };
-  },
+    const selectAllCharacter = (event:any) => {
+      event.target.setSelectionRange(0, state.userInput.length)
+    }
+
+    return { 
+        state, 
+        onClick, 
+        onSubmit,
+        selectAllCharacter,
+        inputArea
+    };
+  }
 });
 </script>
 
@@ -97,10 +76,20 @@ export default defineComponent({
   .preview{
     color: aliceblue;
   }
+
   .input-area{
     padding: 20px 0;
     display: flex;
     gap: 5px;
+
+    .input{
+      padding: 0 5px; 
+      
+      &:focus {
+        outline-width: 2px;
+        outline-color: black;
+      }
+    }
 
     button{
       padding: 5px 10px;
@@ -114,6 +103,10 @@ export default defineComponent({
     &:hover{
       background-color: #ddd;
     }
+  }
+
+  .embed-player-wrapper{
+    width: 800px;
   }
 }
 </style>

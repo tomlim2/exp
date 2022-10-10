@@ -27,6 +27,8 @@ import RichText from "@/components/RichText/RichText.vue";
 import { defineComponent, onMounted, reactive } from "vue";
 import { TextItemDetail, linkDetails, searchHashTag, searchMention } from '@/components/RichText/RichText'
 
+const mentionTestList = [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150', userId: 111}, {nickname: 'johnsoooon', profileUri: 'https://via.placeholder.com/150', userId: 444},{nickname: 'johnsonnnnnnnn', profileUri: 'https://via.placeholder.com/150', userId: 333},{nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120', userId: 222}]
+
 export default defineComponent({
   components: {RichTextInputArea, RichText},
   props: {},
@@ -39,7 +41,7 @@ export default defineComponent({
       searchingKeyword: "",
       hasKeywordMatched: false,
       searchKeyword:'',
-      mentionList: [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150'}, {nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120'}]
+      mentionList: mentionTestList
     });
 
     const onSearchKeywordInput = (event: any) => {
@@ -70,7 +72,7 @@ export default defineComponent({
             state.tagListInSearch = []
           }
         } else if(tagType == "mention"){
-          const dummyList = [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150'}, {nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120'}];
+          const dummyList = mentionTestList;
           const result = searchMention(text, dummyList);
 
           if(result.mentions){
@@ -97,6 +99,7 @@ export default defineComponent({
         
           state.gotText = contents
       }
+
       console.log(result, contents, tags);
     }
 

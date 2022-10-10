@@ -12,7 +12,7 @@
         `${textDetail.type}-${textDetail.startIndexInAllText}`]"
         @click="navigateTo(textDetail.type, textDetail.url)"
         >
-        {{textDetail.text}}
+        {{textDetail.text.replace(/\s/g, '&nbsp;')}}
       </span>
     </p>
   </div>

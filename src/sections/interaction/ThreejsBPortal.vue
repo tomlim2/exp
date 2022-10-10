@@ -305,8 +305,8 @@ export default defineComponent({
   z-index: 20;
 
   #render-three-b {
-    width: 100vw/3 * 2;
-    height: 100vh/3 * 2;
+    width: calc(100vw / 3 * 2);
+    height: calc(100vh / 3 * 2);
   }
 }
 </style>

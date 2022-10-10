@@ -2,11 +2,11 @@
   <div id="embed-player" :class="{error: state.error}">
     <iframe 
     :src="state.source" 
-    frameborder='0' 
-    scrolling='no' 
     :title="state.title" 
+    frameborder='0'
+    scrolling='no'
     loading="lazy"
-    allowfullscreen 
+    allowfullscreen
     allow="encrypted-media;"
     width='100%' height='100%' style='position:absolute;top:0;left:0;'
     >
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, watch } from "vue";
+import { defineComponent, reactive, watch } from "vue";
 
 export default defineComponent({
   props:{
@@ -31,9 +31,6 @@ export default defineComponent({
       error: false
     })
 
-    onMounted(()=>{
-    })
-
     const checkVideoType = (videoUrl:string) =>{
       const urlName = videoUrl.replace(/.+\/\/|www.|\..+/g, '')
       let regExp
@@ -45,6 +42,8 @@ export default defineComponent({
       }
 
       switch (urlName) {
+        
+        case 'youtu':
         case 'youtube':
           regExp = /(?:https?:\/{2})?(?:w{3}\.)?youtu(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]+)/
           videoId = videoUrl.match(regExp);
@@ -109,6 +108,22 @@ export default defineComponent({
 
           break;
 
+        case 'dai':
+          regExp = /(?:https?:\/{2})?(?:w{3}\.)?dailymotion?\.(?:com)([^\s&]+)/i
+          videoId = videoUrl.match(regExp);
+      
+          if(videoId !== null){
+            const dailymotionId = videoId[1].split('/')[videoId[1].split('/').length-1]
+            state.source = `https://dailymotion.com/embed/video/` + dailymotionId
+            state.title = "Dailymotion player"
+            state.error = false;
+          } else { 
+            state.error = true
+            alert("The gfycat url is not valid.");
+          }
+
+          break;
+
         default:
           alert("The link does not supported.");
           state.error = true;
@@ -132,8 +147,8 @@ export default defineComponent({
 <style lang="scss" scoped>
   #embed-player{
     position: relative; 
-    padding-bottom: calc(70.80% + 44px);
-    width: 100%;
+    //16:9
+    padding-bottom: 56.25%;
     background-color: #252525;
 
     &.error{
