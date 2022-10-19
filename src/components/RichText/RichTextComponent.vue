@@ -27,7 +27,24 @@ import RichText from "@/components/RichText/RichText.vue";
 import { defineComponent, onMounted, reactive } from "vue";
 import { TextItemDetail, linkDetails, searchHashTag, searchMention } from '@/components/RichText/RichText'
 
-const mentionTestList = [{nickname: 'johnson', profileUri: 'https://via.placeholder.com/150', userId: 111}, {nickname: 'johnsoooon', profileUri: 'https://via.placeholder.com/150', userId: 444},{nickname: 'johnsonnnnnnnn', profileUri: 'https://via.placeholder.com/150', userId: 333},{nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123}, {nickname:'야근', profileUri: 'https://via.placeholder.com/120', userId: 222}]
+const mentionTestList = [
+  { nickname: 'johnson', profileUri: 'https://via.placeholder.com/150', userId: 111 }, 
+  { nickname: 'johnsoooon', profileUri: 'https://via.placeholder.com/150', userId: 444 },
+  { nickname: 'johnsonnnnnnnn', profileUri: 'https://via.placeholder.com/150', userId: 333 },
+  { nickname:'amy', profileUri: 'https://via.placeholder.com/250', userId:123 }, 
+  { nickname:'야근', profileUri: 'https://via.placeholder.com/120', userId: 222 }
+]
+
+const hashTagList = [
+  { tag: 'hi', count: 12 },
+  { tag: 'why', count: 8 },
+  { tag: 'slow', count: 1 },
+  { tag: 'what', count: 30 },
+  { tag: 'whaaaaat', count: 20 },
+  { tag: 'slowwwwwww', count: 23 },
+  { tag: 'sloooooooow', count: 31 },
+  { tag: 'slooow', count: 77 }  
+]
 
 export default defineComponent({
   components: {RichTextInputArea, RichText},
@@ -63,7 +80,7 @@ export default defineComponent({
     const searchTagKeyword = async ( tagType: string, text: string ) => {
       if(text){
         if(tagType == "hashTag"){
-          const dummyList = [{tag: 'hi', count: 10}, {tag:'why', count:10}, {tag:'slow', count:10}]
+          const dummyList = hashTagList
           const result = searchHashTag(text, dummyList);
           
           if(result.tags){
@@ -91,16 +108,14 @@ export default defineComponent({
     })
 
     const onSubmit = async ( id: string) => {
-      let result
+      // let result
       const contents = state.rawText;
-      const tags = linkDetails(state.rawText).filter((links:TextItemDetail)=>links.type === "hashTag").map(((links:TextItemDetail)=>links.text.slice(1,links.text.length))).join();
+      console.log(linkDetails);
+      // const tags = linkDetails(state.rawText).filter((links:TextItemDetail)=>links.type === "hashTag").map(((links:TextItemDetail)=>links.text.slice(1,links.text.length))).join();
 
       if (id == "post"){
-        
           state.gotText = contents
       }
-
-      console.log(result, contents, tags);
     }
 
     return {

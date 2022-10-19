@@ -1,62 +1,52 @@
 <template>
-  <div>
-    <div>
-      <p>
-        userCursor: {{state.cursorStartPosition}}, {{state.cursorEndPosition}}
-      </p>
-      <p>
-        selectedTagDetailCurosr: {{state.selectedTagDetail && state.selectedTagDetail.startIndexInAllText}}, {{state.selectedTagDetail && state.selectedTagDetail.endIndexInAllText}}
-      </p>
+  <div class="rich-text-input-area">
+    <textarea
+      ref="richTextareaRef"
+      class="textarea textInput"
+      :value="state.raw"
+      @input="onInput"
+      @keydown="selectResultByUpAndDown"
+      @keyup="checkCursorPosition"
+      @click="checkCursorPosition"
+      @scroll="matchScrollTop"
+    />
+    <div
+      ref="displayAreaRef"
+      class="textarea display"
+    >
+      <RichText :contentsText="state.raw" :mentionList="state.mentionList" />
     </div>
-    <div class="rich-text-input-area">
-      <textarea
-        ref="richTextareaRef"
-        class="textarea textInput"
-        :value="state.raw"
-        @input="onInput"
-        @keydown="selectResultByUpAndDown"
-        @keyup="checkCursorPosition"
-        @click="checkCursorPosition"
-        @scroll="matchScrollTop"
-      />
-      <div
-        ref="displayAreaRef"
-        class="textarea display"
-      >
-        <RichText :contentsText="state.raw" :mentionList="state.mentionList" />
-      </div>
-      <div class="search-bar" :class="{ appear: state.isSearchingTag && tagListInSearch.length > 0 }">
-        <div class="item-list">
-          <div v-if="state.selectedTagDetail && state.selectedTagDetail.type == 'hashTag'">
-            <div
-              class="item"
-              v-for="(hashTagItem, index) in tagListInSearch"
-              @click="insertText(hashTagItem, 'hashTag')"
-              :class='{focused: state.searchFocus == index}'
-              :disabled="!state.isSearchingTag"
-              :key="index"
-            >
-              #{{ hashTagItem.tag }}
-              count: {{hashTagItem.count}}
-            </div>
+    <div class="search-bar" :class="{ appear: state.isSearchingTag && tagListInSearch.length > 0 }">
+      <div class="item-list">
+        <div v-if="state.selectedTagDetail && state.selectedTagDetail.type == 'hashTag'">
+          <div
+            class="item"
+            v-for="(hashTagItem, index) in tagListInSearch"
+            @click="insertText(hashTagItem, 'hashTag')"
+            :class='{focused: state.searchFocus == index}'
+            :disabled="!state.isSearchingTag"
+            :key="index"
+          >
+            #{{ hashTagItem.tag }}
+            count: {{hashTagItem.count}}
           </div>
-          <div v-if="state.selectedTagDetail && state.selectedTagDetail.type == 'mention'">
-            <div
-              class="item mention"
-              v-for="(mentionItem, index) in tagListInSearch"
-              @click="insertText(mentionItem, 'mention')"
-              :class='{focused: state.searchFocus == index}'
-              :disabled="!state.isSearchingTag"
-              :key="index"
-            >
-              <div class="img-frame"><img :src="mentionItem.profileUri" :alt="mentionItem.nickname"></div>
-              <span class="nickname">@{{ mentionItem.nickname }}</span>
-            </div>
+        </div>
+        <div v-if="state.selectedTagDetail && state.selectedTagDetail.type == 'mention'">
+          <div
+            class="item mention"
+            v-for="(mentionItem, index) in tagListInSearch"
+            @click="insertText(mentionItem, 'mention')"
+            :class='{focused: state.searchFocus == index}'
+            :disabled="!state.isSearchingTag"
+            :key="index"
+          >
+            <div class="img-frame"><img :src="mentionItem.profileUri" :alt="mentionItem.nickname"></div>
+            <span class="nickname">@{{ mentionItem.nickname }}</span>
           </div>
         </div>
       </div>
-      <div v-if="state.isSearchingTag" class="backdrop" @click="closeSearchBar" />
     </div>
+    <div v-if="state.isSearchingTag" class="backdrop" @click="closeSearchBar" />
   </div>
 </template>
 

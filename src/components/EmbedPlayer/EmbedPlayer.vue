@@ -109,17 +109,18 @@ export default defineComponent({
           break;
 
         case 'dai':
-          regExp = /(?:https?:\/{2})?(?:w{3}\.)?dailymotion?\.(?:com)([^\s&]+)/i
+          regExp = /(?:https?:\/{2})?(?:w{3}\.)?dai?\.(?:ly)([^\s&]+)/i
           videoId = videoUrl.match(regExp);
       
           if(videoId !== null){
             const dailymotionId = videoId[1].split('/')[videoId[1].split('/').length-1]
+
             state.source = `https://dailymotion.com/embed/video/` + dailymotionId
             state.title = "Dailymotion player"
             state.error = false;
           } else { 
             state.error = true
-            alert("The gfycat url is not valid.");
+            alert("Check your dailymotion.");
           }
 
           break;
