@@ -20,7 +20,7 @@ interface ConvertToTagDetails {
 }
 
 const patterns = {
-    url: /[(http(s)?):\/\/(www\.)?a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/gi,
+    url: /[(http(s)?):(www)?a-zA-Z0-9@:%._~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_.~#?&//=]*)/gi,
     checkProtocal: /^((http|https|ftp):\/\/)/,
     hashTag: /\B#[^\s#]+/gi,
     mention: /\B@[^\s@]+/gi,
@@ -94,7 +94,7 @@ const formatTagDetailRow = (text: string, prevTextLength: number, mentionList: a
                 );
 
                 // currentUrl
-                let linkUrl = "/" + currentHashTag.slice(1, currentHashTag.length);
+                const linkUrl = "/" + currentHashTag.slice(1, currentHashTag.length);
 
                 const currentHashTagDetail = formatDetail('hashTag', currentHashTag, indexOfHashTag, prevTextLength, linkUrl)
 
@@ -124,7 +124,7 @@ const formatTagDetailRow = (text: string, prevTextLength: number, mentionList: a
                 }
 
                 // currentUrl
-                let linkUrl = currentMentionUserId ? "/" + String(currentMentionUserId) : '';
+                const linkUrl = currentMentionUserId ? "/" + String(currentMentionUserId) : '';
 
                 const currentMentionDetail = formatDetail('mention', currentMention, indexOfMention, prevTextLength, linkUrl)
 
@@ -164,7 +164,7 @@ const processDetailsInRow = (linkList: TextItemDetails, allText: string, prevTex
         return a.startIndexInSentence - b.startIndexInSentence;
     });
 
-    let processedTexts: TextItemDetails = [];
+    const processedTexts: TextItemDetails = [];
     let beforeIndex = 0;
 
     for (let i = 0; i < sortedList.length; i++) {

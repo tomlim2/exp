@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
     chainWebpack: webpackConfig => {
         webpackConfig.module
@@ -6,4 +8,4 @@ module.exports = {
         .use('glslify-loader')
         .loader('glslify-loader')
     }
-  }
+}

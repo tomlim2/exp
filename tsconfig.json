@@ -34,7 +34,7 @@
     "src/**/*.vue",
     "tests/**/*.ts",
     "tests/**/*.tsx"
-, "src/shaders/test/TestShader_b.ts", "src/libs/shaders/shaderPattern/patterns/pattern1/index.js"  ],
+  , "src/shaders/test/TestShader_b.ts", "src/libs/shaders/shaderPattern/patterns/pattern1/index.js"  ],
   "exclude": [
     "node_modules"
   ]

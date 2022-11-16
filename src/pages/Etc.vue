@@ -1,20 +1,24 @@
 <template>
   <main class="page">
     <section>
-      <h2 class="title">Markdown</h2>
-      <div>
-        <MDEditor :text="state.mdPreview" :isPreviewOnly="true"  />
-        <MDEditor @onChange="onMDEditorChange" />
-        <BasicButton @click="onMDClick" text="preview" />
-      </div>
+      <h2 class="title">Stylus</h2>
+      <Stylus />
     </section>
     <section>
-      <h2 class="title">Markdown</h2>
-      <div>
-        <MarkdownEditor :key="state.markdownExample" :text="state.markdownExample" mode="preview" />
-        <MarkdownEditor mode="editable" @onInput="onMarkdownInput" />
-        <BasicButton @click="onMarkdownClick" />
-      </div>
+      <h2 class="title">Trading view</h2>
+      <TradingView />
+    </section>
+    <section>
+      <h2 class="title">Gradient Stack</h2>
+      <GradientStack />
+    </section>
+    <section>
+      <h2 class="title">Echarts Basic</h2>
+      <EchartsBasic />
+    </section>
+    <section>
+      <h2 class="title">Markdown333</h2>
+      <MarkdownWrapper />
     </section>
     <section>
       <h2 class="title">Digit Password</h2>
@@ -151,9 +155,11 @@ import SearchBarComponent from "@/components/SearchBarComponent.vue";
 import RichTextComponent from "@/components/RichText/RichTextComponent.vue";
 import EmbedPlayerComponent from "@/components/EmbedPlayer/EmbedPlayerComponent.vue";
 import DigitInputComponent from "@/components/DigitInputComponent.vue";
-import BasicButton from "@/components/BasicButton.vue";
-import MarkdownEditor from "@/components/Markdown/MarkdownEditor.vue";
-import MDEditor from "@/components/Markdown/MDEditor.vue"
+import MarkdownWrapper from "@/components/Markdown/MarkdownWrapper.vue"
+import EchartsBasic from "@/components/ECharts/EchartsBasic.vue"
+import GradientStack from "@/components/ECharts/GradientStack.vue"
+import TradingView from "@/components/TradingView/TradingView.vue"
+import Stylus from "@/components/Stylus.vue"
 
 export default defineComponent({
   name: "Etc",
@@ -167,9 +173,11 @@ export default defineComponent({
     RichTextComponent,
     EmbedPlayerComponent,
     DigitInputComponent,
-    BasicButton,
-    MarkdownEditor,
-    MDEditor
+    MarkdownWrapper,
+    EchartsBasic,
+    GradientStack,
+    TradingView,
+    Stylus
   },
   setup() {
     const state = reactive({
