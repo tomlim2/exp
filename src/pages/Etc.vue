@@ -1,6 +1,19 @@
 <template>
   <main class="page">
     <section>
+      <h2 class="title">Logins</h2>
+      <DounutCut />
+    </section>
+    <section>
+      <h2 class="title">PaintScatter</h2>
+      <DounutCut />
+    </section>
+    <section>
+      <h2 class="title">PaintScatter</h2>
+      <PaintScatter />
+    </section>
+    
+    <section>
       <h2 class="title">Stylus</h2>
       <Stylus />
     </section>
@@ -160,6 +173,9 @@ import EchartsBasic from "@/components/ECharts/EchartsBasic.vue"
 import GradientStack from "@/components/ECharts/GradientStack.vue"
 import TradingView from "@/components/TradingView/TradingView.vue"
 import Stylus from "@/components/Stylus.vue"
+import PaintScatter from "@/components/ECharts/PaintScatter.vue"
+import DounutCut from "@/components/ECharts/DounutCut.vue"
+
 
 export default defineComponent({
   name: "Etc",
@@ -177,7 +193,9 @@ export default defineComponent({
     EchartsBasic,
     GradientStack,
     TradingView,
-    Stylus
+    Stylus,
+    PaintScatter,
+    DounutCut
   },
   setup() {
     const state = reactive({

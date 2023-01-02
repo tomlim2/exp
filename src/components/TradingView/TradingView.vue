@@ -1,16 +1,18 @@
 <template>
-  <Chart />
-  <CryptoMarket />
-  <Snaps/>
-  <Screener/>
+  <div class="trading-view">
+    <Chart class="box" />
+    <CryptoMarket class="box" />
+    <Snaps class="box" />
+    <Screener class="box" />
+  </div>
 </template>
 
 <script lang="ts">
-import { Chart,CryptoMarket, Snaps, Screener } from 'vue-tradingview-widgets';
+import { Chart, CryptoMarket, Snaps, Screener } from "vue-tradingview-widgets";
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
     Chart,
     CryptoMarket,
@@ -19,3 +21,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style lang='scss'>
+.trading-view {
+  width: 100%;
+}
+</style>
